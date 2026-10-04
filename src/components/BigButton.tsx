@@ -20,7 +20,7 @@ export const BigButton: React.FC<BigButtonProps> = ({
   size = 'normal',
 }) => {
   const baseClasses =
-    'w-full min-h-[48px] rounded-xl font-bold flex items-center justify-center text-center transition-all duration-150 active:scale-[0.98] select-none';
+    'w-full min-h-[48px] rounded-2xl font-bold flex items-center justify-center text-center transition-all duration-150 active:scale-[0.98] select-none focus-visible:outline-saffron';
   
   const sizeClasses = size === 'large' ? 'py-4 px-6 text-2xl' : 'py-3 px-5 text-lg';
 
@@ -29,7 +29,7 @@ export const BigButton: React.FC<BigButtonProps> = ({
     case 'primary':
       variantClasses = disabled
         ? 'bg-saffron/40 text-navy/60 cursor-not-allowed'
-        : 'bg-saffron text-navy hover:bg-[#e09430] active:bg-[#d08527] shadow-md';
+        : 'bg-saffron text-navy hover:bg-[#e09430] active:bg-[#d08527] shadow-diya';
       break;
     case 'secondary':
       variantClasses = disabled
