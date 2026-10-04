@@ -707,18 +707,18 @@ export const Practice: React.FC = () => {
                 <div className="grid grid-cols-4 gap-2">
                   {(['10k', '25k', '50k', 'custom'] as const).map(chip => {
                     const isSelected = marginChip === chip;
-                    const labels = {
+                    const labels: Record<typeof chip, string> = {
                       '10k': '₹10k',
                       '25k': '₹25k',
                       '50k': '₹50k',
-                      'custom': 'Custom',
+                      'custom': t('practice.custom_label'),
                     };
                     return (
                       <button
                         key={chip}
                         type="button"
                         onClick={() => setMarginChip(chip)}
-                        className={`py-2 rounded-xl text-xs font-bold border transition-colors ${
+                        className={`min-h-[48px] py-2 rounded-xl text-xs font-bold border transition-colors ${
                           isSelected
                             ? 'bg-saffron text-navy border-saffron'
                             : 'bg-slate-800 border-slate-600 text-slate-300 hover:border-slate-500'
