@@ -192,7 +192,7 @@ export const Trades: React.FC = () => {
             </label>
             <input
               type="number"
-              placeholder="e.g. -1500 or 2000"
+              placeholder={t('trades.pnl_placeholder')}
               value={pnl}
               onChange={e => setPnl(e.target.value)}
               className="w-full text-base min-h-[48px] p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
