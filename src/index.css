@@ -3,19 +3,179 @@
 @tailwind utilities;
 
 :root {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans Devanagari', sans-serif;
+  --ruko-night: #0e162e;
+  --ruko-abyss: #0a1122;
+  --ruko-navy: #14213d;
+  --ruko-cream: #faf6ee;
+  --ruko-paper: #f5edd9;
+  --ruko-saffron: #f2a33a;
+  --ruko-ember: #e07b2a;
+  --ruko-green: #2bb3a3;
+  --ruko-red: #e4572e;
+  font-family: 'Mukta', system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans Devanagari', sans-serif;
   line-height: 1.5;
   color-scheme: dark;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background-color: #14213D;
-  color: #FAF6EE;
+  background-color: var(--ruko-night);
+  background-image:
+    radial-gradient(ellipse 80% 42% at 50% -6%, rgba(242, 163, 58, 0.14), transparent 70%),
+    radial-gradient(ellipse 60% 30% at 50% 108%, rgba(43, 179, 163, 0.08), transparent 70%);
+  background-attachment: fixed;
+  color: var(--ruko-cream);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+/* Film grain overlay — calm paper texture, not flat */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
 }
 
 button {
   touch-action: manipulation;
+  font-family: inherit;
+}
+
+/* Display serif for ritual headings */
+.font-ritual {
+  font-family: 'Fraunces', 'Tiro Devanagari Hindi', Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+/* Jaali lattice accent for dividers */
+.jaali-line {
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(242, 163, 58, 0.55) 20%,
+    rgba(242, 163, 58, 0.55) 80%,
+    transparent
+  );
+}
+
+/* Staggered entrance */
+@keyframes ruko-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: ruko-rise 0.5s ease-out both;
+}
+.rise-1 { animation-delay: 0.05s; }
+.rise-2 { animation-delay: 0.12s; }
+.rise-3 { animation-delay: 0.19s; }
+.rise-4 { animation-delay: 0.26s; }
+.rise-5 { animation-delay: 0.33s; }
+
+/* Diya glow ring for primary ritual actions */
+.diya-ring {
+  box-shadow:
+    0 0 0 6px rgba(242, 163, 58, 0.14),
+    0 0 0 14px rgba(242, 163, 58, 0.06),
+    0 0 42px rgba(242, 163, 58, 0.4),
+    0 18px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Handmade paper card */
+.paper-card {
+  background: linear-gradient(160deg, rgba(250, 246, 238, 0.06), rgba(250, 246, 238, 0.02)),
+    rgba(20, 33, 61, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+/* Accessible focus — saffron halo */
+:focus-visible {
+  outline: 3px solid var(--ruko-saffron);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/* Inputs: calm, high contrast */
+input, textarea, select {
+  font-family: inherit;
+}
+input::placeholder, textarea::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+/* Recharts dark-theme polish */
+.recharts-cartesian-axis-tick text {
+  font-family: 'Mukta', sans-serif;
+  font-weight: 600;
+}
+.recharts-tooltip-wrapper {
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+}
+
+/* Slim devotional scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ruko-abyss);
+}
+::-webkit-scrollbar-thumb {
+  background: #2b3a5e;
+  border-radius: 8px;
+  border: 2px solid var(--ruko-abyss);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ruko-saffron);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 200;
+  background: var(--ruko-saffron);
+  color: var(--ruko-night);
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 0.75rem 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  body::after {
+    display: none;
+  }
 }

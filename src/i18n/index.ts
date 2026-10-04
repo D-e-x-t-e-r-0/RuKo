@@ -38,6 +38,10 @@ const savedLang =
     (localStorage.getItem('ruko.lang') || localStorage.getItem('ruko_lang'))) ||
   'hi';
 
+if (typeof document !== 'undefined') {
+  document.documentElement.lang = savedLang === 'en' ? 'en' : 'hi';
+}
+
 i18n
   .use(initReactI18next)
   .init({
