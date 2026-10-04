@@ -545,8 +545,11 @@ export const Practice: React.FC = () => {
             </div>
             <button
               type="button"
+              role="switch"
+              aria-checked={pauseEnabled}
+              aria-label={t('practice.pause_toggle')}
               onClick={() => handleTogglePause(!pauseEnabled)}
-              className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors ${
+              className={`min-h-[48px] min-w-[56px] w-14 flex items-center rounded-full p-1 transition-colors ${
                 pauseEnabled ? 'bg-saffron' : 'bg-slate-600'
               }`}
             >
