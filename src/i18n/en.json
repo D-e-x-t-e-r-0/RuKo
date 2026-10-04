@@ -232,6 +232,11 @@
   "settings": {
     "title": "Settings",
     "language": "Language",
+    "voice_title": "Voice",
+    "voice_desc": "Spoken reflections and voice input",
+    "voice_auto": "Auto (Sarvam when available)",
+    "voice_sarvam": "Sarvam AI voice",
+    "voice_device": "Device voice",
     "demo_data": "Load demo data",
     "demo_loaded": "Demo data loaded successfully!",
     "delete_data": "Delete all my data",

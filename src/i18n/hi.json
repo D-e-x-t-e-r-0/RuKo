@@ -232,6 +232,11 @@
   "settings": {
     "title": "सेटिंग्स",
     "language": "भाषा (Language)",
+    "voice_title": "आवाज़",
+    "voice_desc": "बोले गए चिंतन और वॉइस इनपुट",
+    "voice_auto": "ऑटो (उपलब्ध हो तो Sarvam)",
+    "voice_sarvam": "Sarvam AI आवाज़",
+    "voice_device": "डिवाइस की आवाज़",
     "demo_data": "डेमो डेटा लोड करें",
     "demo_loaded": "डेमो डेटा लोड हो गया!",
     "delete_data": "मेरा सारा डेटा हटाएं",
