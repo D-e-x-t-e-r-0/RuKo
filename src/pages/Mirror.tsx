@@ -43,8 +43,9 @@ export const Mirror: React.FC = () => {
 
   useEffect(() => {
     async function loadMirrorData() {
-      // The Mirror stays real-only
-      const rawDecisions = await db.decisions.toArray();
+      try {
+        // The Mirror stays real-only
+        const rawDecisions = await db.decisions.toArray();
       const allDecisions = rawDecisions.filter(d => d.mode !== 'practice');
       const now = new Date();
 

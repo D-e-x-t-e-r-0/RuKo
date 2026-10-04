@@ -243,7 +243,8 @@ export const Journal: React.FC = () => {
                     onClick={() =>
                       setExpandedDetails(prev => ({ ...prev, [d.id!]: !prev[d.id!] }))
                     }
-                    className="text-saffron hover:underline font-semibold flex items-center space-x-1"
+                    aria-expanded={!!expandedDetails[d.id!]}
+                    className="min-h-[48px] px-2 -ml-2 text-saffron hover:underline font-semibold flex items-center space-x-1"
                   >
                     <span>{t('journal.details')}</span>
                     <span>{expandedDetails[d.id!] ? '▲' : '▼'}</span>
