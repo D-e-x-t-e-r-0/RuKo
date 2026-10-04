@@ -33,11 +33,17 @@ export class RukoDatabase extends Dexie {
 export const db = new RukoDatabase();
 
 export async function clearAll(): Promise<void> {
-  await Promise.all([
-    db.trades.clear(),
-    db.decisions.clear(),
-    db.rules.clear(),
-    db.practiceTrades.clear(),
-    db.sessions.clear(),
-  ]);
+  await db.transaction(
+    'rw',
+    [db.trades, db.decisions, db.rules, db.practiceTrades, db.sessions],
+    async () => {
+      await Promise.all([
+        db.trades.clear(),
+        db.decisions.clear(),
+        db.rules.clear(),
+        db.practiceTrades.clear(),
+        db.sessions.clear(),
+      ]);
+    }
+  );
 }

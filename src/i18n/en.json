@@ -41,6 +41,7 @@
   },
   "home": {
     "pause_button": "Pause now",
+    "tap_before_trading": "Tap before trading",
     "greeting_morning": "Good morning",
     "greeting_afternoon": "Good afternoon",
     "greeting_evening": "Good evening",
