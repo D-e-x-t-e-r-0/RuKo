@@ -659,7 +659,7 @@ export const Pause: React.FC<PauseProps> = ({
                 <button
                   type="button"
                   onClick={() => setLastTradeTime('30m')}
-                  className={`min-h-[40px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
+                  className={`min-h-[48px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     lastTradeTime === '30m'
                       ? 'bg-saffron/30 text-saffron border border-saffron'
                       : 'bg-slate-900/60 text-slate-400 border border-slate-800'
@@ -670,7 +670,7 @@ export const Pause: React.FC<PauseProps> = ({
                 <button
                   type="button"
                   onClick={() => setLastTradeTime('hours')}
-                  className={`min-h-[40px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
+                  className={`min-h-[48px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     lastTradeTime === 'hours'
                       ? 'bg-saffron/30 text-saffron border border-saffron'
                       : 'bg-slate-900/60 text-slate-400 border border-slate-800'
