@@ -15,13 +15,18 @@ export const Journal: React.FC = () => {
   const [expandedDetails, setExpandedDetails] = useState<Record<number, boolean>>({});
 
   const loadDecisions = async () => {
-    const all = await db.decisions.toArray();
-    all.sort((a, b) => b.ts - a.ts);
-    setDecisions(all);
+    try {
+      const all = await db.decisions.toArray();
+      all.sort((a, b) => b.ts - a.ts);
+      setDecisions(all);
 
-    const allSessions = await db.sessions.toArray();
-    allSessions.sort((a, b) => b.startedAt - a.startedAt);
-    setSessions(allSessions);
+      const allSessions = await db.sessions.toArray();
+      allSessions.sort((a, b) => b.startedAt - a.startedAt);
+      setSessions(allSessions);
+    } catch (_) {
+      setDecisions([]);
+      setSessions([]);
+    }
   };
 
   useEffect(() => {
@@ -111,7 +116,7 @@ export const Journal: React.FC = () => {
                 >
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-bold text-cream uppercase tracking-wider">
-                      {s.scenario}
+                      {t(`practice.scenarios.${s.scenario}_title`, s.scenario)}
                     </span>
                     <span className="text-slate-400">
                       {format(new Date(s.startedAt), 'dd MMM yyyy, hh:mm a')}
