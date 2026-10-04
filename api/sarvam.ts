@@ -94,7 +94,9 @@ async function handleTts(body: any, key: string) {
         text,
         target_language_code: languageCode,
         language_code: languageCode,
-        speaker: 'meera',
+        // Valid speakers for bulbul:v3 (meera/v2 roster was retired): ritu is the
+        // neutral female voice that covers all supported Indian languages.
+        speaker: 'ritu',
         model: 'bulbul:v3',
       }),
     },
