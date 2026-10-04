@@ -473,14 +473,13 @@ export const Pause: React.FC<PauseProps> = ({
 
       if (outcome === 'proceeded' && amount > 0) {
         if (mode === 'practice') {
-          if ((db as any).practiceTrades) {
-            await (db as any).practiceTrades.add({
-              ts: now,
-              amount,
-              pnl: null,
-              funding,
-            });
-          }
+          await db.practiceTrades.add({
+            sessionId,
+            ts: now,
+            amount,
+            pnl: null,
+            funding,
+          });
         } else {
           await db.trades.add({
             ts: now,
@@ -494,7 +493,7 @@ export const Pause: React.FC<PauseProps> = ({
       triggerVibrate();
       setScreen(5); // Confirmation
     } catch (err) {
-      console.error('Failed to record decision:', err);
+      setSaveError(t('practice.save_failed'));
     } finally {
       setIsSubmitting(false);
     }
