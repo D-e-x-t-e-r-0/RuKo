@@ -183,11 +183,15 @@ export const Pause: React.FC<PauseProps> = ({
       hint = { result: lastTradeResult, minutesAgo };
     }
 
-    let pastTrades: any[] = [];
+    let pastTrades: Trade[] = [];
     if (mode === 'practice') {
-      if ((db as any).practiceTrades) {
-        pastTrades = await (db as any).practiceTrades.toArray();
-      }
+      const all = await db.practiceTrades.toArray();
+      pastTrades = (sessionId ? all.filter(t => t.sessionId === sessionId) : all).map(t => ({
+        ts: t.ts,
+        amount: t.amount,
+        pnl: t.pnl,
+        funding: t.funding,
+      }));
     } else {
       pastTrades = await db.trades.toArray();
     }
@@ -437,6 +441,7 @@ export const Pause: React.FC<PauseProps> = ({
   const handleDecision = async (outcome: Outcome) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
+    setSaveError(null);
     setFinalOutcome(outcome);
 
     try {
