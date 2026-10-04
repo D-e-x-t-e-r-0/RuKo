@@ -196,6 +196,11 @@
   "trades": {
     "title": "ट्रेड्स",
     "quick_log_title": "नया ट्रेड दर्ज करें (3 टैप)",
+    "amount_placeholder": "जैसे 5000",
+    "pnl_placeholder": "जैसे -1500 या 2000",
+    "select_csv": "CSV फ़ाइल चुनें",
+    "processing_csv": "CSV प्रोसेस हो रहा है...",
+    "choose_csv_sr": "CSV चुनें",
     "amount_label": "रकम (₹)",
     "pnl_label": "P&L (₹, यदि बंद हुआ हो)",
     "funding_label": "पैसा कहाँ से",
@@ -214,6 +219,8 @@
   },
   "rules": {
     "title": "व्यक्तिगत नियम",
+    "count_active": "{{count}} नियम सक्रिय",
+    "delete_rule_label": "नियम हटाएं",
     "subtitle": "दबाव के समय ये नियम आपको याद दिलाए जाएंगे",
     "add_placeholder": "नया नियम लिखें...",
     "btn_add": "नियम जोड़ें",
