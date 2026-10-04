@@ -586,7 +586,7 @@ export const Practice: React.FC = () => {
               <button
                 type="button"
                 onClick={handleEndSession}
-                className="text-xs font-bold text-red-300 hover:text-red-200 border border-red-500/40 rounded-lg px-2 py-1"
+                className="min-h-[48px] text-xs font-bold text-red-300 hover:text-red-200 border border-red-500/40 rounded-lg px-3 py-2"
               >
                 {t('practice.end_session')}
               </button>
