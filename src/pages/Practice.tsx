@@ -313,8 +313,12 @@ export const Practice: React.FC = () => {
   };
 
   const openVirtualPosition = (margin: number) => {
+    const uid =
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}_${Math.floor(Math.random() * 1e9)}`;
     const newPos: VirtualPosition = {
-      id: `${Date.now()}_${Math.random()}`,
+      id: uid,
       instrument: selectedInstrument,
       margin,
       leverage,
