@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { db } from '../db';
-import type { Funding, Horizon, Outcome, Level, Signal, ReflectionAnswer, TriggerItem } from '../types';
+import type { Funding, Horizon, Outcome, Level, Signal, ReflectionAnswer, TriggerItem, Trade } from '../types';
 import { evaluateSignals, type LastTradeHint } from '../engine/signals';
 import { levelFor } from '../engine/pressure';
 import { speak } from '../voice/voice';

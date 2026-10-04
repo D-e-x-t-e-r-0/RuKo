@@ -301,11 +301,12 @@ export const Mirror: React.FC = () => {
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left">
+              <caption className="sr-only">{t('mirror.practice_comparison_title')}</caption>
               <thead>
                 <tr className="border-b border-slate-700 text-slate-400">
-                  <th className="py-2 font-semibold">Mode</th>
-                  <th className="py-2 text-right font-semibold">{t('mirror.avg_trades')}</th>
-                  <th className="py-2 text-right font-semibold">{t('mirror.loss_chasing_share')}</th>
+                  <th scope="col" className="py-2 font-semibold">{t('mirror.mode_col')}</th>
+                  <th scope="col" className="py-2 text-right font-semibold">{t('mirror.avg_trades')}</th>
+                  <th scope="col" className="py-2 text-right font-semibold">{t('mirror.loss_chasing_share')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800 text-cream">
