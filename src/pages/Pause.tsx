@@ -1040,7 +1040,7 @@ export const Pause: React.FC<PauseProps> = ({
                       }
                       setCardIndex(prev => Math.min(cards.length - 1, prev + 1));
                     }}
-                    className="min-h-[40px] px-3 py-1 rounded-xl text-saffron hover:underline font-bold disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="min-h-[48px] px-3 py-1 rounded-xl text-saffron hover:underline font-bold disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     {t('pause.next_card')} →
                   </button>
@@ -1132,7 +1132,7 @@ export const Pause: React.FC<PauseProps> = ({
                     value={why}
                     onChange={e => handleSetReflectionAnswer('why', e.target.value)}
                     placeholder={t('pause.why_placeholder')}
-                    className="w-full text-sm min-h-[44px] p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                    className="w-full text-sm min-h-[48px] p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
                   />
                   <div className="absolute right-1 bottom-1">
                     <MicButton
