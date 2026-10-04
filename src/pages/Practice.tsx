@@ -468,9 +468,10 @@ export const Practice: React.FC = () => {
   // If paused for ritual modal
   if (isPausedForRitual) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#0F172A] overflow-y-auto">
+      <div className="fixed inset-0 z-[70] bg-[#0F172A] overflow-y-auto">
         <Pause
           mode="practice"
+          sessionId={sessionId ?? undefined}
           initialAmount={pendingMargin}
           initialFunding="savings"
           onComplete={handlePauseComplete}
