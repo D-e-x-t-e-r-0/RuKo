@@ -265,7 +265,9 @@ export const Practice: React.FC = () => {
           leverage: activePosition.leverage,
         };
 
-        db.practiceTrades.add(closedTrade);
+        try {
+          void db.practiceTrades.add(closedTrade).catch(() => {});
+        } catch (_) {}
         setSessionTrades(prev => [...prev, closedTrade]);
         setWallet(w => w + activePosition.margin + unrealizedPnl);
         setActivePosition(null);
