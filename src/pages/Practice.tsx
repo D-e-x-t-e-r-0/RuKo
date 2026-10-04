@@ -751,7 +751,7 @@ export const Practice: React.FC = () => {
                         key={lev}
                         type="button"
                         onClick={() => setLeverage(lev)}
-                        className={`py-2 rounded-xl text-xs font-bold border transition-colors ${
+                        className={`min-h-[48px] py-2 rounded-xl text-xs font-bold border transition-colors ${
                           leverage === lev
                             ? 'bg-slate-700 border-saffron text-cream'
                             : 'bg-slate-800 border-slate-600 text-slate-400'
