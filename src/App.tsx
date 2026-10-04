@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HashRouter, Routes, Route, NavLink, useLocation, Link } from 'react-router-dom';
+import { HashRouter, Routes, Route, NavLink, useLocation, Link, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Header } from './components/Header';
 import { LanguagePicker } from './components/LanguagePicker';
@@ -64,7 +64,7 @@ const NavigationBar: React.FC = () => {
     location.pathname === '/settings';
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#14213D]/95 backdrop-blur border-t border-slate-800 max-w-md mx-auto">
+    <nav aria-label="Primary" className="fixed bottom-0 left-0 right-0 z-40 bg-[#0E162E]/92 backdrop-blur-md border-t border-saffron/15 max-w-md mx-auto">
       <div className="grid grid-cols-5 h-16 items-center px-1">
         <NavLink
           to="/"
