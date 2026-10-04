@@ -10,8 +10,12 @@ export const Rules: React.FC = () => {
   const [newRuleText, setNewRuleText] = useState('');
 
   const loadRules = async () => {
-    const all = await db.rules.toArray();
-    setRules(all);
+    try {
+      const all = await db.rules.toArray();
+      setRules(all);
+    } catch (_) {
+      setRules([]);
+    }
   };
 
   useEffect(() => {
