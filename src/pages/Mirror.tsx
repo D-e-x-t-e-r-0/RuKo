@@ -164,6 +164,13 @@ export const Mirror: React.FC = () => {
           setIsAISummary(false);
         });
       }
+      } catch (_) {
+        setChartData([]);
+        setTotalPauses(0);
+        setTotalSaved(0);
+        setImpulsivePercent(0);
+        setShowSupportCard(false);
+      }
     }
 
     loadMirrorData();
@@ -278,7 +285,7 @@ export const Mirror: React.FC = () => {
         <div className="bg-amber-950/40 border-2 border-saffron/70 rounded-2xl p-4 text-cream space-y-2">
           <div className="flex items-center space-x-2">
             <span className="text-saffron text-lg font-bold">ℹ</span>
-            <span className="text-xs uppercase font-bold text-saffron tracking-wider">Notice</span>
+            <span className="text-xs uppercase font-bold text-saffron tracking-wider">{t('mirror.notice')}</span>
           </div>
           <p className="text-sm leading-relaxed text-cream font-medium">
             {t('mirror.support_card')}
