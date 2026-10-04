@@ -734,8 +734,9 @@ export const Practice: React.FC = () => {
                     type="number"
                     value={customMargin}
                     onChange={e => setCustomMargin(e.target.value)}
-                    placeholder="Enter margin"
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-cream font-mono mt-2"
+                    placeholder={t('practice.enter_margin_placeholder')}
+                    aria-label={t('practice.margin')}
+                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-cream font-mono mt-2 min-h-[48px]"
                   />
                 )}
               </div>
