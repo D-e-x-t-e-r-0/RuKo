@@ -18,16 +18,17 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({ onSelect }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-navy text-cream flex flex-col justify-between p-6 max-w-md mx-auto">
-      <div className="my-auto text-center space-y-6">
+    <div className="fixed inset-0 z-[100] bg-abyss text-cream flex flex-col justify-between p-6 max-w-md mx-auto">
+      <div className="my-auto text-center space-y-6 rise">
         {/* App Logo & Title */}
-        <div className="space-y-2">
-          <div className="w-20 h-20 mx-auto rounded-full bg-saffron/20 border-4 border-saffron flex items-center justify-center text-saffron text-3xl font-black">
-            रु
+        <div className="space-y-3">
+          <div className="relative w-24 h-24 mx-auto rounded-full bg-gradient-to-b from-saffron/25 to-transparent border-2 border-saffron/70 flex items-center justify-center text-saffron text-4xl font-black shadow-diya">
+            <span className="animate-flicker">रु</span>
           </div>
-          <h1 className="text-4xl font-black text-saffron tracking-tight font-sans">
-            रुको · Ruko
+          <h1 className="font-ritual text-5xl font-black text-cream tracking-tight">
+            रुको <span className="text-saffron">·</span> Ruko
           </h1>
+          <div className="jaali-line w-48 mx-auto" aria-hidden="true" />
           <p className="text-sm font-medium text-slate-300 leading-relaxed max-w-xs mx-auto">
             फ़ैसले से पहले एक पल रुकें · Take a moment before you decide
           </p>
