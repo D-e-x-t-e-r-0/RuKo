@@ -375,7 +375,9 @@ export const Practice: React.FC = () => {
     };
 
     if (sessionId) {
-      db.practiceTrades.add(closedTrade);
+      try {
+        void db.practiceTrades.add(closedTrade).catch(() => {});
+      } catch (_) {}
     }
     setSessionTrades(prev => [...prev, closedTrade]);
     setWallet(w => w + activePosition.margin + finalPnl);
