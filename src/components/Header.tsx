@@ -8,37 +8,45 @@ export const Header: React.FC = () => {
   const currentLang = i18n.language.startsWith('hi') ? 'hi' : 'en';
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-40 bg-[#14213D]/95 backdrop-blur border-b border-slate-800 max-w-md mx-auto h-14 px-4 flex items-center justify-between">
+    <header className="sticky top-0 left-0 right-0 z-40 bg-[#0E162E]/92 backdrop-blur-md border-b border-saffron/15 max-w-md mx-auto h-16 px-4 flex items-center justify-between">
       <Link
         to="/"
-        className="flex items-center space-x-2 text-saffron font-black text-xl tracking-tight hover:opacity-90 transition-opacity"
+        className="flex items-center space-x-2.5 text-saffron font-ritual font-black text-xl tracking-tight hover:opacity-90 transition-opacity min-h-[48px]"
+        aria-label="Ruko home"
       >
-        <span className="w-7 h-7 rounded-full bg-saffron text-navy flex items-center justify-center text-sm font-black">
-          रु
+        <span className="relative w-9 h-9 rounded-full bg-gradient-to-b from-saffron to-ember text-night flex items-center justify-center text-base font-black shadow-diya">
+          <span className="animate-flicker">रु</span>
+          <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cream/90 blur-[0.5px] animate-glow-pulse" aria-hidden="true" />
         </span>
-        <span>रुको · Ruko</span>
+        <span>रुको <span className="text-cream/90 font-sans font-bold text-sm tracking-wide">· RUKO</span></span>
       </Link>
 
-      <div className="flex items-center bg-slate-900 border border-slate-700 rounded-full p-1 text-xs font-bold">
+      <div
+        className="flex items-center bg-abyss/80 border border-slate-700/80 rounded-full p-1 text-xs font-bold"
+        role="group"
+        aria-label="Language"
+      >
         <button
           type="button"
           onClick={() => changeAppLanguage('hi')}
-          className={`min-h-[32px] px-2.5 py-1 rounded-full transition-all ${
+          aria-pressed={currentLang === 'hi'}
+          className={`min-h-[48px] min-w-[48px] px-3 py-1 rounded-full transition-all ${
             currentLang === 'hi'
-              ? 'bg-saffron text-navy shadow-sm'
+              ? 'bg-saffron text-night shadow-diya'
               : 'text-slate-400 hover:text-cream'
           }`}
           aria-label="Hindi language"
         >
           हि
         </button>
-        <span className="text-slate-600 px-0.5 select-none">|</span>
+        <span className="text-slate-600 px-0.5 select-none" aria-hidden="true">|</span>
         <button
           type="button"
           onClick={() => changeAppLanguage('en')}
-          className={`min-h-[32px] px-2.5 py-1 rounded-full transition-all ${
+          aria-pressed={currentLang === 'en'}
+          className={`min-h-[48px] min-w-[48px] px-3 py-1 rounded-full transition-all ${
             currentLang === 'en'
-              ? 'bg-saffron text-navy shadow-sm'
+              ? 'bg-saffron text-night shadow-diya'
               : 'text-slate-400 hover:text-cream'
           }`}
           aria-label="English language"
