@@ -12,7 +12,7 @@
   --ruko-ember: #e07b2a;
   --ruko-green: #2bb3a3;
   --ruko-red: #e4572e;
-  font-family: 'Mukta', system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans Devanagari', sans-serif;
+  font-family: 'Mukta', 'Noto Sans Devanagari', 'Noto Sans Bengali', 'Noto Sans Tamil', 'Noto Sans Telugu', 'Noto Sans Kannada', 'Noto Sans Malayalam', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Oriya', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.5;
   color-scheme: dark;
 }

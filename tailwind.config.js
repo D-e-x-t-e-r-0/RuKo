@@ -19,7 +19,7 @@ export default {
       },
       fontFamily: {
         display: ['Fraunces', '"Tiro Devanagari Hindi"', 'Georgia', 'serif'],
-        sans: ['Mukta', 'system-ui', '-apple-system', 'BlinkMacSystemFont', "'Noto Sans Devanagari'", 'sans-serif'],
+        sans: ['Mukta', '"Noto Sans Devanagari"', '"Noto Sans Bengali"', '"Noto Sans Tamil"', '"Noto Sans Telugu"', '"Noto Sans Kannada"', '"Noto Sans Malayalam"', '"Noto Sans Gujarati"', '"Noto Sans Gurmukhi"', '"Noto Sans Oriya"', 'system-ui', '-apple-system', 'sans-serif'],
       },
       boxShadow: {
         diya: '0 0 24px rgba(242, 163, 58, 0.35), 0 0 64px rgba(242, 163, 58, 0.15)',
