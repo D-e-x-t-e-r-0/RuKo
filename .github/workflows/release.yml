@@ -105,7 +105,13 @@ jobs:
           echo "$BUILD_JSON" | head -c 300
           BUILD_ID=$(echo "$BUILD_JSON" | jq -r '.[0].id')
           echo "build_id=$BUILD_ID" >> "$GITHUB_OUTPUT"
-      - run: eas build:download "${{ steps.eas-build.outputs.build_id }}" --output ./ruko-preview.apk --non-interactive
+      - run: |
+          mkdir -p ./eas-artifacts
+          cd ./eas-artifacts
+          eas build:download "${{ steps.eas-build.outputs.build_id }}" --non-interactive
+          APK=$(ls *.apk | head -1)
+          test -n "$APK"
+          mv "$APK" ../ruko-preview.apk
       - uses: actions/upload-artifact@v4
         with:
           name: ruko-android-apk
