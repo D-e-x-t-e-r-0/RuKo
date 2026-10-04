@@ -85,6 +85,7 @@
     "funding_loan": "Loan or borrowed",
     "q_amount": "How much are you putting in? (₹)",
     "q_loss": "How much loss can you accept? (₹)",
+    "max_loss_title": "Set your loss limit",
     "amount_placeholder": "Enter amount",
     "loss_placeholder": "Acceptable loss",
     "your_rule": "Your own rule",
@@ -168,11 +169,15 @@
     "signals_label": "Signals:",
     "noticed_patterns_label": "Noticed patterns:",
     "reflection_label": "Reflection:",
-    "none": "None"
+    "none": "None",
+    "view_debrief": "View Debrief →",
+    "pauses_label": "Pauses"
   },
   "mirror": {
     "title": "Weekly Mirror",
     "subtitle": "Decisions over the last 7 days",
+    "notice": "Notice",
+    "mode_col": "Mode",
     "planned": "Planned",
     "impulsive": "Impulsive",
     "stat_pauses": "Pauses completed",
