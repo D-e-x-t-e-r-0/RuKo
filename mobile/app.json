@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "Ruko · रुको",
+    "slug": "ruko",
+    "scheme": "ruko",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0E162E"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.ruko.mobile",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Ruko uses the microphone only for optional voice input during reflections. Audio is transcribed and never stored.",
+        "NSSpeechRecognitionUsageDescription": "Voice input lets you answer reflection prompts by speaking."
+      }
+    },
+    "android": {
+      "package": "app.ruko.mobile",
+      "versionCode": 1,
+      "permissions": ["RECORD_AUDIO"],
+      "adaptiveIcon": {
+        "backgroundColor": "#0E162E",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "name": "Ruko · रुको"
+    },
+    "plugins": ["expo-localization"],
+    "extra": {
+      "eas": {
+        "projectId": "00000000-0000-0000-0000-000000000000"
+      }
+    }
+  }
+}
