@@ -41,6 +41,7 @@
   },
   "home": {
     "pause_button": "रुको",
+    "tap_before_trading": "ट्रेड से पहले थमो",
     "greeting_morning": "शुभ प्रभात",
     "greeting_afternoon": "शुभ दोपहर",
     "greeting_evening": "शुभ संध्या",

@@ -272,7 +272,10 @@
     "auto_close_notice": "Position closed automatically because losses reached the limit.",
     "ticks_left": "Sim time remaining: {{m}}m",
     "no_open_position": "No active position",
-    "position_active": "Active position: {{inst}} (₹{{margin}}, {{lev}}x)"
+    "position_active": "Active position: {{inst}} (₹{{margin}}, {{lev}}x)",
+    "custom_label": "Custom",
+    "enter_margin_placeholder": "Enter margin",
+    "save_failed": "Could not save. Please try again."
   },
   "debrief": {
     "title": "Session Debrief",
