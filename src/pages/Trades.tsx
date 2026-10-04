@@ -137,7 +137,7 @@ export const Trades: React.FC = () => {
               type="number"
               min="1"
               inputMode="numeric"
-              placeholder="e.g. 5000"
+              placeholder={t('trades.amount_placeholder')}
               value={amount}
               onChange={e => setAmount(e.target.value)}
               className="w-full text-lg min-h-[48px] p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
