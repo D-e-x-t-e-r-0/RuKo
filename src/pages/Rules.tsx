@@ -110,7 +110,7 @@ export const Rules: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleDeleteRule(rule.id)}
-                  aria-label="Delete rule"
+                  aria-label={t('rules.delete_rule_label')}
                   className="min-h-[48px] min-w-[48px] flex items-center justify-center text-slate-400 hover:text-rukoRed transition-colors text-base"
                 >
                   ✕
