@@ -196,6 +196,11 @@
   "trades": {
     "title": "Trades",
     "quick_log_title": "Quick log (3 taps)",
+    "amount_placeholder": "e.g. 5000",
+    "pnl_placeholder": "e.g. -1500 or 2000",
+    "select_csv": "Select CSV file",
+    "processing_csv": "Processing CSV...",
+    "choose_csv_sr": "Choose CSV",
     "amount_label": "Amount (₹)",
     "pnl_label": "P&L (₹, if closed)",
     "funding_label": "Money source",
@@ -214,6 +219,8 @@
   },
   "rules": {
     "title": "Personal Rules",
+    "count_active": "{{count}} Rules Active",
+    "delete_rule_label": "Delete rule",
     "subtitle": "Your rules will be shown to you during high pressure checks",
     "add_placeholder": "Write a personal rule...",
     "btn_add": "Add Rule",
