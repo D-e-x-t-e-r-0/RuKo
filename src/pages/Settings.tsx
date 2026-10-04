@@ -3,16 +3,24 @@ import { useTranslation } from 'react-i18next';
 import { clearAll } from '../db';
 import { seed } from '../seed/seed';
 import { BigButton } from '../components/BigButton';
-import { changeAppLanguage } from '../i18n';
+import { LANGUAGES, changeAppLanguage, normalizeLang } from '../i18n';
 import { isAIEnabled, setAIEnabled } from '../ai/ai';
+import { getVoiceMode, setVoiceMode, type VoiceMode } from '../lib/sarvam';
 
 export const Settings: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [aiOn, setAiOn] = useState(() => isAIEnabled());
+  const [voiceMode, setVoiceModeState] = useState<VoiceMode>(() => getVoiceMode());
+  const currentLang = normalizeLang(i18n.language);
 
   const toggleLanguage = (lang: string) => {
     changeAppLanguage(lang);
+  };
+
+  const pickVoice = (mode: VoiceMode) => {
+    setVoiceMode(mode);
+    setVoiceModeState(mode);
   };
 
   const handleLoadDemo = async () => {
@@ -47,34 +55,63 @@ export const Settings: React.FC = () => {
         </div>
       )}
 
-      {/* Language Toggle */}
+      {/* Language Grid — all 12 supported languages */}
       <section className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-3">
         <h2 className="text-xs uppercase font-bold text-saffron tracking-wider">
           {t('settings.language')}
         </h2>
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            onClick={() => toggleLanguage('hi')}
-            className={`min-h-[48px] py-2 px-4 rounded-xl font-bold text-sm transition-all ${
-              i18n.language.startsWith('hi')
-                ? 'bg-saffron text-navy shadow-md'
-                : 'bg-slate-900 text-slate-300 border border-slate-700'
-            }`}
-          >
-            हिंदी (Hindi)
-          </button>
-          <button
-            type="button"
-            onClick={() => toggleLanguage('en')}
-            className={`min-h-[48px] py-2 px-4 rounded-xl font-bold text-sm transition-all ${
-              i18n.language.startsWith('en')
-                ? 'bg-saffron text-navy shadow-md'
-                : 'bg-slate-900 text-slate-300 border border-slate-700'
-            }`}
-          >
-            English
-          </button>
+        <div className="grid grid-cols-2 gap-2.5" role="group" aria-label={t('settings.language')}>
+          {LANGUAGES.map(l => (
+            <button
+              key={l.code}
+              type="button"
+              onClick={() => toggleLanguage(l.code)}
+              aria-pressed={currentLang === l.code}
+              className={`min-h-[48px] py-2 px-3 rounded-xl font-bold text-sm transition-all ${
+                currentLang === l.code
+                  ? 'bg-saffron text-night shadow-diya'
+                  : 'bg-slate-900 text-slate-300 border border-slate-700'
+              }`}
+            >
+              <span className="block leading-tight">{l.nativeName}</span>
+              <span className="block text-[10px] font-semibold opacity-70">{l.name}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* Voice engine — Sarvam AI with device fallback */}
+      <section className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-3">
+        <div>
+          <h2 className="text-xs uppercase font-bold text-saffron tracking-wider">
+            {t('settings.voice_title')}
+          </h2>
+          <p className="text-xs text-slate-400 mt-1">
+            {t('settings.voice_desc')}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 gap-2" role="group" aria-label={t('settings.voice_title')}>
+          {(
+            [
+              ['auto', t('settings.voice_auto')],
+              ['sarvam', t('settings.voice_sarvam')],
+              ['device', t('settings.voice_device')],
+            ] as [VoiceMode, string][]
+          ).map(([mode, label]) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => pickVoice(mode)}
+              aria-pressed={voiceMode === mode}
+              className={`min-h-[48px] py-2 px-4 rounded-xl font-bold text-sm text-left transition-all ${
+                voiceMode === mode
+                  ? 'bg-saffron text-night shadow-diya'
+                  : 'bg-slate-900 text-slate-300 border border-slate-700'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </section>
 

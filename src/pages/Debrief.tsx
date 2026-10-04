@@ -120,11 +120,11 @@ export const Debrief: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4 pb-20 space-y-6">
       <header className="space-y-1">
-        <h1 className="text-2xl font-bold text-cream">
+        <h1 className="font-ritual text-3xl font-black text-cream">
           {t('debrief.title')}
         </h1>
-        <p className="text-xs text-saffron uppercase font-bold tracking-wider">
-          {session.scenario}
+        <p className="text-xs text-saffron uppercase font-bold tracking-[0.16em]">
+          {t(`practice.scenarios.${session.scenario}_title`, session.scenario)}
         </p>
       </header>
 

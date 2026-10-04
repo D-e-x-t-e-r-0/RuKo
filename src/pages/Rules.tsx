@@ -10,8 +10,12 @@ export const Rules: React.FC = () => {
   const [newRuleText, setNewRuleText] = useState('');
 
   const loadRules = async () => {
-    const all = await db.rules.toArray();
-    setRules(all);
+    try {
+      const all = await db.rules.toArray();
+      setRules(all);
+    } catch (_) {
+      setRules([]);
+    }
   };
 
   useEffect(() => {
@@ -87,7 +91,7 @@ export const Rules: React.FC = () => {
       {/* Existing Rules List */}
       <div className="space-y-3">
         <h2 className="text-xs uppercase font-bold text-slate-400 tracking-wider">
-          {rules.length} Rules Active
+          {t('rules.count_active', { count: rules.length })}
         </h2>
         {rules.length === 0 ? (
           <div className="text-center py-6 text-slate-500 text-sm">
@@ -106,7 +110,7 @@ export const Rules: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleDeleteRule(rule.id)}
-                  aria-label="Delete rule"
+                  aria-label={t('rules.delete_rule_label')}
                   className="min-h-[48px] min-w-[48px] flex items-center justify-center text-slate-400 hover:text-rukoRed transition-colors text-base"
                 >
                   ✕

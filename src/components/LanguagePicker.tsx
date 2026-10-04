@@ -1,59 +1,71 @@
 import React from 'react';
-import { changeAppLanguage } from '../i18n';
+import { LANGUAGES, changeAppLanguage, getSpeechCode } from '../i18n';
 import { speak } from '../voice/voice';
 
 interface LanguagePickerProps {
-  onSelect: (lang: 'hi' | 'en') => void;
+  onSelect: (lang: string) => void;
 }
 
+const GREETINGS: Record<string, string> = {
+  hi: 'नमस्ते। यह ऐप आपको फ़ैसले से पहले एक पल रुकने में मदद करेगा।',
+  en: 'Hello. This app helps you take a moment before you decide.',
+  bn: 'নমস্কার। এই অ্যাপ সিদ্ধান্তের আগে এক মুহূর্ত থামতে সাহায্য করবে।',
+  mr: 'नमस्कार. हे ॲप निर्णयाआधी एक क्षण थांबायला मदत करेल.',
+  ta: 'வணக்கம். முடிவெடுக்கும் முன் ஒரு கணம் நிற்க இந்தச் செயலி உதவும்.',
+  te: 'నమస్కారం. నిర్ణయానికి ముందు క్షణం ఆగడానికి ఈ యాప్ సహాయపడుతుంది.',
+  kn: 'ನಮಸ್ಕಾರ. ನಿರ್ಧಾರಕ್ಕೂ ಮುನ್ನ ಒಂದು ಕ್ಷಣ ನಿಲ್ಲಲು ಈ ಆ್ಯಪ್ ಸಹಾಯ ಮಾಡುತ್ತದೆ.',
+  ml: 'നമസ്കാരം. തീരുമാനത്തിന് മുൻപ് ഒരു നിമിഷം നിൽക്കാൻ ഈ ആപ്പ് സഹായിക്കും.',
+  gu: 'નમસ્તે. આ ઍપ નિર્ણય પહેલાં એક ક્ષણ થોભવામાં મદદ કરશે.',
+  pa: 'ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ। ਇਹ ਐਪ ਫ਼ੈਸਲੇ ਤੋਂ ਪਹਿਲਾਂ ਪਲ ਰੁਕਣ ਵਿੱਚ ਮਦਦ ਕਰੇਗੀ।',
+  or: 'ନମସ୍କାର। ଏହି ଆପ ନିଷ୍ପତ୍ତି ପୂର୍ବରୁ ଟିକେ ଅଟକିବାରେ ସାହାଯ୍ୟ କରିବ।',
+  as: 'নমস্কাৰ। এই এপে সিদ্ধান্তৰ আগতে এটা মুহূৰ্ত ৰ’বলৈ সহায় কৰিব।',
+};
+
 export const LanguagePicker: React.FC<LanguagePickerProps> = ({ onSelect }) => {
-  const handleSelect = (lang: 'hi' | 'en') => {
+  const handleSelect = (lang: string) => {
     changeAppLanguage(lang);
-    if (lang === 'hi') {
-      speak('नमस्ते। यह ऐप आपको फ़ैसले से पहले एक पल रुकने में मदद करेगा।', 'hi-IN');
-    } else {
-      speak('Hello. This app helps you take a moment before you decide.', 'en-IN');
-    }
+    speak(GREETINGS[lang] ?? GREETINGS.hi, getSpeechCode(lang));
     onSelect(lang);
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-navy text-cream flex flex-col justify-between p-6 max-w-md mx-auto">
-      <div className="my-auto text-center space-y-6">
+    <div className="fixed inset-0 z-[100] bg-abyss text-cream flex flex-col justify-between p-6 max-w-md mx-auto overflow-y-auto">
+      <div className="my-auto text-center space-y-6 rise">
         {/* App Logo & Title */}
-        <div className="space-y-2">
-          <div className="w-20 h-20 mx-auto rounded-full bg-saffron/20 border-4 border-saffron flex items-center justify-center text-saffron text-3xl font-black">
-            रु
+        <div className="space-y-3">
+          <div className="relative w-24 h-24 mx-auto rounded-full bg-gradient-to-b from-saffron/25 to-transparent border-2 border-saffron/70 flex items-center justify-center text-saffron text-4xl font-black shadow-diya">
+            <span className="animate-flicker">रु</span>
           </div>
-          <h1 className="text-4xl font-black text-saffron tracking-tight font-sans">
-            रुको · Ruko
+          <h1 className="font-ritual text-5xl font-black text-cream tracking-tight">
+            रुको <span className="text-saffron">·</span> Ruko
           </h1>
+          <div className="jaali-line w-48 mx-auto" aria-hidden="true" />
           <p className="text-sm font-medium text-slate-300 leading-relaxed max-w-xs mx-auto">
             फ़ैसले से पहले एक पल रुकें · Take a moment before you decide
           </p>
         </div>
 
-        {/* Huge Language Buttons */}
-        <div className="space-y-4 pt-6 max-w-xs mx-auto">
-          <button
-            type="button"
-            onClick={() => handleSelect('hi')}
-            className="w-full min-h-[64px] py-4 px-6 rounded-2xl bg-saffron text-navy font-black text-2xl hover:bg-[#e09430] active:scale-95 transition-all shadow-xl flex items-center justify-center space-x-2"
-          >
-            <span>हिन्दी</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleSelect('en')}
-            className="w-full min-h-[64px] py-4 px-6 rounded-2xl bg-slate-800 border-2 border-slate-600 text-cream font-black text-2xl hover:border-saffron hover:bg-slate-700/80 active:scale-95 transition-all shadow-xl flex items-center justify-center space-x-2"
-          >
-            <span>English</span>
-          </button>
+        {/* Twelve-language grid */}
+        <div className="grid grid-cols-2 gap-3 pt-4 max-w-sm mx-auto" role="group" aria-label="Language">
+          {LANGUAGES.map((l, idx) => (
+            <button
+              key={l.code}
+              type="button"
+              onClick={() => handleSelect(l.code)}
+              className={`min-h-[56px] py-3 px-4 rounded-2xl font-bold text-lg transition-all active:scale-95 ${
+                idx === 0
+                  ? 'bg-saffron text-night shadow-diya hover:bg-[#e09430]'
+                  : 'bg-slate-800 border-2 border-slate-600 text-cream hover:border-saffron hover:bg-slate-700/80 shadow-xl'
+              }`}
+            >
+              <span className="block leading-tight">{l.nativeName}</span>
+              <span className="block text-[11px] font-semibold opacity-70">{l.name}</span>
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="text-center text-xs text-slate-500 pb-2">
+      <div className="text-center text-xs text-slate-500 pb-2 pt-4">
         भाषा बाद में भी बदली जा सकती है • Language can be changed anytime
       </div>
     </div>

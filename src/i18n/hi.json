@@ -41,6 +41,7 @@
   },
   "home": {
     "pause_button": "रुको",
+    "tap_before_trading": "ट्रेड से पहले थमो",
     "greeting_morning": "शुभ प्रभात",
     "greeting_afternoon": "शुभ दोपहर",
     "greeting_evening": "शुभ संध्या",
@@ -84,6 +85,7 @@
     "funding_loan": "लोन या उधार",
     "q_amount": "कितना लगा रहे हैं? (₹)",
     "q_loss": "कितना नुकसान सह सकते हैं? (₹)",
+    "max_loss_title": "नुकसान की सीमा तय करें",
     "amount_placeholder": "रकम दर्ज करें",
     "loss_placeholder": "अधिकतम नुकसान",
     "your_rule": "आपका अपना नियम",
@@ -167,11 +169,15 @@
     "signals_label": "संकेत:",
     "noticed_patterns_label": "पहचाने गए पैटर्न:",
     "reflection_label": "विचार:",
-    "none": "कोई नहीं"
+    "none": "कोई नहीं",
+    "view_debrief": "समीक्षा देखें →",
+    "pauses_label": "पॉज़"
   },
   "mirror": {
     "title": "साप्ताहिक आईना",
     "subtitle": "पिछले 7 दिनों के फैसले",
+    "notice": "ध्यान दें",
+    "mode_col": "मोड",
     "planned": "योजनाबद्ध",
     "impulsive": "आवेग में",
     "stat_pauses": "किए गए पॉज़",
@@ -190,6 +196,11 @@
   "trades": {
     "title": "ट्रेड्स",
     "quick_log_title": "नया ट्रेड दर्ज करें (3 टैप)",
+    "amount_placeholder": "जैसे 5000",
+    "pnl_placeholder": "जैसे -1500 या 2000",
+    "select_csv": "CSV फ़ाइल चुनें",
+    "processing_csv": "CSV प्रोसेस हो रहा है...",
+    "choose_csv_sr": "CSV चुनें",
     "amount_label": "रकम (₹)",
     "pnl_label": "P&L (₹, यदि बंद हुआ हो)",
     "funding_label": "पैसा कहाँ से",
@@ -208,6 +219,8 @@
   },
   "rules": {
     "title": "व्यक्तिगत नियम",
+    "count_active": "{{count}} नियम सक्रिय",
+    "delete_rule_label": "नियम हटाएं",
     "subtitle": "दबाव के समय ये नियम आपको याद दिलाए जाएंगे",
     "add_placeholder": "नया नियम लिखें...",
     "btn_add": "नियम जोड़ें",
@@ -219,6 +232,11 @@
   "settings": {
     "title": "सेटिंग्स",
     "language": "भाषा (Language)",
+    "voice_title": "आवाज़",
+    "voice_desc": "बोले गए चिंतन और वॉइस इनपुट",
+    "voice_auto": "ऑटो (उपलब्ध हो तो Sarvam)",
+    "voice_sarvam": "Sarvam AI आवाज़",
+    "voice_device": "डिवाइस की आवाज़",
     "demo_data": "डेमो डेटा लोड करें",
     "demo_loaded": "डेमो डेटा लोड हो गया!",
     "delete_data": "मेरा सारा डेटा हटाएं",
@@ -259,7 +277,10 @@
     "auto_close_notice": "पोज़िशन अपने आप बंद हो गई क्योंकि नुकसान सीमा तक पहुँच गया।",
     "ticks_left": "बचा हुआ सिमुलेशन समय: {{m}} मिनट",
     "no_open_position": "कोई सक्रिय पोज़िशन नहीं",
-    "position_active": "सक्रिय पोज़िशन: {{inst}} (₹{{margin}}, {{lev}}x)"
+    "position_active": "सक्रिय पोज़िशन: {{inst}} (₹{{margin}}, {{lev}}x)",
+    "custom_label": "कस्टम",
+    "enter_margin_placeholder": "मार्जिन दर्ज करें",
+    "save_failed": "सहेज नहीं पाए। कृपया फिर कोशिश करें।"
   },
   "debrief": {
     "title": "सत्र समीक्षा",

@@ -15,13 +15,18 @@ export const Journal: React.FC = () => {
   const [expandedDetails, setExpandedDetails] = useState<Record<number, boolean>>({});
 
   const loadDecisions = async () => {
-    const all = await db.decisions.toArray();
-    all.sort((a, b) => b.ts - a.ts);
-    setDecisions(all);
+    try {
+      const all = await db.decisions.toArray();
+      all.sort((a, b) => b.ts - a.ts);
+      setDecisions(all);
 
-    const allSessions = await db.sessions.toArray();
-    allSessions.sort((a, b) => b.startedAt - a.startedAt);
-    setSessions(allSessions);
+      const allSessions = await db.sessions.toArray();
+      allSessions.sort((a, b) => b.startedAt - a.startedAt);
+      setSessions(allSessions);
+    } catch (_) {
+      setDecisions([]);
+      setSessions([]);
+    }
   };
 
   useEffect(() => {
@@ -111,7 +116,7 @@ export const Journal: React.FC = () => {
                 >
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-bold text-cream uppercase tracking-wider">
-                      {s.scenario}
+                      {t(`practice.scenarios.${s.scenario}_title`, s.scenario)}
                     </span>
                     <span className="text-slate-400">
                       {format(new Date(s.startedAt), 'dd MMM yyyy, hh:mm a')}
@@ -131,7 +136,7 @@ export const Journal: React.FC = () => {
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px]">Pauses</span>
+                      <span className="text-slate-400 block text-[10px]">{t('journal.pauses_label')}</span>
                       <span className="font-mono font-bold text-cream">
                         {s.pausesTaken ?? 0}
                       </span>
@@ -145,9 +150,9 @@ export const Journal: React.FC = () => {
                   <div className="pt-1">
                     <Link
                       to={`/debrief?id=${s.id}`}
-                      className="inline-block text-xs font-bold text-saffron hover:underline"
+                      className="inline-flex items-center min-h-[48px] px-2 -ml-2 text-xs font-bold text-saffron hover:underline"
                     >
-                      View Debrief →
+                      {t('journal.view_debrief')}
                     </Link>
                   </div>
                 </div>
@@ -238,7 +243,8 @@ export const Journal: React.FC = () => {
                     onClick={() =>
                       setExpandedDetails(prev => ({ ...prev, [d.id!]: !prev[d.id!] }))
                     }
-                    className="text-saffron hover:underline font-semibold flex items-center space-x-1"
+                    aria-expanded={!!expandedDetails[d.id!]}
+                    className="min-h-[48px] px-2 -ml-2 text-saffron hover:underline font-semibold flex items-center space-x-1"
                   >
                     <span>{t('journal.details')}</span>
                     <span>{expandedDetails[d.id!] ? '▲' : '▼'}</span>

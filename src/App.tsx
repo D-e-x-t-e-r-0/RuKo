@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HashRouter, Routes, Route, NavLink, useLocation, Link } from 'react-router-dom';
+import { HashRouter, Routes, Route, NavLink, useLocation, Link, Navigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Header } from './components/Header';
 import { LanguagePicker } from './components/LanguagePicker';
@@ -64,7 +64,7 @@ const NavigationBar: React.FC = () => {
     location.pathname === '/settings';
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#14213D]/95 backdrop-blur border-t border-slate-800 max-w-md mx-auto">
+    <nav aria-label="Primary" className="fixed bottom-0 left-0 right-0 z-40 bg-[#0E162E]/92 backdrop-blur-md border-t border-saffron/15 max-w-md mx-auto">
       <div className="grid grid-cols-5 h-16 items-center px-1">
         <NavLink
           to="/"
@@ -139,9 +139,10 @@ export const App: React.FC = () => {
         <AIConsentModal onComplete={() => setAiModalDismissed(true)} />
       )}
       <HashRouter>
-        <div className="min-h-screen bg-navy text-slate-100 flex flex-col justify-between">
+        <div className="min-h-screen bg-night text-slate-100 flex flex-col justify-between">
+          <a href="#main" className="skip-link">{hasLang ? 'Skip to content' : 'मुख्य सामग्री पर जाएं'}</a>
           <Header />
-          <main className="flex-1 w-full max-w-md mx-auto">
+          <main id="main" className="flex-1 w-full max-w-md mx-auto">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/pause" element={<Pause />} />
@@ -153,6 +154,7 @@ export const App: React.FC = () => {
               <Route path="/more" element={<MoreMenu />} />
               <Route path="/rules" element={<Rules />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
           <NavigationBar />

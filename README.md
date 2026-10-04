@@ -66,7 +66,7 @@ Ruko features an optional, privacy-preserving AI assistant:
 - **Local Storage:** `dexie` (IndexedDB v3)
 - **PWA:** `vite-plugin-pwa` (precache + web app manifest)
 - **Charts:** `recharts` (weekly mirror stacked bar chart and practice price line chart)
-- **i18n & Speech:** `i18next`, `react-i18next` (`hi` default, `en`), Web Speech API
+- **i18n & Speech:** `i18next`, `react-i18next` (12 languages: `hi` default, `en`, `bn`, `mr`, `ta`, `te`, `kn`, `ml`, `gu`, `pa`, `or`, `as`), Sarvam AI voices (bulbul TTS / saarika STT via `/api/sarvam`, key in `SARVAM_API_KEY`) with on-device Web Speech fallback
 - **Testing:** `vitest`
 
 ---
@@ -100,6 +100,9 @@ npm run build
 ### Environment Variables (Optional for AI Layer):
 - `GEMINI_API_KEY`: Your Google Gemini API key (configured as a secret in Vercel/Netlify dashboard; backwards compatible with `ANTHROPIC_API_KEY`).
 - `AI_MODEL`: Gemini model to use (defaults to `gemini-1.5-flash`).
+
+### Environment Variables (Optional for Sarvam Voices):
+- `SARVAM_API_KEY`: Your Sarvam AI API key (dashboard at https://dashboard.sarvam.ai). Powers `/api/sarvam` — natural TTS (bulbul), speech-to-text (saarika), and translation (Mayura) across all 12 app languages. Without it the app silently uses on-device Web Speech. See `.env.example`.
 
 ### Deploying to Vercel:
 1. Connect this repository to Vercel (or run `npx vercel`).

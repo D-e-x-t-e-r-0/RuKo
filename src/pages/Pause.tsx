@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { db } from '../db';
-import type { Funding, Horizon, Outcome, Level, Signal, ReflectionAnswer, TriggerItem } from '../types';
+import type { Funding, Horizon, Outcome, Level, Signal, ReflectionAnswer, TriggerItem, Trade } from '../types';
 import { evaluateSignals, type LastTradeHint } from '../engine/signals';
 import { levelFor } from '../engine/pressure';
 import { speak } from '../voice/voice';
@@ -20,6 +20,7 @@ export interface PauseProps {
   mode?: 'real' | 'practice';
   initialAmount?: number;
   initialFunding?: Funding;
+  sessionId?: number;
   onComplete?: (outcome: Outcome) => void;
 }
 
@@ -31,6 +32,7 @@ interface ReflectionCardDef {
   answerType?: 'chips' | 'text' | 'number' | 'info';
   options?: { value: string; label: string }[];
   qid?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   extraData?: any;
 }
 
@@ -38,6 +40,7 @@ export const Pause: React.FC<PauseProps> = ({
   mode = 'real',
   initialAmount,
   initialFunding,
+  sessionId,
   onComplete,
 }) => {
   const { t, i18n } = useTranslation();
@@ -146,6 +149,7 @@ export const Pause: React.FC<PauseProps> = ({
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [finalOutcome, setFinalOutcome] = useState<Outcome>('abandoned');
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const getEffectiveAmount = (): number => {
     if (amountType === 'other') {
@@ -179,11 +183,15 @@ export const Pause: React.FC<PauseProps> = ({
       hint = { result: lastTradeResult, minutesAgo };
     }
 
-    let pastTrades: any[] = [];
+    let pastTrades: Trade[] = [];
     if (mode === 'practice') {
-      if ((db as any).practiceTrades) {
-        pastTrades = await (db as any).practiceTrades.toArray();
-      }
+      const all = await db.practiceTrades.toArray();
+      pastTrades = (sessionId ? all.filter(t => t.sessionId === sessionId) : all).map(t => ({
+        ts: t.ts,
+        amount: t.amount,
+        pnl: t.pnl,
+        funding: t.funding,
+      }));
     } else {
       pastTrades = await db.trades.toArray();
     }
@@ -433,6 +441,7 @@ export const Pause: React.FC<PauseProps> = ({
   const handleDecision = async (outcome: Outcome) => {
     if (isSubmitting) return;
     setIsSubmitting(true);
+    setSaveError(null);
     setFinalOutcome(outcome);
 
     try {
@@ -464,14 +473,13 @@ export const Pause: React.FC<PauseProps> = ({
 
       if (outcome === 'proceeded' && amount > 0) {
         if (mode === 'practice') {
-          if ((db as any).practiceTrades) {
-            await (db as any).practiceTrades.add({
-              ts: now,
-              amount,
-              pnl: null,
-              funding,
-            });
-          }
+          await db.practiceTrades.add({
+            sessionId,
+            ts: now,
+            amount,
+            pnl: null,
+            funding,
+          });
         } else {
           await db.trades.add({
             ts: now,
@@ -485,7 +493,7 @@ export const Pause: React.FC<PauseProps> = ({
       triggerVibrate();
       setScreen(5); // Confirmation
     } catch (err) {
-      console.error('Failed to record decision:', err);
+      setSaveError(t('practice.save_failed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -603,7 +611,7 @@ export const Pause: React.FC<PauseProps> = ({
               <button
                 type="button"
                 onClick={() => setLastTradeResult('loss')}
-                className={`min-h-[44px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
+                className={`min-h-[48px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
                   lastTradeResult === 'loss'
                     ? 'bg-rukoRed text-cream shadow-sm'
                     : 'bg-slate-900 text-slate-300 border border-slate-700'
@@ -614,7 +622,7 @@ export const Pause: React.FC<PauseProps> = ({
               <button
                 type="button"
                 onClick={() => setLastTradeResult('profit')}
-                className={`min-h-[44px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
+                className={`min-h-[48px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
                   lastTradeResult === 'profit'
                     ? 'bg-rukoGreen text-navy shadow-sm'
                     : 'bg-slate-900 text-slate-300 border border-slate-700'
@@ -625,7 +633,7 @@ export const Pause: React.FC<PauseProps> = ({
               <button
                 type="button"
                 onClick={() => setLastTradeResult('none')}
-                className={`min-h-[44px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
+                className={`min-h-[48px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
                   lastTradeResult === 'none'
                     ? 'bg-slate-700 text-cream shadow-sm'
                     : 'bg-slate-900 text-slate-300 border border-slate-700'
@@ -640,7 +648,7 @@ export const Pause: React.FC<PauseProps> = ({
                 <button
                   type="button"
                   onClick={() => setLastTradeTime('just_now')}
-                  className={`min-h-[40px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
+                  className={`min-h-[48px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     lastTradeTime === 'just_now'
                       ? 'bg-saffron/30 text-saffron border border-saffron'
                       : 'bg-slate-900/60 text-slate-400 border border-slate-800'
@@ -651,7 +659,7 @@ export const Pause: React.FC<PauseProps> = ({
                 <button
                   type="button"
                   onClick={() => setLastTradeTime('30m')}
-                  className={`min-h-[40px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
+                  className={`min-h-[48px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     lastTradeTime === '30m'
                       ? 'bg-saffron/30 text-saffron border border-saffron'
                       : 'bg-slate-900/60 text-slate-400 border border-slate-800'
@@ -662,7 +670,7 @@ export const Pause: React.FC<PauseProps> = ({
                 <button
                   type="button"
                   onClick={() => setLastTradeTime('hours')}
-                  className={`min-h-[40px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
+                  className={`min-h-[48px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     lastTradeTime === 'hours'
                       ? 'bg-saffron/30 text-saffron border border-saffron'
                       : 'bg-slate-900/60 text-slate-400 border border-slate-800'
@@ -768,7 +776,7 @@ export const Pause: React.FC<PauseProps> = ({
                             (currentCard.extraData ? currentCard.extraData.ruleText : '')
                         )
                       }
-                      className="min-h-[40px] min-w-[40px] p-2 rounded-full text-saffron hover:bg-slate-700 text-base"
+                      className="min-h-[48px] min-w-[48px] p-2 rounded-full text-saffron hover:bg-slate-700 text-base"
                       aria-label="Speak card"
                     >
                       🔊
@@ -1014,7 +1022,7 @@ export const Pause: React.FC<PauseProps> = ({
                     type="button"
                     disabled={cardIndex === 0}
                     onClick={() => setCardIndex(prev => Math.max(0, prev - 1))}
-                    className="min-h-[40px] px-3 py-1 rounded-xl text-slate-400 hover:text-cream disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="min-h-[48px] px-3 py-1 rounded-xl text-slate-400 hover:text-cream disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     ← {t('pause.prev_card')}
                   </button>
@@ -1032,7 +1040,7 @@ export const Pause: React.FC<PauseProps> = ({
                       }
                       setCardIndex(prev => Math.min(cards.length - 1, prev + 1));
                     }}
-                    className="min-h-[40px] px-3 py-1 rounded-xl text-saffron hover:underline font-bold disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="min-h-[48px] px-3 py-1 rounded-xl text-saffron hover:underline font-bold disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     {t('pause.next_card')} →
                   </button>
@@ -1124,7 +1132,7 @@ export const Pause: React.FC<PauseProps> = ({
                     value={why}
                     onChange={e => handleSetReflectionAnswer('why', e.target.value)}
                     placeholder={t('pause.why_placeholder')}
-                    className="w-full text-sm min-h-[44px] p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                    className="w-full text-sm min-h-[48px] p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
                   />
                   <div className="absolute right-1 bottom-1">
                     <MicButton
@@ -1140,6 +1148,11 @@ export const Pause: React.FC<PauseProps> = ({
 
           {/* Action Buttons: Abandon, Delay, Proceed */}
           <div className="space-y-3 pt-2">
+            {saveError && (
+              <p role="alert" className="text-sm font-semibold text-rukoRed bg-rukoRed/10 border border-rukoRed/40 rounded-xl px-3 py-2 text-center">
+                {saveError}
+              </p>
+            )}
             <BigButton
               variant="danger"
               disabled={why.trim().length < 3 || isSubmitting}
@@ -1161,7 +1174,7 @@ export const Pause: React.FC<PauseProps> = ({
                 type="button"
                 disabled={why.trim().length < 3 || isSubmitting}
                 onClick={() => handleDecision('proceeded')}
-                className={`min-h-[44px] px-4 py-2 text-sm font-medium transition-all ${
+                className={`min-h-[48px] px-4 py-2 text-sm font-medium transition-all ${
                   why.trim().length < 3 || isSubmitting
                     ? 'text-slate-600 cursor-not-allowed'
                     : 'text-slate-400 hover:text-cream underline'

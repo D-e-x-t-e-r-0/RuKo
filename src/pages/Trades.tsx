@@ -137,7 +137,7 @@ export const Trades: React.FC = () => {
               type="number"
               min="1"
               inputMode="numeric"
-              placeholder="e.g. 5000"
+              placeholder={t('trades.amount_placeholder')}
               value={amount}
               onChange={e => setAmount(e.target.value)}
               className="w-full text-lg min-h-[48px] p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
@@ -192,7 +192,7 @@ export const Trades: React.FC = () => {
             </label>
             <input
               type="number"
-              placeholder="e.g. -1500 or 2000"
+              placeholder={t('trades.pnl_placeholder')}
               value={pnl}
               onChange={e => setPnl(e.target.value)}
               className="w-full text-base min-h-[48px] p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
@@ -215,9 +215,9 @@ export const Trades: React.FC = () => {
         </p>
 
         <label className="block cursor-pointer">
-          <span className="sr-only">Choose CSV</span>
+          <span className="sr-only">{t('trades.choose_csv_sr')}</span>
           <div className="min-h-[48px] w-full border-2 border-dashed border-slate-600 hover:border-saffron rounded-xl p-3 text-center text-sm font-semibold text-cream flex items-center justify-center bg-slate-900/60 transition-colors">
-            {isProcessing ? 'Processing CSV...' : 'Select CSV file'}
+            {isProcessing ? t('trades.processing_csv') : t('trades.select_csv')}
           </div>
           <input
             type="file"

@@ -23,7 +23,8 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     async function loadStats() {
-      const all = await db.decisions.toArray();
+      try {
+        const all = await db.decisions.toArray();
       const now = new Date();
       const isToday = (ts: number) => {
         const d = new Date(ts);
@@ -45,49 +46,56 @@ export const Home: React.FC = () => {
         d => !d.reflection && !d.feeling && d.ts <= sixHoursAgo
       );
       setHasPendingReflection(unreviewed);
+      } catch (_) {
+        setTodayPauses(0);
+        setTodaySaved(0);
+        setHasPendingReflection(false);
+      }
     }
 
     loadStats();
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-between min-h-[calc(100vh-140px)] max-w-md mx-auto p-4 pb-20 space-y-6">
+    <div className="flex flex-col items-center justify-between min-h-[calc(100vh-140px)] max-w-md mx-auto p-4 pb-24 space-y-6">
       {/* Header & Time-Aware Greeting */}
-      <header className="text-center pt-2 space-y-1 w-full">
-        <div className="inline-block px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-semibold text-slate-300">
+      <header className="text-center pt-3 space-y-2 w-full rise">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-abyss/70 border border-saffron/25 text-xs font-semibold text-saffron">
+          <span className="w-1.5 h-1.5 rounded-full bg-saffron animate-glow-pulse" aria-hidden="true" />
           {t(getGreetingKey())}
         </div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-saffron font-sans">
+        <h1 className="font-ritual text-5xl font-black tracking-tight text-cream leading-none">
           {t('app_name')}
         </h1>
+        <div className="jaali-line w-40 mx-auto" aria-hidden="true" />
         <p className="text-sm text-slate-300 font-medium">
           {t('app_tagline')}
         </p>
       </header>
 
       {/* Main Pause Action */}
-      <div className="w-full my-auto flex flex-col items-center py-4">
+      <div className="w-full my-auto flex flex-col items-center py-4 rise rise-1">
         <div className="w-full max-w-xs aspect-square flex items-center justify-center p-2">
           <button
             onClick={() => navigate('/pause')}
-            className="w-56 h-56 rounded-full bg-saffron text-navy font-black text-4xl shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 border-8 border-saffron/30 flex flex-col items-center justify-center space-y-1"
+            className="diya-ring group relative w-56 h-56 rounded-full bg-gradient-to-b from-saffron via-saffron to-ember text-night font-black text-4xl hover:scale-105 active:scale-95 transition-all duration-200 border-8 border-saffron/20 flex flex-col items-center justify-center space-y-1"
             aria-label={t('home.pause_button')}
           >
-            <span>{t('home.pause_button')}</span>
-            <span className="text-xs font-semibold tracking-wider uppercase opacity-80">
-              Tap before trading
+            <span className="font-ritual tracking-tight">{t('home.pause_button')}</span>
+            <span className="text-[11px] font-sans font-semibold tracking-[0.18em] uppercase opacity-80">
+              {t('home.tap_before_trading')}
             </span>
           </button>
         </div>
       </div>
 
       {/* Thought for Today */}
-      <div className="w-full bg-slate-800/80 border border-slate-700 rounded-2xl p-4 shadow-md space-y-2">
-        <div className="flex items-center space-x-2 text-saffron text-xs uppercase font-bold tracking-wider">
-          <span>💡</span>
+      <div className="paper-card w-full border border-slate-700/70 rounded-3xl p-5 shadow-card space-y-2 rise rise-2">
+        <div className="flex items-center space-x-2 text-saffron text-[11px] uppercase font-bold tracking-[0.16em]">
+          <span aria-hidden="true">🪔</span>
           <span>{t('home.thought_for_today')}</span>
         </div>
-        <p className="text-sm italic font-medium text-cream leading-relaxed">
+        <p className="font-ritual text-lg italic font-medium text-cream leading-relaxed">
           "{t(`snippets.${thought.key}`)}"
         </p>
         {thought.sourceKey && (
@@ -98,7 +106,7 @@ export const Home: React.FC = () => {
       </div>
 
       {/* Info & Reflection Section */}
-      <div className="w-full space-y-4">
+      <div className="w-full space-y-4 rise rise-3">
         {/* Pending Reflection Alert */}
         {hasPendingReflection && (
           <div className="bg-amber-950/40 border border-saffron/60 rounded-2xl p-4 shadow-sm">

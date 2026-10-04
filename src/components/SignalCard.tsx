@@ -29,8 +29,11 @@ export const SignalCard: React.FC<SignalCardProps> = ({ signal }) => {
   };
 
   return (
-    <div className="bg-slate-800/80 border-l-4 border-saffron rounded-r-xl p-4 text-cream shadow-sm flex items-start space-x-3">
-      <div className="flex-1 text-base leading-relaxed font-medium">
+    <div className="paper-card border border-saffron/25 border-l-4 border-l-saffron rounded-2xl p-4 text-cream shadow-card flex items-start space-x-3 rise">
+      <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-saffron/15 text-saffron text-base" aria-hidden="true">
+        ◉
+      </span>
+      <div className="flex-1 text-[15px] leading-relaxed font-medium">
         {getMessage()}
       </div>
     </div>

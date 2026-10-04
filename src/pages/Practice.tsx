@@ -70,7 +70,8 @@ export const Practice: React.FC = () => {
   const [observedSignals, setObservedSignals] = useState<Set<string>>(new Set());
   const [autoCloseNotice, setAutoCloseNotice] = useState<string | null>(null);
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const sessionEndedRef = useRef<boolean>(false);
 
   // Update pause toggle in localStorage
   const handleTogglePause = (enabled: boolean) => {
@@ -105,6 +106,7 @@ export const Practice: React.FC = () => {
 
   // Start Session
   const handleStartSession = async () => {
+    sessionEndedRef.current = false;
     const seed = scenarioInfo.fixedSeed;
     const series: Record<InstrumentId, number[]> = {
       demo_index: generatePrices(seed, selectedScenario, 'demo_index', 120),
@@ -263,7 +265,9 @@ export const Practice: React.FC = () => {
           leverage: activePosition.leverage,
         };
 
-        db.practiceTrades.add(closedTrade);
+        try {
+          void db.practiceTrades.add(closedTrade).catch(() => {});
+        } catch (_) {}
         setSessionTrades(prev => [...prev, closedTrade]);
         setWallet(w => w + activePosition.margin + unrealizedPnl);
         setActivePosition(null);
@@ -309,8 +313,12 @@ export const Practice: React.FC = () => {
   };
 
   const openVirtualPosition = (margin: number) => {
+    const uid =
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `${Date.now()}_${Math.floor(Math.random() * 1e9)}`;
     const newPos: VirtualPosition = {
-      id: `${Date.now()}_${Math.random()}`,
+      id: uid,
       instrument: selectedInstrument,
       margin,
       leverage,
@@ -367,7 +375,9 @@ export const Practice: React.FC = () => {
     };
 
     if (sessionId) {
-      db.practiceTrades.add(closedTrade);
+      try {
+        void db.practiceTrades.add(closedTrade).catch(() => {});
+      } catch (_) {}
     }
     setSessionTrades(prev => [...prev, closedTrade]);
     setWallet(w => w + activePosition.margin + finalPnl);
@@ -376,6 +386,8 @@ export const Practice: React.FC = () => {
 
   // End Session handler
   const handleEndSession = async () => {
+    if (sessionEndedRef.current) return;
+    sessionEndedRef.current = true;
     if (timerRef.current) clearInterval(timerRef.current);
     if (sessionId === null || !priceSeries) return;
 
@@ -456,9 +468,10 @@ export const Practice: React.FC = () => {
   // If paused for ritual modal
   if (isPausedForRitual) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#0F172A] overflow-y-auto">
+      <div className="fixed inset-0 z-[70] bg-[#0F172A] overflow-y-auto">
         <Pause
           mode="practice"
+          sessionId={sessionId ?? undefined}
           initialAmount={pendingMargin}
           initialFunding="savings"
           onComplete={handlePauseComplete}
@@ -532,8 +545,11 @@ export const Practice: React.FC = () => {
             </div>
             <button
               type="button"
+              role="switch"
+              aria-checked={pauseEnabled}
+              aria-label={t('practice.pause_toggle')}
               onClick={() => handleTogglePause(!pauseEnabled)}
-              className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors ${
+              className={`min-h-[48px] min-w-[56px] w-14 flex items-center rounded-full p-1 transition-colors ${
                 pauseEnabled ? 'bg-saffron' : 'bg-slate-600'
               }`}
             >
@@ -570,7 +586,7 @@ export const Practice: React.FC = () => {
               <button
                 type="button"
                 onClick={handleEndSession}
-                className="text-xs font-bold text-red-300 hover:text-red-200 border border-red-500/40 rounded-lg px-2 py-1"
+                className="min-h-[48px] text-xs font-bold text-red-300 hover:text-red-200 border border-red-500/40 rounded-lg px-3 py-2"
               >
                 {t('practice.end_session')}
               </button>
@@ -691,18 +707,18 @@ export const Practice: React.FC = () => {
                 <div className="grid grid-cols-4 gap-2">
                   {(['10k', '25k', '50k', 'custom'] as const).map(chip => {
                     const isSelected = marginChip === chip;
-                    const labels = {
+                    const labels: Record<typeof chip, string> = {
                       '10k': '₹10k',
                       '25k': '₹25k',
                       '50k': '₹50k',
-                      'custom': 'Custom',
+                      'custom': t('practice.custom_label'),
                     };
                     return (
                       <button
                         key={chip}
                         type="button"
                         onClick={() => setMarginChip(chip)}
-                        className={`py-2 rounded-xl text-xs font-bold border transition-colors ${
+                        className={`min-h-[48px] py-2 rounded-xl text-xs font-bold border transition-colors ${
                           isSelected
                             ? 'bg-saffron text-navy border-saffron'
                             : 'bg-slate-800 border-slate-600 text-slate-300 hover:border-slate-500'
@@ -718,8 +734,9 @@ export const Practice: React.FC = () => {
                     type="number"
                     value={customMargin}
                     onChange={e => setCustomMargin(e.target.value)}
-                    placeholder="Enter margin"
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-cream font-mono mt-2"
+                    placeholder={t('practice.enter_margin_placeholder')}
+                    aria-label={t('practice.margin')}
+                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-cream font-mono mt-2 min-h-[48px]"
                   />
                 )}
               </div>
@@ -734,7 +751,7 @@ export const Practice: React.FC = () => {
                         key={lev}
                         type="button"
                         onClick={() => setLeverage(lev)}
-                        className={`py-2 rounded-xl text-xs font-bold border transition-colors ${
+                        className={`min-h-[48px] py-2 rounded-xl text-xs font-bold border transition-colors ${
                           leverage === lev
                             ? 'bg-slate-700 border-saffron text-cream'
                             : 'bg-slate-800 border-slate-600 text-slate-400'

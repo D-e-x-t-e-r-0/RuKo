@@ -43,8 +43,9 @@ export const Mirror: React.FC = () => {
 
   useEffect(() => {
     async function loadMirrorData() {
-      // The Mirror stays real-only
-      const rawDecisions = await db.decisions.toArray();
+      try {
+        // The Mirror stays real-only
+        const rawDecisions = await db.decisions.toArray();
       const allDecisions = rawDecisions.filter(d => d.mode !== 'practice');
       const now = new Date();
 
@@ -163,6 +164,13 @@ export const Mirror: React.FC = () => {
           setIsAISummary(false);
         });
       }
+      } catch (_) {
+        setChartData([]);
+        setTotalPauses(0);
+        setTotalSaved(0);
+        setImpulsivePercent(0);
+        setShowSupportCard(false);
+      }
     }
 
     loadMirrorData();
@@ -277,7 +285,7 @@ export const Mirror: React.FC = () => {
         <div className="bg-amber-950/40 border-2 border-saffron/70 rounded-2xl p-4 text-cream space-y-2">
           <div className="flex items-center space-x-2">
             <span className="text-saffron text-lg font-bold">ℹ</span>
-            <span className="text-xs uppercase font-bold text-saffron tracking-wider">Notice</span>
+            <span className="text-xs uppercase font-bold text-saffron tracking-wider">{t('mirror.notice')}</span>
           </div>
           <p className="text-sm leading-relaxed text-cream font-medium">
             {t('mirror.support_card')}
@@ -293,11 +301,12 @@ export const Mirror: React.FC = () => {
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left">
+              <caption className="sr-only">{t('mirror.practice_comparison_title')}</caption>
               <thead>
                 <tr className="border-b border-slate-700 text-slate-400">
-                  <th className="py-2 font-semibold">Mode</th>
-                  <th className="py-2 text-right font-semibold">{t('mirror.avg_trades')}</th>
-                  <th className="py-2 text-right font-semibold">{t('mirror.loss_chasing_share')}</th>
+                  <th scope="col" className="py-2 font-semibold">{t('mirror.mode_col')}</th>
+                  <th scope="col" className="py-2 text-right font-semibold">{t('mirror.avg_trades')}</th>
+                  <th scope="col" className="py-2 text-right font-semibold">{t('mirror.loss_chasing_share')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800 text-cream">
