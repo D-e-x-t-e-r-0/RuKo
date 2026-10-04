@@ -40,6 +40,7 @@ export const Pause: React.FC<PauseProps> = ({
   mode = 'real',
   initialAmount,
   initialFunding,
+  sessionId,
   onComplete,
 }) => {
   const { t, i18n } = useTranslation();
@@ -148,6 +149,7 @@ export const Pause: React.FC<PauseProps> = ({
   // Submission state
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [finalOutcome, setFinalOutcome] = useState<Outcome>('abandoned');
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const getEffectiveAmount = (): number => {
     if (amountType === 'other') {
