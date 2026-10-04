@@ -71,6 +71,23 @@ Ruko features an optional, privacy-preserving AI assistant:
 
 ---
 
+## 5b. Mobile App (Expo) & Releases
+
+- **`mobile/`** is the native Expo companion (SDK 57): same ritual, journal,
+  simulator, and 12 languages with a polished midnight-diya theme.
+  Storage is on-device AsyncStorage; voice is Sarvam-first with expo-speech
+  fallback. See `mobile/README.md`.
+- **Releases** are automated in `.github/workflows/release.yml`:
+  push a `v*` tag (or dispatch manually) to run web tests + build, Expo
+  typecheck + web export, an optional EAS preview APK (needs the `EXPO_TOKEN`
+  secret), and publish a GitHub Release with both web bundles attached.
+
+```bash
+git tag v1.1.0 && git push origin v1.1.0
+```
+
+---
+
 ## 6. How to Run Locally
 
 ### Install dependencies:
