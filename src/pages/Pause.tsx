@@ -1148,6 +1148,11 @@ export const Pause: React.FC<PauseProps> = ({
 
           {/* Action Buttons: Abandon, Delay, Proceed */}
           <div className="space-y-3 pt-2">
+            {saveError && (
+              <p role="alert" className="text-sm font-semibold text-rukoRed bg-rukoRed/10 border border-rukoRed/40 rounded-xl px-3 py-2 text-center">
+                {saveError}
+              </p>
+            )}
             <BigButton
               variant="danger"
               disabled={why.trim().length < 3 || isSubmitting}
@@ -1169,7 +1174,7 @@ export const Pause: React.FC<PauseProps> = ({
                 type="button"
                 disabled={why.trim().length < 3 || isSubmitting}
                 onClick={() => handleDecision('proceeded')}
-                className={`min-h-[44px] px-4 py-2 text-sm font-medium transition-all ${
+                className={`min-h-[48px] px-4 py-2 text-sm font-medium transition-all ${
                   why.trim().length < 3 || isSubmitting
                     ? 'text-slate-600 cursor-not-allowed'
                     : 'text-slate-400 hover:text-cream underline'
