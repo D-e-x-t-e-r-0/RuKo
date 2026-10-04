@@ -386,6 +386,8 @@ export const Practice: React.FC = () => {
 
   // End Session handler
   const handleEndSession = async () => {
+    if (sessionEndedRef.current) return;
+    sessionEndedRef.current = true;
     if (timerRef.current) clearInterval(timerRef.current);
     if (sessionId === null || !priceSeries) return;
 
