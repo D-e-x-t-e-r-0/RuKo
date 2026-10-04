@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans Devanagari', sans-serif;
+  line-height: 1.5;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: #14213D;
+  color: #FAF6EE;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  touch-action: manipulation;
+}
