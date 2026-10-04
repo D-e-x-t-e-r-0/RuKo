@@ -776,7 +776,7 @@ export const Pause: React.FC<PauseProps> = ({
                             (currentCard.extraData ? currentCard.extraData.ruleText : '')
                         )
                       }
-                      className="min-h-[40px] min-w-[40px] p-2 rounded-full text-saffron hover:bg-slate-700 text-base"
+                      className="min-h-[48px] min-w-[48px] p-2 rounded-full text-saffron hover:bg-slate-700 text-base"
                       aria-label="Speak card"
                     >
                       🔊
@@ -1022,7 +1022,7 @@ export const Pause: React.FC<PauseProps> = ({
                     type="button"
                     disabled={cardIndex === 0}
                     onClick={() => setCardIndex(prev => Math.max(0, prev - 1))}
-                    className="min-h-[40px] px-3 py-1 rounded-xl text-slate-400 hover:text-cream disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="min-h-[48px] px-3 py-1 rounded-xl text-slate-400 hover:text-cream disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     ← {t('pause.prev_card')}
                   </button>
