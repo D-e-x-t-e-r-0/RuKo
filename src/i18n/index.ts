@@ -26,6 +26,11 @@ export function changeAppLanguage(lang: string): void {
     localStorage.setItem('ruko.lang', lang);
     localStorage.setItem('ruko_lang', lang);
   } catch (_) {}
+  try {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang === 'hi' ? 'hi' : 'en';
+    }
+  } catch (_) {}
 }
 
 const savedLang =

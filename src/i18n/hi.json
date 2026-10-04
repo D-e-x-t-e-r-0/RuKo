@@ -272,7 +272,10 @@
     "auto_close_notice": "पोज़िशन अपने आप बंद हो गई क्योंकि नुकसान सीमा तक पहुँच गया।",
     "ticks_left": "बचा हुआ सिमुलेशन समय: {{m}} मिनट",
     "no_open_position": "कोई सक्रिय पोज़िशन नहीं",
-    "position_active": "सक्रिय पोज़िशन: {{inst}} (₹{{margin}}, {{lev}}x)"
+    "position_active": "सक्रिय पोज़िशन: {{inst}} (₹{{margin}}, {{lev}}x)",
+    "custom_label": "कस्टम",
+    "enter_margin_placeholder": "मार्जिन दर्ज करें",
+    "save_failed": "सहेज नहीं पाए। कृपया फिर कोशिश करें।"
   },
   "debrief": {
     "title": "सत्र समीक्षा",
