@@ -139,9 +139,10 @@ export const App: React.FC = () => {
         <AIConsentModal onComplete={() => setAiModalDismissed(true)} />
       )}
       <HashRouter>
-        <div className="min-h-screen bg-navy text-slate-100 flex flex-col justify-between">
+        <div className="min-h-screen bg-night text-slate-100 flex flex-col justify-between">
+          <a href="#main" className="skip-link">{hasLang ? 'Skip to content' : 'मुख्य सामग्री पर जाएं'}</a>
           <Header />
-          <main className="flex-1 w-full max-w-md mx-auto">
+          <main id="main" className="flex-1 w-full max-w-md mx-auto">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/pause" element={<Pause />} />
@@ -153,6 +154,7 @@ export const App: React.FC = () => {
               <Route path="/more" element={<MoreMenu />} />
               <Route path="/rules" element={<Rules />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
           <NavigationBar />
