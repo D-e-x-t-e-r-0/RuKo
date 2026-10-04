@@ -20,6 +20,7 @@ export interface PauseProps {
   mode?: 'real' | 'practice';
   initialAmount?: number;
   initialFunding?: Funding;
+  sessionId?: number;
   onComplete?: (outcome: Outcome) => void;
 }
 
@@ -31,6 +32,7 @@ interface ReflectionCardDef {
   answerType?: 'chips' | 'text' | 'number' | 'info';
   options?: { value: string; label: string }[];
   qid?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   extraData?: any;
 }
 
