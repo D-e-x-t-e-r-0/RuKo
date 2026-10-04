@@ -1,8 +1,8 @@
 export const BANNED_REGEX =
-  /\b(buy|sell|hold|target|stock|share price|nifty|sensex|banknifty|invest in|should trade)\b/i;
+  /\b(buy|sell|hold|target|tip|tips|stock|share price|nifty|sensex|banknifty|invest in|should trade)\b/i;
 
 export const BANNED_HINDI_REGEX =
-  /खरीदो|बेचो|निवेश करें|स्टॉक|शेयर खरीद/;
+  /खरीद|बेच|निवेश करें|निवेश कर|स्टॉक|शेयर खरीद|शेयर बेच/;
 
 export function hasBannedWords(text: string): boolean {
   if (!text) return false;
