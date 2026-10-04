@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { canListen, listen } from '../voice/voice';
+import { getSpeechCode } from '../i18n';
 import { useTranslation } from 'react-i18next';
 
 interface MicButtonProps {
@@ -19,8 +20,7 @@ export const MicButton: React.FC<MicButtonProps> = ({ onTranscript, className = 
     if (listening) return;
     setListening(true);
     try {
-      const lang = i18n.language.startsWith('hi') ? 'hi-IN' : 'en-IN';
-      const text = await listen(lang);
+      const text = await listen(getSpeechCode(i18n.language));
       if (text) {
         onTranscript(text);
       }
