@@ -108,7 +108,7 @@ jobs:
       - run: |
           mkdir -p ./eas-artifacts
           cd ./eas-artifacts
-          eas build:download "${{ steps.eas-build.outputs.build_id }}" --non-interactive
+          eas build:download --build-id "${{ steps.eas-build.outputs.build_id }}" --non-interactive
           APK=$(ls *.apk | head -1)
           test -n "$APK"
           mv "$APK" ../ruko-preview.apk
