@@ -85,6 +85,7 @@
     "funding_loan": "लोन या उधार",
     "q_amount": "कितना लगा रहे हैं? (₹)",
     "q_loss": "कितना नुकसान सह सकते हैं? (₹)",
+    "max_loss_title": "नुकसान की सीमा तय करें",
     "amount_placeholder": "रकम दर्ज करें",
     "loss_placeholder": "अधिकतम नुकसान",
     "your_rule": "आपका अपना नियम",
@@ -168,11 +169,15 @@
     "signals_label": "संकेत:",
     "noticed_patterns_label": "पहचाने गए पैटर्न:",
     "reflection_label": "विचार:",
-    "none": "कोई नहीं"
+    "none": "कोई नहीं",
+    "view_debrief": "समीक्षा देखें →",
+    "pauses_label": "पॉज़"
   },
   "mirror": {
     "title": "साप्ताहिक आईना",
     "subtitle": "पिछले 7 दिनों के फैसले",
+    "notice": "ध्यान दें",
+    "mode_col": "मोड",
     "planned": "योजनाबद्ध",
     "impulsive": "आवेग में",
     "stat_pauses": "किए गए पॉज़",
