@@ -23,7 +23,8 @@ export const Home: React.FC = () => {
 
   useEffect(() => {
     async function loadStats() {
-      const all = await db.decisions.toArray();
+      try {
+        const all = await db.decisions.toArray();
       const now = new Date();
       const isToday = (ts: number) => {
         const d = new Date(ts);
