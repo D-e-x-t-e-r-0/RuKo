@@ -136,7 +136,7 @@ export const Journal: React.FC = () => {
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px]">Pauses</span>
+                      <span className="text-slate-400 block text-[10px]">{t('journal.pauses_label')}</span>
                       <span className="font-mono font-bold text-cream">
                         {s.pausesTaken ?? 0}
                       </span>
@@ -150,9 +150,9 @@ export const Journal: React.FC = () => {
                   <div className="pt-1">
                     <Link
                       to={`/debrief?id=${s.id}`}
-                      className="inline-block text-xs font-bold text-saffron hover:underline"
+                      className="inline-flex items-center min-h-[48px] px-2 -ml-2 text-xs font-bold text-saffron hover:underline"
                     >
-                      View Debrief →
+                      {t('journal.view_debrief')}
                     </Link>
                   </div>
                 </div>
