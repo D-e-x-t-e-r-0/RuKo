@@ -70,7 +70,8 @@ export const Practice: React.FC = () => {
   const [observedSignals, setObservedSignals] = useState<Set<string>>(new Set());
   const [autoCloseNotice, setAutoCloseNotice] = useState<string | null>(null);
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const sessionEndedRef = useRef<boolean>(false);
 
   // Update pause toggle in localStorage
   const handleTogglePause = (enabled: boolean) => {
@@ -105,6 +106,7 @@ export const Practice: React.FC = () => {
 
   // Start Session
   const handleStartSession = async () => {
+    sessionEndedRef.current = false;
     const seed = scenarioInfo.fixedSeed;
     const series: Record<InstrumentId, number[]> = {
       demo_index: generatePrices(seed, selectedScenario, 'demo_index', 120),
