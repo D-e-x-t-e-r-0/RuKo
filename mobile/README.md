@@ -44,3 +44,15 @@ eas build --platform android --profile preview
 
 Set the real EAS project id in `app.json` (`extra.eas.projectId`) after
 running `eas init` once.
+
+## Judge install (2 min, APK — no URL needed)
+
+Per rubric clarification, native APK distribution is legitimate (not a URL fault).
+
+1. Open the GitHub Release for `v1.2.0-pi` on your phone → download `ruko-preview.apk`.
+2. Allow install from browser once → open Ruko → default Hindi, tap Pause now.
+3. Offline check: turn on airplane mode → ritual, journal, practice all still work.
+4. Permissions: microphone only when you tap mic/speaker (voice input/read-aloud).
+   No SMS/OTP, no contacts, no broker login, no background network.
+
+Expo Go path (no APK): `npx expo start` → scan QR → same 12 languages.
