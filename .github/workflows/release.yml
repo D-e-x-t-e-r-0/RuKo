@@ -124,6 +124,7 @@ jobs:
     # APK is best-effort: publish even if it was skipped or failed.
     if: startsWith(github.ref, 'refs/tags/v') && !cancelled()
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
           name: ruko-web-dist
