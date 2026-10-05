@@ -7,5 +7,5 @@ export NODE_ENV="${NODE_ENV:-production}"
 export PORT="${PORT:-4173}" HOST="${HOST:-127.0.0.1}"
 if [ -f .env ]; then set -a; source .env; set +a; fi
 if [ ! -d dist ]; then echo "[ruko] dist/ missing, building..."; npm run build; fi
-echo "[ruko] starting preview on $HOST:$PORT (dist + /api)..."
-exec npm run preview -- --port "$PORT" --host "$HOST"
+echo "[ruko] starting pi-server on $HOST:$PORT (dist + /api)..."
+exec node server/pi-server.mjs
