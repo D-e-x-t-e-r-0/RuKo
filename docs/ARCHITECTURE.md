@@ -7,6 +7,7 @@
 - Channels: same reducer serves PWA, `/api/telegram` (live), `/api/whatsapp` (paid-gated, 503 without token). Telegram sessions: 24h TTL in-memory, file-backed on Pi via `RUKO_SESSION_FILE`.
 - Edge: nginx serves `dist/` (immutable hashed assets, no-cache `sw.js`), proxies `/api/*` with 4-5s timeouts. Single Pi: `server/pi-server.mjs` + systemd. Multi-Pi: same Docker image under k3s (`k8s/`, 2 replicas, `/api/health` probes).
 - Proof: `eval/cases.json` (25) in CI, 135+ vitest checks, `scripts/audit-pwa.mjs`, evidence pack + `RUKO1.` encrypted backup.
+- Visual language: same midnight-diya palette on web + Expo, rendered as **soft neumorphism** — raised surfaces pair an abyss pocket (`rgba(4,8,20,.65)`) with a cream lip (`rgba(250,246,238,.07)`); pressed states invert to inset; saffron ritual actions keep a low diya glow. Web primitives in `src/index.css` (`.neu-raised`, `.neu-pressed`, `.neu-btn`, `.neu-chip`, updated `.paper-card`/`.diya-ring`) and `shadow-neu*` Tailwind tokens; Expo parity in `mobile/src/theme.ts` (`colors` + `neu`) and `mobile/src/components/ui.tsx`. Restraint rule: neu only on ritual surfaces (cards, primary buttons, chips), never on body text or charts, so contrast and 48px targets hold on 2GB phones.
 
 ```mermaid
 flowchart TB

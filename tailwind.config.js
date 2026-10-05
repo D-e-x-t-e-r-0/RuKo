@@ -25,6 +25,12 @@ export default {
         diya: '0 0 24px rgba(242, 163, 58, 0.35), 0 0 64px rgba(242, 163, 58, 0.15)',
         card: '0 8px 32px rgba(0, 0, 0, 0.35)',
         lift: '0 12px 40px rgba(0, 0, 0, 0.45)',
+        /* Soft neumorphism on the same midnight-diya palette: light lip top-left, deep pocket bottom-right */
+        neu: '7px 7px 18px rgba(4, 8, 20, 0.65), -7px -7px 18px rgba(250, 246, 238, 0.07)',
+        'neu-sm': '4px 4px 12px rgba(4, 8, 20, 0.6), -4px -4px 12px rgba(250, 246, 238, 0.06)',
+        'neu-in': 'inset 5px 5px 14px rgba(4, 8, 20, 0.7), inset -5px -5px 14px rgba(250, 246, 238, 0.05)',
+        'neu-btn': '5px 5px 14px rgba(4, 8, 20, 0.55), -5px -5px 14px rgba(250, 246, 238, 0.09), 0 0 22px rgba(242, 163, 58, 0.22)',
+        'neu-diya': '6px 6px 18px rgba(4, 8, 20, 0.6), -6px -6px 18px rgba(250, 246, 238, 0.08), 0 0 42px rgba(242, 163, 58, 0.35)',
       },
       borderRadius: {
         '4xl': '2rem',

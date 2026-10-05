@@ -2,7 +2,11 @@
 
 Native companion to the Ruko PWA — same pause ritual, decision journal, and
 practice simulator, rebuilt with React Native + Expo and a polished
-midnight-diya theme.
+midnight-diya theme with **soft neumorphism in the exact same colors as web**:
+raised cards (`theme.neu.card`: abyss pocket + cream lip), saffron ritual
+buttons (`theme.neu.btn` glow), pressed chip states. Tokens live in
+`mobile/src/theme.ts` (`colors` + `neu`), surfaces in
+`mobile/src/components/ui.tsx` (`Card`, `BigButton`, `Chip`).
 
 - **12 languages**: hi (default), en, bn, mr, ta, te, kn, ml, gu, pa, or, as
 - **Voice**: Sarvam bulbul TTS + saarika STT through `/api/sarvam`

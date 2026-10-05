@@ -10,7 +10,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, fonts, radius, spacing } from '../theme';
+import { colors, fonts, neu, radius, spacing } from '../theme';
 
 export function Screen({ children, padded = true }: { children: React.ReactNode; padded?: boolean }) {
   return (
@@ -121,6 +121,24 @@ const s = StyleSheet.create({
     padding: spacing.md,
     borderWidth: 1,
     borderColor: colors.line,
+    /* Soft neumorphism, same palette: abyss pocket + cream lip */
+    shadowColor: neu.card.shadowColor,
+    shadowOpacity: neu.card.shadowOpacity,
+    shadowRadius: neu.card.shadowRadius,
+    shadowOffset: neu.card.shadowOffset,
+    elevation: neu.card.elevation,
+  },
+  cardHi: {
+    backgroundColor: colors.cardHi,
+    borderRadius: radius.lg,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: 'rgba(250, 246, 238, 0.12)',
+    shadowColor: '#FAF6EE',
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    shadowOffset: { width: -5, height: -5 },
+    elevation: 4,
   },
   title: {
     fontFamily: fonts.display,
@@ -149,6 +167,11 @@ const s = StyleSheet.create({
     borderColor: colors.line,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: neu.card.shadowColor,
+    shadowOpacity: 0.5,
+    shadowRadius: 6,
+    shadowOffset: { width: 4, height: 4 },
+    elevation: 5,
   },
   chipOn: { backgroundColor: colors.saffron, borderColor: colors.saffron },
   chipText: { color: colors.cream, fontWeight: '700', fontSize: 14 },
@@ -176,11 +199,13 @@ const btn = StyleSheet.create({
   textDark: { color: colors.night },
   primary: {
     backgroundColor: colors.saffron,
-    shadowColor: colors.saffron,
-    shadowOpacity: 0.4,
-    shadowRadius: 18,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 6,
+    shadowColor: neu.btn.shadowColor,
+    shadowOpacity: neu.btn.shadowOpacity,
+    shadowRadius: neu.btn.shadowRadius,
+    shadowOffset: neu.btn.shadowOffset,
+    elevation: neu.btn.elevation,
+    borderWidth: 1,
+    borderColor: 'rgba(250, 246, 238, 0.18)',
   },
   secondary: { backgroundColor: colors.green },
   danger: { backgroundColor: colors.red },
