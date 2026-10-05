@@ -260,6 +260,10 @@ npm run build
 - `TELEGRAM_WEBHOOK_SECRET`: Recommended shared secret — Telegram must echo it in the `X-Telegram-Bot-Api-Secret-Token` header on every update or the request is rejected with 401.
 - After deploying, point your bot at the endpoint once: `npm run bot:set-webhook -- https://your-app.vercel.app`
 
+### Environment Variables (WhatsApp adapter — paid, OFF by default):
+- `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`: Meta Cloud API credentials (paid business number required). Without them `/api/whatsapp` returns 503 by design — see §5d.
+- `WHATSAPP_WEBHOOK_VERIFY_TOKEN`: verifies the Meta subscribe handshake.
+
 ### Deploying to Vercel:
 1. Connect this repository to Vercel (or run `npx vercel`).
 2. Settings:
