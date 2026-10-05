@@ -78,11 +78,11 @@ export const Home: React.FC = () => {
         <div className="w-full max-w-xs aspect-square flex items-center justify-center p-2">
           <button
             onClick={() => navigate('/pause')}
-            className="diya-ring group relative w-56 h-56 rounded-full bg-gradient-to-b from-saffron via-saffron to-ember text-night font-black text-4xl hover:scale-105 active:scale-95 transition-all duration-200 border-8 border-saffron/20 flex flex-col items-center justify-center space-y-1"
+            className="diya-ring group relative w-56 h-56 rounded-full bg-gradient-to-b from-[#F6B252] via-saffron to-ember text-night font-black text-4xl hover:scale-105 active:scale-95 transition-all duration-200 border-4 border-cream/30 flex flex-col items-center justify-center space-y-1"
             aria-label={t('home.pause_button')}
           >
-            <span className="font-ritual tracking-tight">{t('home.pause_button')}</span>
-            <span className="text-[11px] font-sans font-semibold tracking-[0.18em] uppercase opacity-80">
+            <span className="font-ritual tracking-tight text-night">{t('home.pause_button')}</span>
+            <span className="text-[11px] font-sans font-bold tracking-[0.18em] uppercase text-night/80">
               {t('home.tap_before_trading')}
             </span>
           </button>

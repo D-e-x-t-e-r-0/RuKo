@@ -94,14 +94,14 @@ button {
 .rise-4 { animation-delay: 0.26s; }
 .rise-5 { animation-delay: 0.33s; }
 
-/* Diya glow ring for primary ritual actions — now soft-neumorphic, same saffron */
+/* Diya glow ring for primary ritual actions — shadow only, never a background,
+   so the saffron gradient on the Pause button stays bright and legible. */
 .diya-ring {
-  background: linear-gradient(145deg, #182747, #101b33);
   box-shadow:
-    6px 6px 18px rgba(4, 8, 20, 0.6),
-    -6px -6px 18px rgba(250, 246, 238, 0.08),
-    0 0 0 6px rgba(242, 163, 58, 0.14),
-    0 0 42px rgba(242, 163, 58, 0.35);
+    0 0 0 6px rgba(242, 163, 58, 0.22),
+    0 0 0 14px rgba(242, 163, 58, 0.1),
+    8px 8px 28px rgba(4, 8, 20, 0.55),
+    0 0 54px rgba(242, 163, 58, 0.45);
 }
 
 /* Handmade paper card — same navy/cream, gently embossed (soft neumorphism) */
