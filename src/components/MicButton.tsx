@@ -40,8 +40,8 @@ export const MicButton: React.FC<MicButtonProps> = ({ onTranscript, className = 
       aria-label="Voice input"
       className={`min-h-[48px] min-w-[48px] p-2.5 rounded-full flex items-center justify-center transition-all ${
         listening
-          ? 'bg-rukoRed text-cream animate-pulse'
-          : 'bg-slate-700/80 text-saffron hover:bg-slate-700 active:bg-slate-600'
+          ? 'bg-rukoRed text-white animate-pulse'
+          : 'bg-slate-200 text-clay hover:bg-slate-300 active:bg-slate-300'
       } ${className}`}
     >
       <svg

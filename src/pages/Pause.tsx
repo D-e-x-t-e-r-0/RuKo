@@ -506,7 +506,7 @@ export const Pause: React.FC<PauseProps> = ({
     <div className="min-h-[calc(100vh-140px)] max-w-md mx-auto p-4 pb-20 flex flex-col justify-between">
       {/* Practice Mode Banner */}
       {mode === 'practice' && (
-        <div className="bg-amber-950/60 border border-saffron/60 text-saffron p-3 rounded-2xl text-xs font-semibold mb-3 text-center">
+        <div className="bg-amber-50 border border-saffron/60 text-clay p-3 rounded-2xl text-xs font-semibold mb-3 text-center">
           {t('pause.practice_banner')}
         </div>
       )}
@@ -515,10 +515,10 @@ export const Pause: React.FC<PauseProps> = ({
       {screen === 1 && (
         <div className="my-auto space-y-5">
           <div>
-            <h2 className="text-2xl font-bold text-cream">
+            <h2 className="text-2xl font-bold text-navy">
               {t('pause.quick_check_title')}
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               {t('pause.amount_label')}
             </p>
           </div>
@@ -534,7 +534,7 @@ export const Pause: React.FC<PauseProps> = ({
                   className={`min-h-[48px] py-2 px-1 rounded-xl text-sm font-bold transition-all ${
                     amountType === amt
                       ? 'bg-saffron text-navy shadow-md'
-                      : 'bg-slate-800 text-slate-200 border border-slate-700 hover:border-slate-500'
+                      : 'bg-white text-slate-700 border border-slate-200 hover:border-slate-500'
                   }`}
                 >
                   {amt === 'other' ? t('pause.amount_other') : `₹${Number(amt).toLocaleString('en-IN')}`}
@@ -550,14 +550,14 @@ export const Pause: React.FC<PauseProps> = ({
                 value={customAmount}
                 onChange={e => setCustomAmount(e.target.value)}
                 placeholder={t('pause.amount_other_placeholder')}
-                className="w-full text-lg min-h-[48px] p-3 rounded-xl bg-slate-900 border-2 border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                className="w-full text-lg min-h-[48px] p-3 rounded-xl bg-slate-100 border-2 border-slate-200 text-navy focus:border-saffron focus:outline-none"
               />
             )}
           </div>
 
           {/* Money Source Buttons */}
           <div className="space-y-2">
-            <label className="text-xs font-semibold text-slate-400">
+            <label className="text-xs font-semibold text-slate-500">
               {t('pause.q_funding')}
             </label>
             <div className="grid grid-cols-1 gap-2.5">
@@ -567,7 +567,7 @@ export const Pause: React.FC<PauseProps> = ({
                 className={`min-h-[50px] p-3 rounded-xl text-sm font-bold text-left px-4 transition-all flex items-center justify-between ${
                   funding === 'savings'
                     ? 'bg-saffron text-navy shadow-md'
-                    : 'bg-slate-800 text-cream border border-slate-700 hover:border-slate-500'
+                    : 'bg-white text-navy border border-slate-200 hover:border-slate-500'
                 }`}
               >
                 <span>{t('pause.funding_savings')}</span>
@@ -580,7 +580,7 @@ export const Pause: React.FC<PauseProps> = ({
                 className={`min-h-[50px] p-3 rounded-xl text-sm font-bold text-left px-4 transition-all flex items-center justify-between ${
                   funding === 'emergency'
                     ? 'bg-saffron text-navy shadow-md'
-                    : 'bg-slate-800 text-cream border border-slate-700 hover:border-slate-500'
+                    : 'bg-white text-navy border border-slate-200 hover:border-slate-500'
                 }`}
               >
                 <span>{t('pause.funding_emergency')}</span>
@@ -593,7 +593,7 @@ export const Pause: React.FC<PauseProps> = ({
                 className={`min-h-[50px] p-3 rounded-xl text-sm font-bold text-left px-4 transition-all flex items-center justify-between ${
                   funding === 'loan'
                     ? 'bg-saffron text-navy shadow-md'
-                    : 'bg-slate-800 text-cream border border-slate-700 hover:border-slate-500'
+                    : 'bg-white text-navy border border-slate-200 hover:border-slate-500'
                 }`}
               >
                 <span>{t('pause.funding_loan')}</span>
@@ -603,8 +603,8 @@ export const Pause: React.FC<PauseProps> = ({
           </div>
 
           {/* Optional: Last Trade? */}
-          <div className="bg-slate-800/60 border border-slate-700/80 rounded-2xl p-3.5 space-y-2.5">
-            <span className="text-xs font-semibold text-slate-400">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-2.5">
+            <span className="text-xs font-semibold text-slate-500">
               {t('pause.last_trade_prompt')}
             </span>
             <div className="grid grid-cols-3 gap-2">
@@ -613,8 +613,8 @@ export const Pause: React.FC<PauseProps> = ({
                 onClick={() => setLastTradeResult('loss')}
                 className={`min-h-[48px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
                   lastTradeResult === 'loss'
-                    ? 'bg-rukoRed text-cream shadow-sm'
-                    : 'bg-slate-900 text-slate-300 border border-slate-700'
+                    ? 'bg-rukoRed text-navy shadow-sm'
+                    : 'bg-slate-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.last_trade_loss')}
@@ -625,7 +625,7 @@ export const Pause: React.FC<PauseProps> = ({
                 className={`min-h-[48px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
                   lastTradeResult === 'profit'
                     ? 'bg-rukoGreen text-navy shadow-sm'
-                    : 'bg-slate-900 text-slate-300 border border-slate-700'
+                    : 'bg-slate-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.last_trade_profit')}
@@ -635,8 +635,8 @@ export const Pause: React.FC<PauseProps> = ({
                 onClick={() => setLastTradeResult('none')}
                 className={`min-h-[48px] py-1.5 px-2 rounded-xl text-xs font-bold transition-all ${
                   lastTradeResult === 'none'
-                    ? 'bg-slate-700 text-cream shadow-sm'
-                    : 'bg-slate-900 text-slate-300 border border-slate-700'
+                    ? 'bg-slate-700 text-navy shadow-sm'
+                    : 'bg-slate-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.last_trade_none')}
@@ -644,14 +644,14 @@ export const Pause: React.FC<PauseProps> = ({
             </div>
 
             {lastTradeResult !== 'none' && (
-              <div className="grid grid-cols-3 gap-2 pt-1 border-t border-slate-700/60">
+              <div className="grid grid-cols-3 gap-2 pt-1 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setLastTradeTime('just_now')}
                   className={`min-h-[48px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     lastTradeTime === 'just_now'
-                      ? 'bg-saffron/30 text-saffron border border-saffron'
-                      : 'bg-slate-900/60 text-slate-400 border border-slate-800'
+                      ? 'bg-saffron/30 text-clay border border-saffron'
+                      : 'bg-slate-100 text-slate-500 border border-slate-200'
                   }`}
                 >
                   {t('pause.timing_just_now')}
@@ -661,8 +661,8 @@ export const Pause: React.FC<PauseProps> = ({
                   onClick={() => setLastTradeTime('30m')}
                   className={`min-h-[48px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     lastTradeTime === '30m'
-                      ? 'bg-saffron/30 text-saffron border border-saffron'
-                      : 'bg-slate-900/60 text-slate-400 border border-slate-800'
+                      ? 'bg-saffron/30 text-clay border border-saffron'
+                      : 'bg-slate-100 text-slate-500 border border-slate-200'
                   }`}
                 >
                   {t('pause.timing_30m')}
@@ -672,8 +672,8 @@ export const Pause: React.FC<PauseProps> = ({
                   onClick={() => setLastTradeTime('hours')}
                   className={`min-h-[48px] py-1 px-2 rounded-lg text-[11px] font-semibold transition-all ${
                     lastTradeTime === 'hours'
-                      ? 'bg-saffron/30 text-saffron border border-saffron'
-                      : 'bg-slate-900/60 text-slate-400 border border-slate-800'
+                      ? 'bg-saffron/30 text-clay border border-saffron'
+                      : 'bg-slate-100 text-slate-500 border border-slate-200'
                   }`}
                 >
                   {t('pause.timing_hours')}
@@ -701,8 +701,8 @@ export const Pause: React.FC<PauseProps> = ({
                 level === 'high'
                   ? 'bg-rukoRed/20 text-rukoRed border-2 border-rukoRed'
                   : level === 'caution'
-                  ? 'bg-saffron/20 text-saffron border-2 border-saffron'
-                  : 'bg-rukoGreen/20 text-rukoGreen border-2 border-rukoGreen'
+                  ? 'bg-saffron/20 text-clay border-2 border-saffron'
+                  : 'bg-rukoGreen/20 text-teal-700 border-2 border-rukoGreen'
               }`}
             >
               {t(`levels.${level}`)}
@@ -716,15 +716,15 @@ export const Pause: React.FC<PauseProps> = ({
                 <SignalCard key={sig.id} signal={sig} />
               ))
             ) : (
-              <div className="bg-slate-800/80 border-l-4 border-rukoGreen rounded-r-xl p-4 text-cream font-medium">
+              <div className="bg-white border-l-4 border-rukoGreen rounded-r-xl p-4 text-navy font-medium">
                 {t('signals.none')}
               </div>
             )}
           </div>
 
           {/* Mirror Disclaimer */}
-          <div className="bg-slate-900/80 border border-slate-700/80 rounded-2xl p-4 text-center">
-            <p className="text-sm font-medium text-slate-300">
+          <div className="bg-slate-100 border border-slate-200 rounded-2xl p-4 text-center">
+            <p className="text-sm font-medium text-slate-600">
               {t('pause.mirror_disclaimer')}
             </p>
           </div>
@@ -740,17 +740,17 @@ export const Pause: React.FC<PauseProps> = ({
         <div className="flex-1 flex flex-col justify-between py-2 space-y-4">
           {/* Header Progress Bar & Step info */}
           <div className="space-y-2">
-            <div className="flex justify-between items-center text-xs font-semibold text-slate-400">
+            <div className="flex justify-between items-center text-xs font-semibold text-slate-500">
               <span>
                 {cardIndex + 1} / {cards.length}
               </span>
-              <span className="text-slate-400 text-xs font-medium">
+              <span className="text-slate-500 text-xs font-medium">
                 {currentCard?.type === 'breath'
                   ? t('pause.breathe_in')
                   : t('pause.mindful_reflection')}
               </span>
             </div>
-            <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-white rounded-full overflow-hidden">
               <div
                 className="h-full bg-saffron transition-all duration-300 ease-out"
                 style={{
@@ -763,9 +763,9 @@ export const Pause: React.FC<PauseProps> = ({
           {/* Reflection Card Display */}
           <div className="my-auto">
             {currentCard && (
-              <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-5 shadow-xl space-y-4 min-h-[260px] flex flex-col justify-between">
+              <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xl space-y-4 min-h-[260px] flex flex-col justify-between">
                 {/* Card Top: Speaker */}
-                <div className="flex items-center justify-between border-b border-slate-700/60 pb-3">
+                <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                   <div className="flex items-center space-x-2">
                     <button
                       type="button"
@@ -776,12 +776,12 @@ export const Pause: React.FC<PauseProps> = ({
                             (currentCard.extraData ? currentCard.extraData.ruleText : '')
                         )
                       }
-                      className="min-h-[48px] min-w-[48px] p-2 rounded-full text-saffron hover:bg-slate-700 text-base"
+                      className="min-h-[48px] min-w-[48px] p-2 rounded-full text-clay hover:bg-slate-200 text-base"
                       aria-label="Speak card"
                     >
                       🔊
                     </button>
-                    <span className="text-xs uppercase font-bold tracking-wider text-slate-400">
+                    <span className="text-xs uppercase font-bold tracking-wider text-slate-500">
                       {currentCard.type.replace('_', ' ')}
                     </span>
                   </div>
@@ -800,7 +800,7 @@ export const Pause: React.FC<PauseProps> = ({
 
                   {currentCard.type === 'why' && (
                     <div className="space-y-3">
-                      <h3 className="text-lg font-bold text-cream">
+                      <h3 className="text-lg font-bold text-navy">
                         {t('pause.why_card_title')}
                       </h3>
                       <div className="relative">
@@ -809,7 +809,7 @@ export const Pause: React.FC<PauseProps> = ({
                           value={why}
                           onChange={e => handleSetReflectionAnswer('why', e.target.value)}
                           placeholder={t('pause.why_placeholder')}
-                          className="w-full text-base p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                          className="w-full text-base p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
                         />
                         <div className="absolute right-2 bottom-2">
                           <MicButton
@@ -838,7 +838,7 @@ export const Pause: React.FC<PauseProps> = ({
 
                   {currentCard.type === 'horizon' && (
                     <div className="space-y-3">
-                      <h3 className="text-lg font-bold text-cream">
+                      <h3 className="text-lg font-bold text-navy">
                         {t('pause.q_horizon')}
                       </h3>
                       <div className="space-y-2">
@@ -850,7 +850,7 @@ export const Pause: React.FC<PauseProps> = ({
                             className={`w-full min-h-[46px] p-2.5 rounded-xl text-sm font-bold text-left px-4 transition-all ${
                               horizon === opt.value
                                 ? 'bg-saffron text-navy shadow-md'
-                                : 'bg-slate-900 text-cream border border-slate-700 hover:border-slate-500'
+                                : 'bg-slate-100 text-navy border border-slate-200 hover:border-slate-500'
                             }`}
                           >
                             {opt.label}
@@ -862,7 +862,7 @@ export const Pause: React.FC<PauseProps> = ({
 
                   {currentCard.type === 'max_loss' && (
                     <div className="space-y-3">
-                      <h3 className="text-lg font-bold text-cream">
+                      <h3 className="text-lg font-bold text-navy">
                         {t('pause.max_loss_title')}
                       </h3>
                       <input
@@ -872,14 +872,14 @@ export const Pause: React.FC<PauseProps> = ({
                         value={maxLossStr}
                         onChange={e => handleSetReflectionAnswer('max_loss', e.target.value)}
                         placeholder={t('pause.loss_placeholder')}
-                        className="w-full text-xl min-h-[48px] p-3 rounded-xl bg-slate-900 border-2 border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                        className="w-full text-xl min-h-[48px] p-3 rounded-xl bg-slate-100 border-2 border-slate-200 text-navy focus:border-saffron focus:outline-none"
                       />
                     </div>
                   )}
 
                   {(currentCard.type === 'signal' || currentCard.type === 'general') && (
                     <div className="space-y-3">
-                      <h3 className="text-lg font-bold text-cream">
+                      <h3 className="text-lg font-bold text-navy">
                         {currentCard.questionText}
                       </h3>
 
@@ -899,7 +899,7 @@ export const Pause: React.FC<PauseProps> = ({
                                 className={`min-h-[46px] p-2.5 rounded-xl text-sm font-bold text-left px-4 transition-all ${
                                   isSelected
                                     ? 'bg-saffron text-navy shadow-md'
-                                    : 'bg-slate-900 text-cream border border-slate-700 hover:border-slate-500'
+                                    : 'bg-slate-100 text-navy border border-slate-200 hover:border-slate-500'
                                 }`}
                               >
                                 {opt.label}
@@ -919,7 +919,7 @@ export const Pause: React.FC<PauseProps> = ({
                               handleSetReflectionAnswer(currentCard.qid, e.target.value)
                             }
                             placeholder={t('pause.why_placeholder')}
-                            className="w-full text-base p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                            className="w-full text-base p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
                           />
                           <div className="absolute right-2 bottom-2">
                             <MicButton
@@ -941,10 +941,10 @@ export const Pause: React.FC<PauseProps> = ({
 
                   {currentCard.type === 'mirror' && currentCard.extraData && (
                     <div className="space-y-3">
-                      <span className="text-xs uppercase font-bold text-saffron tracking-wider">
+                      <span className="text-xs uppercase font-bold text-clay tracking-wider">
                         {t('mirror.title')}
                       </span>
-                      <p className="text-base text-cream leading-relaxed italic">
+                      <p className="text-base text-navy leading-relaxed italic">
                         {t('pause.mirror_card_text', {
                           date: currentCard.extraData.date,
                           why: currentCard.extraData.why,
@@ -956,10 +956,10 @@ export const Pause: React.FC<PauseProps> = ({
 
                   {currentCard.type === 'rule' && currentCard.extraData && (
                     <div className="space-y-2">
-                      <span className="text-xs uppercase font-bold text-saffron tracking-wider">
+                      <span className="text-xs uppercase font-bold text-clay tracking-wider">
                         {t('pause.your_rule')}
                       </span>
-                      <p className="text-lg font-bold text-cream">
+                      <p className="text-lg font-bold text-navy">
                         "{currentCard.extraData.ruleText}"
                       </p>
                     </div>
@@ -968,7 +968,7 @@ export const Pause: React.FC<PauseProps> = ({
                   {currentCard.type === 'body' && (
                     <div className="text-center space-y-3 py-4">
                       <div className="text-3xl">🧘‍♂️</div>
-                      <p className="text-lg font-bold text-cream">
+                      <p className="text-lg font-bold text-navy">
                         {currentCard.questionText}
                       </p>
                     </div>
@@ -977,7 +977,7 @@ export const Pause: React.FC<PauseProps> = ({
                   {currentCard.type === 'ai_trigger' && (
                     <div className="space-y-3 py-2">
                       <AIBadge isAI={Boolean(currentCard.extraData?.isAI)} />
-                      <p className="text-base font-semibold text-cream leading-relaxed">
+                      <p className="text-base font-semibold text-navy leading-relaxed">
                         {currentCard.title}
                       </p>
                     </div>
@@ -986,7 +986,7 @@ export const Pause: React.FC<PauseProps> = ({
                   {currentCard.type === 'ai_question' && (
                     <div className="space-y-3">
                       <AIBadge isAI={Boolean(currentCard.extraData?.isAI)} />
-                      <h3 className="text-lg font-bold text-cream">
+                      <h3 className="text-lg font-bold text-navy">
                         {currentCard.questionText}
                       </h3>
                       <div className="relative pt-1">
@@ -1000,7 +1000,7 @@ export const Pause: React.FC<PauseProps> = ({
                             )
                           }
                           placeholder={t('pause.why_placeholder')}
-                          className="w-full text-base p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                          className="w-full text-base p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
                         />
                         <div className="absolute right-2 bottom-2">
                           <MicButton
@@ -1017,12 +1017,12 @@ export const Pause: React.FC<PauseProps> = ({
                 </div>
 
                 {/* Card Bottom Nav */}
-                <div className="flex items-center justify-between pt-2 border-t border-slate-700/60 text-xs">
+                <div className="flex items-center justify-between pt-2 border-t border-slate-200 text-xs">
                   <button
                     type="button"
                     disabled={cardIndex === 0}
                     onClick={() => setCardIndex(prev => Math.max(0, prev - 1))}
-                    className="min-h-[48px] px-3 py-1 rounded-xl text-slate-400 hover:text-cream disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="min-h-[48px] px-3 py-1 rounded-xl text-slate-500 hover:text-navy disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     ← {t('pause.prev_card')}
                   </button>
@@ -1040,7 +1040,7 @@ export const Pause: React.FC<PauseProps> = ({
                       }
                       setCardIndex(prev => Math.min(cards.length - 1, prev + 1));
                     }}
-                    className="min-h-[48px] px-3 py-1 rounded-xl text-saffron hover:underline font-bold disabled:opacity-30 disabled:cursor-not-allowed"
+                    className="min-h-[48px] px-3 py-1 rounded-xl text-clay hover:underline font-bold disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     {t('pause.next_card')} →
                   </button>
@@ -1077,7 +1077,7 @@ export const Pause: React.FC<PauseProps> = ({
                     }
                     setScreen(4);
                   }}
-                  className="text-xs text-slate-400 hover:text-cream underline py-1"
+                  className="text-xs text-slate-500 hover:text-navy underline py-1"
                 >
                   {t('pause.skip_to_decide', 'Go to Decide')}
                 </button>
@@ -1091,29 +1091,29 @@ export const Pause: React.FC<PauseProps> = ({
       {screen === 4 && (
         <div className="my-auto space-y-6">
           {/* Compact Recap */}
-          <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-4 shadow-md space-y-3">
-            <h3 className="text-xs uppercase font-bold text-saffron tracking-wider">
+          <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-md space-y-3">
+            <h3 className="text-xs uppercase font-bold text-clay tracking-wider">
               {t('pause.recap_title')}
             </h3>
 
             <div className="space-y-2 text-sm">
               <div>
-                <span className="text-xs text-slate-400 block">{t('pause.q_why')}</span>
-                <span className="font-semibold text-cream">
+                <span className="text-xs text-slate-500 block">{t('pause.q_why')}</span>
+                <span className="font-semibold text-navy">
                   {why.trim() ? `"${why}"` : <span className="text-rukoRed italic">Required</span>}
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-700/60">
+              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200">
                 <div>
-                  <span className="text-xs text-slate-400 block">{t('pause.horizon_label')}</span>
-                  <span className="font-medium text-cream capitalize">
+                  <span className="text-xs text-slate-500 block">{t('pause.horizon_label')}</span>
+                  <span className="font-medium text-navy capitalize">
                     {t(`pause.horizon_${horizon}`)}
                   </span>
                 </div>
                 <div>
-                  <span className="text-xs text-slate-400 block">{t('pause.max_loss_label')}</span>
-                  <span className="font-mono font-medium text-cream">
+                  <span className="text-xs text-slate-500 block">{t('pause.max_loss_label')}</span>
+                  <span className="font-mono font-medium text-navy">
                     ₹{Number(maxLossStr || 0).toLocaleString('en-IN')}
                   </span>
                 </div>
@@ -1132,7 +1132,7 @@ export const Pause: React.FC<PauseProps> = ({
                     value={why}
                     onChange={e => handleSetReflectionAnswer('why', e.target.value)}
                     placeholder={t('pause.why_placeholder')}
-                    className="w-full text-sm min-h-[48px] p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                    className="w-full text-sm min-h-[48px] p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
                   />
                   <div className="absolute right-1 bottom-1">
                     <MicButton
@@ -1177,7 +1177,7 @@ export const Pause: React.FC<PauseProps> = ({
                 className={`min-h-[48px] px-4 py-2 text-sm font-medium transition-all ${
                   why.trim().length < 3 || isSubmitting
                     ? 'text-slate-600 cursor-not-allowed'
-                    : 'text-slate-400 hover:text-cream underline'
+                    : 'text-slate-500 hover:text-navy underline'
                 }`}
               >
                 {t('pause.btn_proceed')}
@@ -1190,16 +1190,16 @@ export const Pause: React.FC<PauseProps> = ({
       {/* SCREEN 5: Confirmation */}
       {screen === 5 && (
         <div className="my-auto space-y-6 text-center py-6">
-          <div className="w-20 h-20 mx-auto rounded-full bg-rukoGreen/20 border-4 border-rukoGreen flex items-center justify-center text-rukoGreen text-3xl">
+          <div className="w-20 h-20 mx-auto rounded-full bg-rukoGreen/20 border-4 border-rukoGreen flex items-center justify-center text-teal-700 text-3xl">
             ✓
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-cream">
+            <h2 className="text-2xl font-bold text-navy">
               {t('pause.recorded_title')}
             </h2>
             {(finalOutcome === 'abandoned' || finalOutcome === 'delayed') && (
-              <p className="text-sm font-medium text-saffron max-w-xs mx-auto leading-relaxed">
+              <p className="text-sm font-medium text-clay max-w-xs mx-auto leading-relaxed">
                 {t('pause.courage_quote')}
               </p>
             )}

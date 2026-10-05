@@ -29,18 +29,18 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({ onSelect }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-abyss text-cream flex flex-col justify-between p-6 max-w-md mx-auto overflow-y-auto">
+    <div className="fixed inset-0 z-[100] bg-[#F4F6FA] text-navy flex flex-col justify-between p-6 max-w-md mx-auto overflow-y-auto">
       <div className="my-auto text-center space-y-6 rise">
         {/* App Logo & Title */}
         <div className="space-y-3">
-          <div className="relative w-24 h-24 mx-auto rounded-full bg-gradient-to-b from-saffron/25 to-transparent border-2 border-saffron/70 flex items-center justify-center text-saffron text-4xl font-black shadow-diya">
+          <div className="relative w-24 h-24 mx-auto rounded-full bg-gradient-to-b from-saffron to-ember border-2 border-saffron flex items-center justify-center text-night text-4xl font-black shadow-neu-diya">
             <span className="animate-flicker">रु</span>
           </div>
-          <h1 className="font-ritual text-5xl font-black text-cream tracking-tight">
-            रुको <span className="text-saffron">·</span> Ruko
+          <h1 className="font-ritual text-5xl font-black text-navy tracking-tight">
+            रुको <span className="text-clay">·</span> Ruko
           </h1>
           <div className="jaali-line w-48 mx-auto" aria-hidden="true" />
-          <p className="text-sm font-medium text-slate-300 leading-relaxed max-w-xs mx-auto">
+          <p className="text-sm font-medium text-slate-600 leading-relaxed max-w-xs mx-auto">
             फ़ैसले से पहले एक पल रुकें · Take a moment before you decide
           </p>
         </div>
@@ -54,8 +54,8 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({ onSelect }) => {
               onClick={() => handleSelect(l.code)}
               className={`min-h-[56px] py-3 px-4 rounded-2xl font-bold text-lg transition-all active:scale-95 ${
                 idx === 0
-                  ? 'bg-saffron text-night shadow-diya hover:bg-[#e09430]'
-                  : 'bg-slate-800 border-2 border-slate-600 text-cream hover:border-saffron hover:bg-slate-700/80 shadow-xl'
+                  ? 'bg-saffron text-night shadow-neu-btn hover:bg-[#e09430]'
+                  : 'bg-white border-2 border-slate-200 text-navy hover:border-saffron shadow-sm'
               }`}
             >
               <span className="block leading-tight">{l.nativeName}</span>

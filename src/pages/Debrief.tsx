@@ -106,7 +106,7 @@ export const Debrief: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="max-w-md mx-auto p-4 text-center text-slate-400">
+      <div className="max-w-md mx-auto p-4 text-center text-slate-500">
         Loading...
       </div>
     );
@@ -115,7 +115,7 @@ export const Debrief: React.FC = () => {
   if (!session) {
     return (
       <div className="max-w-md mx-auto p-4 text-center space-y-4">
-        <p className="text-slate-400">Session not found.</p>
+        <p className="text-slate-500">Session not found.</p>
         <BigButton variant="secondary" onClick={() => navigate('/practice')}>
           {t('debrief.practice_again')}
         </BigButton>
@@ -130,62 +130,62 @@ export const Debrief: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4 pb-20 space-y-6">
       <header className="space-y-1">
-        <h1 className="font-ritual text-3xl font-black text-cream">
+        <h1 className="font-ritual text-3xl font-black text-navy">
           {t('debrief.title')}
         </h1>
-        <p className="text-xs text-saffron uppercase font-bold tracking-[0.16em]">
+        <p className="text-xs text-clay uppercase font-bold tracking-[0.16em]">
           {t(`practice.scenarios.${session.scenario}_title`, session.scenario)}
         </p>
       </header>
 
       {/* Metrics Grid */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3">
-          <div className="text-xs text-slate-400">{t('debrief.final_pnl')}</div>
-          <div className="text-lg font-bold font-mono text-cream mt-0.5">
+        <div className="bg-white border border-slate-200 rounded-2xl p-3">
+          <div className="text-xs text-slate-500">{t('debrief.final_pnl')}</div>
+          <div className="text-lg font-bold font-mono text-navy mt-0.5">
             {pnlFormatted}
           </div>
         </div>
 
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3">
-          <div className="text-xs text-slate-400">{t('debrief.max_drawdown')}</div>
-          <div className="text-lg font-bold font-mono text-cream mt-0.5">
+        <div className="bg-white border border-slate-200 rounded-2xl p-3">
+          <div className="text-xs text-slate-500">{t('debrief.max_drawdown')}</div>
+          <div className="text-lg font-bold font-mono text-navy mt-0.5">
             {session.maxDrawdownPercent ?? 0}%
           </div>
         </div>
 
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3">
-          <div className="text-xs text-slate-400">{t('debrief.trades_opened')}</div>
-          <div className="text-lg font-bold font-mono text-cream mt-0.5">
+        <div className="bg-white border border-slate-200 rounded-2xl p-3">
+          <div className="text-xs text-slate-500">{t('debrief.trades_opened')}</div>
+          <div className="text-lg font-bold font-mono text-navy mt-0.5">
             {session.tradesOpened ?? 0}
           </div>
         </div>
 
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3">
-          <div className="text-xs text-slate-400">{t('debrief.quick_reentry')}</div>
-          <div className="text-lg font-bold font-mono text-cream mt-0.5">
+        <div className="bg-white border border-slate-200 rounded-2xl p-3">
+          <div className="text-xs text-slate-500">{t('debrief.quick_reentry')}</div>
+          <div className="text-lg font-bold font-mono text-navy mt-0.5">
             {session.tradesAfterLoss ?? 0}
           </div>
         </div>
 
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3">
-          <div className="text-xs text-slate-400">{t('debrief.size_change')}</div>
-          <div className="text-lg font-bold font-mono text-cream mt-0.5">
+        <div className="bg-white border border-slate-200 rounded-2xl p-3">
+          <div className="text-xs text-slate-500">{t('debrief.size_change')}</div>
+          <div className="text-lg font-bold font-mono text-navy mt-0.5">
             {session.sizeIncreasePercent ?? 0}%
           </div>
         </div>
 
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3">
-          <div className="text-xs text-slate-400">{t('debrief.pauses_taken')}</div>
-          <div className="text-lg font-bold font-mono text-cream mt-0.5">
+        <div className="bg-white border border-slate-200 rounded-2xl p-3">
+          <div className="text-xs text-slate-500">{t('debrief.pauses_taken')}</div>
+          <div className="text-lg font-bold font-mono text-navy mt-0.5">
             {session.pausesTaken ?? 0}
           </div>
         </div>
       </div>
 
       {/* Observed Pressure Signals */}
-      <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-4 space-y-2">
-        <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2">
+        <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
           {t('debrief.signals_observed')}
         </div>
         {session.observedSignals && session.observedSignals.length > 0 ? (
@@ -193,14 +193,14 @@ export const Debrief: React.FC = () => {
             {session.observedSignals.map(sig => (
               <span
                 key={sig}
-                className="bg-amber-950/60 border border-saffron/40 text-saffron text-xs font-semibold px-2.5 py-1 rounded-lg"
+                className="bg-amber-50 border border-saffron/40 text-clay text-xs font-semibold px-2.5 py-1 rounded-lg"
               >
                 {t(`signal_names.${sig}`, sig)}
               </span>
             ))}
           </div>
         ) : (
-          <p className="text-xs text-slate-400 pt-1">
+          <p className="text-xs text-slate-500 pt-1">
             {t('debrief.none_observed')}
           </p>
         )}
@@ -208,22 +208,22 @@ export const Debrief: React.FC = () => {
 
       {/* AI or Fallback Summary Card */}
       {summaryText && (
-        <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-4 space-y-3">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-cream">
+            <h3 className="text-sm font-bold text-navy">
               {t('debrief.ai_summary_title')}
             </h3>
             <AIBadge isAI={isAISummary} />
           </div>
-          <p className="text-xs text-slate-300 leading-relaxed font-sans">
+          <p className="text-xs text-slate-600 leading-relaxed font-sans">
             {summaryText}
           </p>
         </div>
       )}
 
       {/* Self-reflection Note (text or voice) */}
-      <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-4 space-y-3">
-        <label className="block text-sm font-bold text-cream">
+      <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-3">
+        <label className="block text-sm font-bold text-navy">
           {t('debrief.self_reflection_prompt')}
         </label>
         <div className="relative">
@@ -235,7 +235,7 @@ export const Debrief: React.FC = () => {
             }}
             placeholder={t('debrief.self_reflection_placeholder')}
             rows={3}
-            className="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 pr-12 text-xs text-cream placeholder-slate-500 focus:outline-none focus:border-saffron"
+            className="w-full bg-slate-100 border border-slate-200 rounded-xl p-3 pr-12 text-xs text-navy placeholder-slate-500 focus:outline-none focus:border-saffron"
           />
           <div className="absolute right-2 bottom-3">
             <MicButton
@@ -259,14 +259,14 @@ export const Debrief: React.FC = () => {
       </div>
 
       {/* Closing Disclaimer Banner */}
-      <div className="bg-amber-950/40 border border-saffron/40 text-saffron p-3.5 rounded-2xl text-xs font-medium text-center leading-relaxed">
+      <div className="bg-amber-50 border border-saffron/40 text-clay p-3.5 rounded-2xl text-xs font-medium text-center leading-relaxed">
         {t('debrief.closing_disclaimer')}
       </div>
 
       {impact && (
-        <div className="bg-emerald-950/40 border border-emerald-700/50 rounded-2xl p-4 space-y-1">
-          <div className="text-xs font-bold text-emerald-300 uppercase tracking-wider">Pause impact · practice only</div>
-          <p className="text-xs text-slate-300 leading-relaxed">{impact}</p>
+        <div className="bg-emerald-50 border border-emerald-700/50 rounded-2xl p-4 space-y-1">
+          <div className="text-xs font-bold text-emerald-700 uppercase tracking-wider">Pause impact · practice only</div>
+          <p className="text-xs text-slate-600 leading-relaxed">{impact}</p>
           <p className="text-[11px] text-slate-500">Real Mirror stays clean — this table never mixes practice with real decisions.</p>
         </div>
       )}

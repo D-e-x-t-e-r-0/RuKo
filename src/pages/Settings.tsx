@@ -44,20 +44,20 @@ export const Settings: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4 pb-20 space-y-6">
       <header>
-        <h1 className="text-2xl font-bold text-cream">
+        <h1 className="text-2xl font-bold text-navy">
           {t('settings.title')}
         </h1>
       </header>
 
       {statusMessage && (
-        <div className="p-3 bg-rukoGreen/20 border border-rukoGreen/60 rounded-xl text-sm font-semibold text-cream text-center">
+        <div className="p-3 bg-rukoGreen/20 border border-rukoGreen/60 rounded-xl text-sm font-semibold text-navy text-center">
           {statusMessage}
         </div>
       )}
 
       {/* Language Grid — all 12 supported languages */}
-      <section className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-3">
-        <h2 className="text-xs uppercase font-bold text-saffron tracking-wider">
+      <section className="bg-white border border-slate-200 rounded-2xl p-4 space-y-3">
+        <h2 className="text-xs uppercase font-bold text-clay tracking-wider">
           {t('settings.language')}
         </h2>
         <div className="grid grid-cols-2 gap-2.5" role="group" aria-label={t('settings.language')}>
@@ -70,7 +70,7 @@ export const Settings: React.FC = () => {
               className={`min-h-[48px] py-2 px-3 rounded-xl font-bold text-sm transition-all ${
                 currentLang === l.code
                   ? 'bg-saffron text-night shadow-diya'
-                  : 'bg-slate-900 text-slate-300 border border-slate-700'
+                  : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}
             >
               <span className="block leading-tight">{l.nativeName}</span>
@@ -81,12 +81,12 @@ export const Settings: React.FC = () => {
       </section>
 
       {/* Voice engine — Sarvam AI with device fallback */}
-      <section className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-3">
+      <section className="bg-white border border-slate-200 rounded-2xl p-4 space-y-3">
         <div>
-          <h2 className="text-xs uppercase font-bold text-saffron tracking-wider">
+          <h2 className="text-xs uppercase font-bold text-clay tracking-wider">
             {t('settings.voice_title')}
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             {t('settings.voice_desc')}
           </p>
         </div>
@@ -106,7 +106,7 @@ export const Settings: React.FC = () => {
               className={`min-h-[48px] py-2 px-4 rounded-xl font-bold text-sm text-left transition-all ${
                 voiceMode === mode
                   ? 'bg-saffron text-night shadow-diya'
-                  : 'bg-slate-900 text-slate-300 border border-slate-700'
+                  : 'bg-slate-100 text-slate-600 border border-slate-200'
               }`}
             >
               {label}
@@ -116,14 +116,14 @@ export const Settings: React.FC = () => {
       </section>
 
       {/* Smart Reflection (AI) Toggle */}
-      <section className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-2 shadow-sm">
+      <section className="bg-white border border-slate-200 rounded-2xl p-4 space-y-2 shadow-sm">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-bold text-cream flex items-center space-x-1.5">
+            <h2 className="text-sm font-bold text-navy flex items-center space-x-1.5">
               <span>✨</span>
               <span>{t('settings.ai_toggle_title')}</span>
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-500 mt-0.5">
               {t('settings.ai_toggle_desc')}
             </p>
           </div>
@@ -137,7 +137,7 @@ export const Settings: React.FC = () => {
             className={`min-h-[36px] px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
               aiOn
                 ? 'bg-saffron text-navy shadow-md'
-                : 'bg-slate-700 text-slate-400'
+                : 'bg-slate-700 text-slate-500'
             }`}
           >
             {aiOn ? 'ON' : 'OFF'}
@@ -163,8 +163,8 @@ export const Settings: React.FC = () => {
       </section>
 
       {/* Privacy Guarantee Note */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-4 text-center">
-        <p className="text-xs text-slate-400 font-medium">
+      <div className="bg-slate-100 border border-slate-200 rounded-2xl p-4 text-center">
+        <p className="text-xs text-slate-500 font-medium">
           🔒 {t('settings.privacy_note')}
         </p>
       </div>

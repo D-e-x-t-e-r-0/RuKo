@@ -62,18 +62,18 @@ export const Journal: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4 pb-20 space-y-5">
       <header className="space-y-3">
-        <h1 className="text-2xl font-bold text-cream">
+        <h1 className="text-2xl font-bold text-navy">
           {t('journal.title')}
         </h1>
         {/* Segmented Filter */}
-        <div className="flex bg-slate-800 p-1 rounded-2xl border border-slate-700">
+        <div className="flex bg-white p-1 rounded-2xl border border-slate-200">
           <button
             type="button"
             onClick={() => setFilter('real')}
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all ${
               filter === 'real'
                 ? 'bg-saffron text-navy shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             {t('journal.filter_real')}
@@ -84,7 +84,7 @@ export const Journal: React.FC = () => {
             className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all ${
               filter === 'practice'
                 ? 'bg-saffron text-navy shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             {t('journal.filter_practice')}
@@ -93,7 +93,7 @@ export const Journal: React.FC = () => {
 
         {/* Weekly Summary (Real mode only) */}
         {filter === 'real' && (
-          <p className="text-sm font-medium text-saffron bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+          <p className="text-sm font-medium text-clay bg-white p-3 rounded-xl border border-slate-200">
             {t('journal.summary', { n: nPauses, k: kAbandonedDelayed })}
           </p>
         )}
@@ -102,7 +102,7 @@ export const Journal: React.FC = () => {
       {/* Practice Sessions (in practice mode) */}
       {filter === 'practice' && sessions.length > 0 && (
         <div className="space-y-3">
-          <h2 className="text-sm font-bold text-cream">
+          <h2 className="text-sm font-bold text-navy">
             {t('journal.practice_sessions_title')}
           </h2>
           <div className="space-y-2.5">
@@ -112,45 +112,45 @@ export const Journal: React.FC = () => {
               return (
                 <div
                   key={s.id}
-                  className="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 space-y-2 shadow-md"
+                  className="bg-white border border-slate-200 rounded-2xl p-4 space-y-2 shadow-md"
                 >
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-cream uppercase tracking-wider">
+                    <span className="font-bold text-navy uppercase tracking-wider">
                       {t(`practice.scenarios.${s.scenario}_title`, s.scenario)}
                     </span>
-                    <span className="text-slate-400">
+                    <span className="text-slate-500">
                       {format(new Date(s.startedAt), 'dd MMM yyyy, hh:mm a')}
                     </span>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-xs pt-1">
                     <div>
-                      <span className="text-slate-400 block text-[10px]">P&L</span>
-                      <span className="font-mono font-bold text-cream">
+                      <span className="text-slate-500 block text-[10px]">P&L</span>
+                      <span className="font-mono font-bold text-navy">
                         {pnlSign}₹{Math.abs(pnl).toLocaleString('en-IN')}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px]">Drawdown</span>
-                      <span className="font-mono font-bold text-cream">
+                      <span className="text-slate-500 block text-[10px]">Drawdown</span>
+                      <span className="font-mono font-bold text-navy">
                         {s.maxDrawdownPercent ?? 0}%
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px]">{t('journal.pauses_label')}</span>
-                      <span className="font-mono font-bold text-cream">
+                      <span className="text-slate-500 block text-[10px]">{t('journal.pauses_label')}</span>
+                      <span className="font-mono font-bold text-navy">
                         {s.pausesTaken ?? 0}
                       </span>
                     </div>
                   </div>
                   {s.selfReflection && (
-                    <p className="text-xs italic text-slate-300 bg-slate-900/60 p-2.5 rounded-xl border border-slate-700/60">
+                    <p className="text-xs italic text-slate-600 bg-slate-100 p-2.5 rounded-xl border border-slate-200">
                       "{s.selfReflection}"
                     </p>
                   )}
                   <div className="pt-1">
                     <Link
                       to={`/debrief?id=${s.id}`}
-                      className="inline-flex items-center min-h-[48px] px-2 -ml-2 text-xs font-bold text-saffron hover:underline"
+                      className="inline-flex items-center min-h-[48px] px-2 -ml-2 text-xs font-bold text-clay hover:underline"
                     >
                       {t('journal.view_debrief')}
                     </Link>
@@ -165,14 +165,14 @@ export const Journal: React.FC = () => {
       {/* Decisions List */}
       <div className="space-y-4">
         {displayedDecisions.length === 0 && (filter === 'real' || sessions.length === 0) ? (
-          <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-8 text-center space-y-3 shadow-md">
-            <div className="w-12 h-12 mx-auto rounded-full bg-slate-700/60 flex items-center justify-center text-saffron text-2xl">
+          <div className="bg-white border border-slate-200 rounded-2xl p-8 text-center space-y-3 shadow-md">
+            <div className="w-12 h-12 mx-auto rounded-full bg-slate-700/60 flex items-center justify-center text-clay text-2xl">
               📖
             </div>
-            <h3 className="text-base font-bold text-cream">
+            <h3 className="text-base font-bold text-navy">
               {t('journal.empty_title')}
             </h3>
-            <p className="text-sm text-slate-400 max-w-xs mx-auto">
+            <p className="text-sm text-slate-500 max-w-xs mx-auto">
               {t('journal.empty_desc')}
             </p>
           </div>
@@ -185,11 +185,11 @@ export const Journal: React.FC = () => {
             return (
               <div
                 key={d.id}
-                className="bg-slate-800/90 border border-slate-700/80 rounded-2xl p-4 space-y-3 shadow-md"
+                className="bg-white border border-slate-200 rounded-2xl p-4 space-y-3 shadow-md"
               >
                 {/* Header: Date and Level */}
                 <div className="flex justify-between items-center text-xs">
-                  <span className="text-slate-400 font-medium">
+                  <span className="text-slate-500 font-medium">
                     {format(new Date(d.ts), 'dd MMM yyyy, HH:mm')}
                   </span>
                   <span
@@ -197,8 +197,8 @@ export const Journal: React.FC = () => {
                       d.level === 'high'
                         ? 'bg-rukoRed/20 text-rukoRed border border-rukoRed'
                         : d.level === 'caution'
-                        ? 'bg-saffron/20 text-saffron border border-saffron'
-                        : 'bg-rukoGreen/20 text-rukoGreen border border-rukoGreen'
+                        ? 'bg-saffron/20 text-clay border border-saffron'
+                        : 'bg-rukoGreen/20 text-teal-700 border border-rukoGreen'
                     }`}
                   >
                     {t(`levels.${d.level}`)}
@@ -207,63 +207,63 @@ export const Journal: React.FC = () => {
 
                 {/* Why text */}
                 <div>
-                  <div className="text-sm text-slate-400 mb-1">
+                  <div className="text-sm text-slate-500 mb-1">
                     {t('pause.q_why')}
                   </div>
-                  <div className="text-base font-semibold text-cream">
+                  <div className="text-base font-semibold text-navy">
                     "{d.why}"
                   </div>
                 </div>
 
                 {/* Outcome & Details */}
-                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-700/60 text-xs">
-                  <div className="text-slate-300">
-                    <span className="text-slate-400 mr-1.5">{t('journal.outcome_label')}:</span>
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200 text-xs">
+                  <div className="text-slate-600">
+                    <span className="text-slate-500 mr-1.5">{t('journal.outcome_label')}:</span>
                     <span
                       className={`font-bold ${
                         d.outcome === 'abandoned'
                           ? 'text-rukoRed'
                           : d.outcome === 'delayed'
-                          ? 'text-saffron'
-                          : 'text-rukoGreen'
+                          ? 'text-clay'
+                          : 'text-teal-700'
                       }`}
                     >
                       {t(`journal.outcome_${d.outcome}`)}
                     </span>
                   </div>
-                  <div className="text-slate-300 font-mono">
+                  <div className="text-slate-600 font-mono">
                     ₹{d.amount.toLocaleString('en-IN')}
                   </div>
                 </div>
 
                 {/* Expandable Details Toggle */}
-                <div className="pt-2 border-t border-slate-700/40 flex justify-between items-center text-xs">
+                <div className="pt-2 border-t border-slate-200/40 flex justify-between items-center text-xs">
                   <button
                     type="button"
                     onClick={() =>
                       setExpandedDetails(prev => ({ ...prev, [d.id!]: !prev[d.id!] }))
                     }
                     aria-expanded={!!expandedDetails[d.id!]}
-                    className="min-h-[48px] px-2 -ml-2 text-saffron hover:underline font-semibold flex items-center space-x-1"
+                    className="min-h-[48px] px-2 -ml-2 text-clay hover:underline font-semibold flex items-center space-x-1"
                   >
                     <span>{t('journal.details')}</span>
                     <span>{expandedDetails[d.id!] ? '▲' : '▼'}</span>
                   </button>
-                  <span className="text-[11px] text-slate-400 capitalize">
+                  <span className="text-[11px] text-slate-500 capitalize">
                     {d.horizon} • {d.funding}
                   </span>
                 </div>
 
                 {/* Expanded Details Body */}
                 {expandedDetails[d.id!] && (
-                  <div className="p-3 rounded-xl bg-slate-900/70 border border-slate-700/60 text-xs space-y-2 mt-2">
-                    <div className="grid grid-cols-2 gap-2 text-slate-300">
+                  <div className="p-3 rounded-xl bg-slate-100/70 border border-slate-200 text-xs space-y-2 mt-2">
+                    <div className="grid grid-cols-2 gap-2 text-slate-600">
                       <div>
-                        <span className="text-slate-400 block text-[11px]">{t('journal.max_loss_label')}</span>
+                        <span className="text-slate-500 block text-[11px]">{t('journal.max_loss_label')}</span>
                         <span className="font-mono">₹{d.maxLoss.toLocaleString('en-IN')}</span>
                       </div>
                       <div>
-                        <span className="text-slate-400 block text-[11px]">{t('journal.signals_label')}</span>
+                        <span className="text-slate-500 block text-[11px]">{t('journal.signals_label')}</span>
                         <span>
                           {d.firedSignals.length > 0
                             ? d.firedSignals.map(sig => t(`signal_names.${sig}`, sig)).join(', ')
@@ -274,13 +274,13 @@ export const Journal: React.FC = () => {
 
                     {/* Triggers (Phase 3) */}
                     {d.triggers && d.triggers.length > 0 && (
-                      <div className="pt-1.5 border-t border-slate-800 space-y-1">
-                        <span className="text-slate-400 text-[11px] block">{t('journal.noticed_patterns_label')}</span>
+                      <div className="pt-1.5 border-t border-slate-200 space-y-1">
+                        <span className="text-slate-500 text-[11px] block">{t('journal.noticed_patterns_label')}</span>
                         <div className="flex flex-wrap gap-1.5">
                           {d.triggers.map((trig, idx) => (
                             <span
                               key={idx}
-                              className="px-2 py-0.5 rounded-md bg-amber-950/60 border border-saffron/40 text-saffron text-[11px] font-medium"
+                              className="px-2 py-0.5 rounded-md bg-amber-50 border border-saffron/40 text-clay text-[11px] font-medium"
                             >
                               {t(`pause.trigger_labels.${trig.type}`, trig.type)}: "{trig.evidence}"
                             </span>
@@ -291,12 +291,12 @@ export const Journal: React.FC = () => {
 
                     {/* Reflections */}
                     {d.reflections && d.reflections.length > 0 && (
-                      <div className="pt-1.5 border-t border-slate-800 space-y-1">
-                        <span className="text-slate-400 text-[11px] block">{t('journal.reflections_title')}:</span>
+                      <div className="pt-1.5 border-t border-slate-200 space-y-1">
+                        <span className="text-slate-500 text-[11px] block">{t('journal.reflections_title')}:</span>
                         <div className="space-y-1">
                           {d.reflections.map((ref, idx) => (
-                            <div key={idx} className="text-slate-300 bg-slate-800/60 p-1.5 rounded-lg">
-                              <span className="font-semibold text-slate-400 mr-1">{ref.qid.replace('q_', '')}:</span>
+                            <div key={idx} className="text-slate-600 bg-slate-50 p-1.5 rounded-lg">
+                              <span className="font-semibold text-slate-500 mr-1">{ref.qid.replace('q_', '')}:</span>
                               <span>{ref.answer}</span>
                             </div>
                           ))}
@@ -308,17 +308,17 @@ export const Journal: React.FC = () => {
 
                 {/* Existing Reflection */}
                 {(d.reflection || d.feeling) && (
-                  <div className="mt-3 p-3 rounded-xl bg-slate-900/60 border border-slate-700/80 text-xs space-y-1">
+                  <div className="mt-3 p-3 rounded-xl bg-slate-100 border border-slate-200 text-xs space-y-1">
                     <div className="flex items-center space-x-2">
-                      <span className="text-slate-400">{t('journal.reflection_label')}</span>
+                      <span className="text-slate-500">{t('journal.reflection_label')}</span>
                       {d.feeling && (
-                        <span className="font-bold text-saffron uppercase">
+                        <span className="font-bold text-clay uppercase">
                           {t(`journal.feel_${d.feeling}`)}
                         </span>
                       )}
                     </div>
                     {d.reflection && (
-                      <p className="text-slate-200 italic mt-1 font-sans">
+                      <p className="text-slate-700 italic mt-1 font-sans">
                         "{d.reflection}"
                       </p>
                     )}
@@ -327,8 +327,8 @@ export const Journal: React.FC = () => {
 
                 {/* Morning-after Prompt Card */}
                 {needsReflection && d.id && (
-                  <div className="mt-3 p-3.5 rounded-xl bg-amber-950/40 border border-saffron/50 space-y-3">
-                    <p className="text-sm font-bold text-saffron">
+                  <div className="mt-3 p-3.5 rounded-xl bg-amber-50 border border-saffron/50 space-y-3">
+                    <p className="text-sm font-bold text-clay">
                       {t('journal.morning_prompt')}
                     </p>
                     <div className="grid grid-cols-3 gap-2">
@@ -340,7 +340,7 @@ export const Journal: React.FC = () => {
                         className={`min-h-[48px] py-2 px-2 rounded-xl font-bold text-xs transition-all ${
                           currentFeeling === 'calm'
                             ? 'bg-rukoGreen text-navy'
-                            : 'bg-slate-800 text-slate-200 border border-slate-600'
+                            : 'bg-white text-slate-700 border border-slate-300'
                         }`}
                       >
                         {t('journal.feel_calm')}
@@ -352,8 +352,8 @@ export const Journal: React.FC = () => {
                         }
                         className={`min-h-[48px] py-2 px-2 rounded-xl font-bold text-xs transition-all ${
                           currentFeeling === 'regret'
-                            ? 'bg-rukoRed text-cream'
-                            : 'bg-slate-800 text-slate-200 border border-slate-600'
+                            ? 'bg-rukoRed text-navy'
+                            : 'bg-white text-slate-700 border border-slate-300'
                         }`}
                       >
                         {t('journal.feel_regret')}
@@ -366,7 +366,7 @@ export const Journal: React.FC = () => {
                         className={`min-h-[48px] py-2 px-2 rounded-xl font-bold text-xs transition-all ${
                           currentFeeling === 'unsure'
                             ? 'bg-saffron text-navy'
-                            : 'bg-slate-800 text-slate-200 border border-slate-600'
+                            : 'bg-white text-slate-700 border border-slate-300'
                         }`}
                       >
                         {t('journal.feel_unsure')}
@@ -380,7 +380,7 @@ export const Journal: React.FC = () => {
                       onChange={e =>
                         setReflectionTexts(prev => ({ ...prev, [d.id!]: e.target.value }))
                       }
-                      className="w-full text-sm min-h-[48px] p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+                      className="w-full text-sm min-h-[48px] p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
                     />
 
                     <button

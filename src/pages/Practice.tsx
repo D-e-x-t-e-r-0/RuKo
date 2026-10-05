@@ -457,7 +457,7 @@ export const Practice: React.FC = () => {
   // If paused for ritual modal
   if (isPausedForRitual) {
     return (
-      <div className="fixed inset-0 z-[70] bg-[#0F172A] overflow-y-auto">
+      <div className="fixed inset-0 z-[70] bg-slate-100 overflow-y-auto">
         <Pause
           mode="practice"
           sessionId={sessionId ?? undefined}
@@ -472,7 +472,7 @@ export const Practice: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4 pb-20 space-y-4">
       {/* Permanent Warning Banner */}
-      <div className="bg-amber-950/60 border border-saffron/60 text-saffron p-3 rounded-2xl text-xs font-semibold text-center leading-relaxed">
+      <div className="bg-amber-50 border border-saffron/60 text-clay p-3 rounded-2xl text-xs font-semibold text-center leading-relaxed">
         {t('practice.banner')}
       </div>
 
@@ -480,10 +480,10 @@ export const Practice: React.FC = () => {
       {sessionId === null ? (
         <div className="space-y-5">
           <header>
-            <h1 className="text-2xl font-bold text-cream">
+            <h1 className="text-2xl font-bold text-navy">
               {t('practice.title')}
             </h1>
-            <p className="text-sm text-slate-400 mt-1">
+            <p className="text-sm text-slate-500 mt-1">
               {t('practice.select_scenario')}
             </p>
           </header>
@@ -502,19 +502,19 @@ export const Practice: React.FC = () => {
                   onClick={() => setSelectedScenario(scId)}
                   className={`w-full text-left p-4 rounded-2xl border transition-all ${
                     isSelected
-                      ? 'bg-slate-800 border-saffron ring-1 ring-saffron'
-                      : 'bg-slate-800/60 border-slate-700 hover:border-slate-500'
+                      ? 'bg-white border-saffron ring-1 ring-saffron'
+                      : 'bg-slate-50 border-slate-200 hover:border-slate-500'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-cream text-base">
+                    <span className="font-bold text-navy text-base">
                       {t(titleKey, scId)}
                     </span>
-                    <span className="text-xs text-slate-400 font-mono">
+                    <span className="text-xs text-slate-500 font-mono">
                       {sc.startHour.toString().padStart(2, '0')}:{sc.startMinute.toString().padStart(2, '0')}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-300 mt-1">
+                  <p className="text-xs text-slate-600 mt-1">
                     {t(descKey, i18n.language.startsWith('hi') ? sc.hiDescription : sc.enDescription)}
                   </p>
                 </button>
@@ -523,12 +523,12 @@ export const Practice: React.FC = () => {
           </div>
 
           {/* Pause Ritual Toggle */}
-          <div className="bg-slate-800/80 border border-slate-700 p-4 rounded-2xl flex items-center justify-between">
+          <div className="bg-white border border-slate-200 p-4 rounded-2xl flex items-center justify-between">
             <div className="space-y-0.5">
-              <div className="text-sm font-bold text-cream">
+              <div className="text-sm font-bold text-navy">
                 {t('practice.pause_toggle')}
               </div>
-              <div className="text-xs text-slate-400">
+              <div className="text-xs text-slate-500">
                 {t('practice.pause_toggle_desc')}
               </div>
             </div>
@@ -543,7 +543,7 @@ export const Practice: React.FC = () => {
               }`}
             >
               <div
-                className={`bg-navy w-4 h-4 rounded-full shadow-md transform transition-transform ${
+                className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform ${
                   pauseEnabled ? 'translate-x-6' : 'translate-x-0'
                 }`}
               />
@@ -558,24 +558,24 @@ export const Practice: React.FC = () => {
         /* Live Running Session Screen */
         <div className="space-y-4">
           {/* Top Status Bar */}
-          <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-3 flex items-center justify-between text-xs">
+          <div className="bg-white border border-slate-200 rounded-2xl p-3 flex items-center justify-between text-xs">
             <div className="flex items-center space-x-2">
               <span className="w-2 h-2 rounded-full bg-saffron animate-pulse" />
-              <span className="font-semibold text-cream">
+              <span className="font-semibold text-navy">
                 {t(`practice.scenarios.${selectedScenario}_title`, selectedScenario)}
               </span>
-              <span className="text-slate-400 font-mono">
+              <span className="text-slate-500 font-mono">
                 {format(new Date(currentSimTs), 'hh:mm a')}
               </span>
             </div>
             <div className="flex items-center space-x-3">
-              <span className="text-slate-400">
+              <span className="text-slate-500">
                 {t('practice.ticks_left', { m: 120 - tick })}
               </span>
               <button
                 type="button"
                 onClick={handleEndSession}
-                className="min-h-[48px] text-xs font-bold text-red-300 hover:text-red-200 border border-red-500/40 rounded-lg px-3 py-2"
+                className="min-h-[48px] text-xs font-bold text-red-600 hover:text-red-700 border border-red-500/40 rounded-lg px-3 py-2"
               >
                 {t('practice.end_session')}
               </button>
@@ -584,35 +584,35 @@ export const Practice: React.FC = () => {
 
           {/* Auto Close Alert */}
           {autoCloseNotice && (
-            <div className="bg-red-950/80 border border-red-500/60 text-red-200 p-3 rounded-2xl text-xs font-semibold text-center animate-fade-in">
+            <div className="bg-red-50 border border-red-500/60 text-red-700 p-3 rounded-2xl text-xs font-semibold text-center animate-fade-in">
               {autoCloseNotice}
             </div>
           )}
 
           {/* Account Balance & Instrument Price */}
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3">
-              <div className="text-xs text-slate-400">{t('practice.wallet')}</div>
-              <div className="text-lg font-bold font-mono text-cream">
+            <div className="bg-white border border-slate-200 rounded-2xl p-3">
+              <div className="text-xs text-slate-500">{t('practice.wallet')}</div>
+              <div className="text-lg font-bold font-mono text-navy">
                 ₹{wallet.toLocaleString('en-IN')}
               </div>
             </div>
-            <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-3">
-              <div className="text-xs text-slate-400">{t('practice.current_price')}</div>
-              <div className="text-lg font-bold font-mono text-cream">
+            <div className="bg-white border border-slate-200 rounded-2xl p-3">
+              <div className="text-xs text-slate-500">{t('practice.current_price')}</div>
+              <div className="text-lg font-bold font-mono text-navy">
                 ₹{currentPrice.toFixed(2)}
               </div>
             </div>
           </div>
 
           {/* Chart — candlesticks (5 ticks each), like a real trading screen */}
-          <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-3">
+          <div className="bg-white border border-slate-200 rounded-2xl p-3">
             <CandleChart candles={chartCandles} tick={tick + 1} />
           </div>
 
           {/* Instrument Selector */}
           <div className="space-y-1">
-            <label className="text-xs text-slate-400">{t('practice.instrument')}</label>
+            <label className="text-xs text-slate-500">{t('practice.instrument')}</label>
             <div className="grid grid-cols-2 gap-2">
               {(Object.keys(INSTRUMENTS) as InstrumentId[]).map(instId => {
                 const info = INSTRUMENTS[instId];
@@ -625,8 +625,8 @@ export const Practice: React.FC = () => {
                     onClick={() => setSelectedInstrument(instId)}
                     className={`py-2 px-3 rounded-xl text-xs font-semibold text-left border transition-all ${
                       isSelected
-                        ? 'bg-slate-700 border-saffron text-cream'
-                        : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:text-slate-200'
+                        ? 'bg-slate-700 border-saffron text-navy'
+                        : 'bg-slate-50 border-slate-200 text-slate-500 hover:text-slate-900'
                     } ${activePosition !== null ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {info.name}
@@ -638,9 +638,9 @@ export const Practice: React.FC = () => {
 
           {/* Active Position Info OR Open Position Controls */}
           {activePosition ? (
-            <div className="bg-slate-800 border border-slate-600 rounded-2xl p-4 space-y-3">
-              <div className="flex items-center justify-between text-xs text-slate-300">
-                <span className="font-semibold text-cream">
+            <div className="bg-white border border-slate-300 rounded-2xl p-4 space-y-3">
+              <div className="flex items-center justify-between text-xs text-slate-600">
+                <span className="font-semibold text-navy">
                   {INSTRUMENTS[activePosition.instrument].name}
                 </span>
                 <span className="font-mono">
@@ -648,12 +648,12 @@ export const Practice: React.FC = () => {
                 </span>
               </div>
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">
+                <span className="text-slate-500">
                   Entry: ₹{activePosition.entryPrice.toFixed(2)}
                 </span>
                 <div className="text-right">
-                  <span className="text-slate-400 block text-[10px]">{t('practice.unrealized_pnl')}</span>
-                  <span className="font-mono font-bold text-sm text-slate-200">
+                  <span className="text-slate-500 block text-[10px]">{t('practice.unrealized_pnl')}</span>
+                  <span className="font-mono font-bold text-sm text-slate-700">
                     {unrealizedPnl >= 0 ? `+₹${unrealizedPnl}` : `-₹${Math.abs(unrealizedPnl)}`}
                   </span>
                 </div>
@@ -663,10 +663,10 @@ export const Practice: React.FC = () => {
               </BigButton>
             </div>
           ) : (
-            <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-4 space-y-4">
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-4">
               {/* Margin Selector Chips */}
               <div className="space-y-1.5">
-                <label className="text-xs text-slate-400">{t('practice.margin')}</label>
+                <label className="text-xs text-slate-500">{t('practice.margin')}</label>
                 <div className="grid grid-cols-4 gap-2">
                   {(['10k', '25k', '50k', 'custom'] as const).map(chip => {
                     const isSelected = marginChip === chip;
@@ -684,7 +684,7 @@ export const Practice: React.FC = () => {
                         className={`min-h-[48px] py-2 rounded-xl text-xs font-bold border transition-colors ${
                           isSelected
                             ? 'bg-saffron text-navy border-saffron'
-                            : 'bg-slate-800 border-slate-600 text-slate-300 hover:border-slate-500'
+                            : 'bg-white border-slate-300 text-slate-600 hover:border-slate-500'
                         }`}
                       >
                         {labels[chip]}
@@ -699,7 +699,7 @@ export const Practice: React.FC = () => {
                     onChange={e => setCustomMargin(e.target.value)}
                     placeholder={t('practice.enter_margin_placeholder')}
                     aria-label={t('practice.margin')}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-cream font-mono mt-2 min-h-[48px]"
+                    className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-sm text-navy font-mono mt-2 min-h-[48px]"
                   />
                 )}
               </div>
@@ -707,7 +707,7 @@ export const Practice: React.FC = () => {
               {/* Leverage Selector */}
               {instrumentInfo.maxLeverage === 5 && (
                 <div className="space-y-1.5">
-                  <label className="text-xs text-slate-400">{t('practice.leverage')}</label>
+                  <label className="text-xs text-slate-500">{t('practice.leverage')}</label>
                   <div className="grid grid-cols-2 gap-2">
                     {([1, 5] as const).map(lev => (
                       <button
@@ -716,8 +716,8 @@ export const Practice: React.FC = () => {
                         onClick={() => setLeverage(lev)}
                         className={`min-h-[48px] py-2 rounded-xl text-xs font-bold border transition-colors ${
                           leverage === lev
-                            ? 'bg-slate-700 border-saffron text-cream'
-                            : 'bg-slate-800 border-slate-600 text-slate-400'
+                            ? 'bg-slate-700 border-saffron text-navy'
+                            : 'bg-white border-slate-300 text-slate-500'
                         }`}
                       >
                         {lev}x

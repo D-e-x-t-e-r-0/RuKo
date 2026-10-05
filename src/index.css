@@ -10,14 +10,15 @@
   --ruko-paper: #f5edd9;
   --ruko-saffron: #f2a33a;
   --ruko-ember: #e07b2a;
+  --ruko-clay: #92400e;
   --ruko-green: #2bb3a3;
   --ruko-red: #e4572e;
-  /* Same palette, neumorphic light: top-left cream lip + bottom-right abyss pocket */
-  --neu-light: rgba(250, 246, 238, 0.07);
-  --neu-dark: rgba(4, 8, 20, 0.65);
+  --ruko-bg: #f4f6fa;
+  --ruko-surface: #ffffff;
+  --ruko-line: #e2e8f0;
   font-family: 'Mukta', 'Noto Sans Devanagari', 'Noto Sans Bengali', 'Noto Sans Tamil', 'Noto Sans Telugu', 'Noto Sans Kannada', 'Noto Sans Malayalam', 'Noto Sans Gujarati', 'Noto Sans Gurmukhi', 'Noto Sans Oriya', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.5;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html {
@@ -26,28 +27,12 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--ruko-night);
-  background-image:
-    radial-gradient(ellipse 80% 42% at 50% -6%, rgba(242, 163, 58, 0.14), transparent 70%),
-    radial-gradient(ellipse 60% 30% at 50% 108%, rgba(43, 179, 163, 0.08), transparent 70%);
-  background-attachment: fixed;
-  color: var(--ruko-cream);
+  background-color: var(--ruko-bg);
+  color: var(--ruko-navy);
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
-}
-
-/* Film grain overlay — calm paper texture, not flat */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
 }
 
 button {
@@ -55,20 +40,21 @@ button {
   font-family: inherit;
 }
 
-/* Display serif for ritual headings */
+/* Display serif reserved for the wordmark and reflective quotes */
 .font-ritual {
   font-family: 'Fraunces', 'Tiro Devanagari Hindi', Georgia, serif;
   letter-spacing: -0.01em;
 }
 
-/* Jaali lattice accent for dividers */
+/* Hairline section divider with a saffron core */
 .jaali-line {
-  height: 1px;
+  height: 2px;
+  border-radius: 2px;
   background-image: linear-gradient(
     to right,
     transparent,
-    rgba(242, 163, 58, 0.55) 20%,
-    rgba(242, 163, 58, 0.55) 80%,
+    rgba(242, 163, 58, 0.8) 20%,
+    rgba(242, 163, 58, 0.8) 80%,
     transparent
   );
 }
@@ -94,110 +80,97 @@ button {
 .rise-4 { animation-delay: 0.26s; }
 .rise-5 { animation-delay: 0.33s; }
 
-/* Diya glow ring for primary ritual actions — shadow only, never a background,
-   so the saffron gradient on the Pause button stays bright and legible. */
+/* Saffron halo ring for the primary ritual action — shadow only, never a
+   background, so the Pause button gradient stays bright and legible. */
 .diya-ring {
   box-shadow:
-    0 0 0 6px rgba(242, 163, 58, 0.22),
-    0 0 0 14px rgba(242, 163, 58, 0.1),
-    8px 8px 28px rgba(4, 8, 20, 0.55),
-    0 0 54px rgba(242, 163, 58, 0.45);
+    0 0 0 6px rgba(242, 163, 58, 0.25),
+    0 0 0 14px rgba(242, 163, 58, 0.12),
+    0 4px 18px rgba(242, 163, 58, 0.4),
+    0 2px 6px rgba(20, 33, 61, 0.12);
 }
 
-/* Handmade paper card — same navy/cream, gently embossed (soft neumorphism) */
+/* Institutional card: flat white, hairline border, one soft shadow */
 .paper-card {
-  background: linear-gradient(145deg, #182747, #101b33);
-  box-shadow:
-    7px 7px 18px rgba(4, 8, 20, 0.65),
-    -7px -7px 18px rgba(250, 246, 238, 0.07);
-  border: 1px solid rgba(250, 246, 238, 0.06);
-  backdrop-filter: blur(8px);
+  background: var(--ruko-surface);
+  border: 1px solid var(--ruko-line);
+  box-shadow: 0 1px 2px rgba(20, 33, 61, 0.06), 0 4px 14px rgba(20, 33, 61, 0.07);
 }
 
-/* Neumorphic primitives — same colors, better depth. Use sparingly: ritual surfaces only. */
+/* Flat functional primitives (kept names so existing JSX needs no churn) */
 .neu-raised {
-  background: linear-gradient(145deg, #182747, #101b33);
-  box-shadow:
-    7px 7px 18px var(--neu-dark),
-    -7px -7px 18px var(--neu-light);
-  border: 1px solid rgba(250, 246, 238, 0.06);
+  background: var(--ruko-surface);
+  border: 1px solid var(--ruko-line);
+  box-shadow: 0 1px 2px rgba(20, 33, 61, 0.06), 0 4px 14px rgba(20, 33, 61, 0.07);
   border-radius: 1.375rem;
 }
 .neu-pressed {
-  background: linear-gradient(145deg, #0e162e, #0a1122);
-  box-shadow:
-    inset 5px 5px 14px rgba(4, 8, 20, 0.7),
-    inset -5px -5px 14px rgba(250, 246, 238, 0.05);
-  border: 1px solid rgba(250, 246, 238, 0.05);
+  background: #eef2f7;
+  border: 1px solid var(--ruko-line);
+  box-shadow: inset 0 2px 6px rgba(20, 33, 61, 0.08);
   border-radius: 1.375rem;
 }
 .neu-btn {
-  background: linear-gradient(145deg, #f6b252, #d98a26);
+  background: linear-gradient(180deg, #f6b252, #e89b2e);
   color: #0e162e;
-  box-shadow:
-    5px 5px 14px rgba(4, 8, 20, 0.55),
-    -5px -5px 14px rgba(250, 246, 238, 0.09),
-    0 0 22px rgba(242, 163, 58, 0.22);
+  box-shadow: 0 2px 8px rgba(146, 64, 14, 0.25);
   border-radius: 1rem;
   transition: box-shadow 0.18s ease, transform 0.18s ease;
 }
 .neu-btn:active {
-  box-shadow:
-    inset 4px 4px 12px rgba(4, 8, 20, 0.45),
-    inset -4px -4px 12px rgba(250, 246, 238, 0.12);
+  box-shadow: inset 0 2px 6px rgba(20, 33, 61, 0.2);
   transform: translateY(1px) scale(0.995);
 }
 .neu-chip {
-  background: linear-gradient(145deg, #182747, #0d1528);
-  box-shadow:
-    4px 4px 12px rgba(4, 8, 20, 0.6),
-    -4px -4px 12px rgba(250, 246, 238, 0.06);
-  border: 1px solid rgba(250, 246, 238, 0.07);
+  background: var(--ruko-surface);
+  border: 1px solid var(--ruko-line);
+  box-shadow: 0 1px 2px rgba(20, 33, 61, 0.06);
 }
 .neu-chip[aria-pressed="true"], .neu-chip.on {
-  background: linear-gradient(145deg, #f6b252, #d98a26);
+  background: linear-gradient(180deg, #f6b252, #e89b2e);
   color: #0e162e;
-  box-shadow:
-    inset 3px 3px 10px rgba(4, 8, 20, 0.4),
-    inset -3px -3px 10px rgba(250, 246, 238, 0.15);
+  border-color: #e89b2e;
 }
 
-/* Accessible focus — saffron halo */
+/* Accessible focus — navy outline with saffron offset, visible on white */
 :focus-visible {
-  outline: 3px solid var(--ruko-saffron);
+  outline: 2px solid var(--ruko-navy);
   outline-offset: 2px;
   border-radius: 0.5rem;
 }
 
-/* Inputs: calm, high contrast */
+/* Inputs: white, navy text, calm */
 input, textarea, select {
   font-family: inherit;
+  background-color: #ffffff;
+  color: var(--ruko-navy);
 }
 input::placeholder, textarea::placeholder {
-  color: #64748b;
+  color: #94a3b8;
   opacity: 1;
 }
 
-/* Recharts dark-theme polish */
+/* Recharts light-theme polish */
 .recharts-cartesian-axis-tick text {
   font-family: 'Mukta', sans-serif;
   font-weight: 600;
+  fill: #64748b;
 }
 .recharts-tooltip-wrapper {
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 4px 12px rgba(20, 33, 61, 0.15));
 }
 
-/* Slim devotional scrollbar */
+/* Slim neutral scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--ruko-abyss);
+  background: #eef2f7;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2b3a5e;
+  background: #cbd5e1;
   border-radius: 8px;
-  border: 2px solid var(--ruko-abyss);
+  border: 2px solid #eef2f7;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ruko-saffron);
@@ -209,8 +182,8 @@ input::placeholder, textarea::placeholder {
   left: -9999px;
   top: 0;
   z-index: 200;
-  background: var(--ruko-saffron);
-  color: var(--ruko-night);
+  background: var(--ruko-navy);
+  color: #ffffff;
   font-weight: 700;
   padding: 0.75rem 1.25rem;
   border-radius: 0 0 0.75rem 0;
@@ -262,6 +235,6 @@ button, [role="button"], a.btn, input[type="submit"] {
 /* Evidence pack + debrief print cleanly for counsellors */
 @media print {
   body { background: #fff; color: #111; }
-  body::after, nav, .no-print { display: none !important; }
+  nav, .no-print { display: none !important; }
   .paper-card { background: #fff; border: 1px solid #ccc; }
 }

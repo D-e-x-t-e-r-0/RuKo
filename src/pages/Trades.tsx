@@ -117,20 +117,20 @@ export const Trades: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4 pb-20 space-y-6">
       <header>
-        <h1 className="text-2xl font-bold text-cream">
+        <h1 className="text-2xl font-bold text-navy">
           {t('trades.title')}
         </h1>
       </header>
 
       {/* Quick Log in 3 Taps */}
-      <section className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-4">
-        <h2 className="text-sm uppercase font-bold text-saffron tracking-wider">
+      <section className="bg-white border border-slate-200 rounded-2xl p-4 space-y-4">
+        <h2 className="text-sm uppercase font-bold text-clay tracking-wider">
           {t('trades.quick_log_title')}
         </h2>
 
         <form onSubmit={handleSaveTrade} className="space-y-4">
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-600 mb-1">
               {t('trades.amount_label')}
             </label>
             <input
@@ -140,13 +140,13 @@ export const Trades: React.FC = () => {
               placeholder={t('trades.amount_placeholder')}
               value={amount}
               onChange={e => setAmount(e.target.value)}
-              className="w-full text-lg min-h-[48px] p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+              className="w-full text-lg min-h-[48px] p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-600 mb-1">
               {t('trades.funding_label')}
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -156,7 +156,7 @@ export const Trades: React.FC = () => {
                 className={`min-h-[48px] py-2 px-2 rounded-xl text-xs font-bold transition-all ${
                   funding === 'savings'
                     ? 'bg-saffron text-navy'
-                    : 'bg-slate-900 text-slate-300 border border-slate-700'
+                    : 'bg-slate-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.funding_savings')}
@@ -167,7 +167,7 @@ export const Trades: React.FC = () => {
                 className={`min-h-[48px] py-2 px-2 rounded-xl text-xs font-bold transition-all ${
                   funding === 'emergency'
                     ? 'bg-saffron text-navy'
-                    : 'bg-slate-900 text-slate-300 border border-slate-700'
+                    : 'bg-slate-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.funding_emergency')}
@@ -178,7 +178,7 @@ export const Trades: React.FC = () => {
                 className={`min-h-[48px] py-2 px-2 rounded-xl text-xs font-bold transition-all ${
                   funding === 'loan'
                     ? 'bg-saffron text-navy'
-                    : 'bg-slate-900 text-slate-300 border border-slate-700'
+                    : 'bg-slate-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.funding_loan')}
@@ -187,7 +187,7 @@ export const Trades: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-600 mb-1">
               {t('trades.pnl_label')}
             </label>
             <input
@@ -195,7 +195,7 @@ export const Trades: React.FC = () => {
               placeholder={t('trades.pnl_placeholder')}
               value={pnl}
               onChange={e => setPnl(e.target.value)}
-              className="w-full text-base min-h-[48px] p-3 rounded-xl bg-slate-900 border border-slate-700 text-cream focus:border-saffron focus:outline-none"
+              className="w-full text-base min-h-[48px] p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
             />
           </div>
 
@@ -206,17 +206,17 @@ export const Trades: React.FC = () => {
       </section>
 
       {/* CSV Import */}
-      <section className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-3">
-        <h2 className="text-sm uppercase font-bold text-saffron tracking-wider">
+      <section className="bg-white border border-slate-200 rounded-2xl p-4 space-y-3">
+        <h2 className="text-sm uppercase font-bold text-clay tracking-wider">
           {t('trades.csv_title')}
         </h2>
-        <p className="text-xs text-slate-400">
+        <p className="text-xs text-slate-500">
           {t('trades.csv_note')}
         </p>
 
         <label className="block cursor-pointer">
           <span className="sr-only">{t('trades.choose_csv_sr')}</span>
-          <div className="min-h-[48px] w-full border-2 border-dashed border-slate-600 hover:border-saffron rounded-xl p-3 text-center text-sm font-semibold text-cream flex items-center justify-center bg-slate-900/60 transition-colors">
+          <div className="min-h-[48px] w-full border-2 border-dashed border-slate-300 hover:border-saffron rounded-xl p-3 text-center text-sm font-semibold text-navy flex items-center justify-center bg-slate-100 transition-colors">
             {isProcessing ? t('trades.processing_csv') : t('trades.select_csv')}
           </div>
           <input
@@ -229,7 +229,7 @@ export const Trades: React.FC = () => {
         </label>
 
         {importMessage && (
-          <div className="p-3 bg-rukoGreen/20 border border-rukoGreen/60 rounded-xl text-xs font-medium text-cream">
+          <div className="p-3 bg-rukoGreen/20 border border-rukoGreen/60 rounded-xl text-xs font-medium text-navy">
             {importMessage}
           </div>
         )}
@@ -238,7 +238,7 @@ export const Trades: React.FC = () => {
       {/* Recent Trades List */}
       <section className="space-y-3">
         <div className="flex justify-between items-center">
-          <h2 className="text-sm uppercase font-bold text-slate-400 tracking-wider">
+          <h2 className="text-sm uppercase font-bold text-slate-500 tracking-wider">
             {t('trades.recent_trades')}
           </h2>
           {recentTrades.length > 0 && (
@@ -252,14 +252,14 @@ export const Trades: React.FC = () => {
         </div>
 
         {recentTrades.length === 0 ? (
-          <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-8 text-center space-y-3 shadow-md">
-            <div className="w-12 h-12 mx-auto rounded-full bg-slate-700/60 flex items-center justify-center text-saffron text-2xl">
+          <div className="bg-white border border-slate-200 rounded-2xl p-8 text-center space-y-3 shadow-md">
+            <div className="w-12 h-12 mx-auto rounded-full bg-slate-700/60 flex items-center justify-center text-clay text-2xl">
               📊
             </div>
-            <h3 className="text-base font-bold text-cream">
+            <h3 className="text-base font-bold text-navy">
               {t('trades.empty_title')}
             </h3>
-            <p className="text-sm text-slate-400 max-w-xs mx-auto">
+            <p className="text-sm text-slate-500 max-w-xs mx-auto">
               {t('trades.empty_desc')}
             </p>
           </div>
@@ -268,13 +268,13 @@ export const Trades: React.FC = () => {
             {recentTrades.map((trade, idx) => (
               <div
                 key={trade.id || idx}
-                className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3 flex items-center justify-between text-xs"
+                className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between text-xs"
               >
                 <div>
-                  <div className="font-semibold text-cream text-sm font-mono">
+                  <div className="font-semibold text-navy text-sm font-mono">
                     ₹{trade.amount.toLocaleString('en-IN')}
                   </div>
-                  <div className="text-slate-400 mt-0.5">
+                  <div className="text-slate-500 mt-0.5">
                     {format(new Date(trade.ts), 'dd MMM, HH:mm')} •{' '}
                     <span className="capitalize">{trade.funding}</span>
                   </div>
@@ -282,11 +282,11 @@ export const Trades: React.FC = () => {
 
                 <div className="text-right">
                   {trade.pnl === null ? (
-                    <span className="px-2 py-1 bg-slate-700/60 text-slate-300 rounded font-medium text-[11px]">
+                    <span className="px-2 py-1 bg-slate-700/60 text-slate-600 rounded font-medium text-[11px]">
                       {t('trades.open')}
                     </span>
                   ) : trade.pnl >= 0 ? (
-                    <span className="font-bold text-rukoGreen font-mono text-sm">
+                    <span className="font-bold text-teal-700 font-mono text-sm">
                       +₹{trade.pnl.toLocaleString('en-IN')}
                     </span>
                   ) : (

@@ -179,23 +179,23 @@ export const Mirror: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4 pb-20 space-y-6">
       <header>
-        <h1 className="text-2xl font-bold text-cream">
+        <h1 className="text-2xl font-bold text-navy">
           {t('mirror.title')}
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-500 mt-1">
           {t('mirror.subtitle')}
         </p>
       </header>
 
       {totalPauses === 0 ? (
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-8 text-center space-y-3 shadow-md">
-          <div className="w-12 h-12 mx-auto rounded-full bg-slate-700/60 flex items-center justify-center text-saffron text-2xl">
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 text-center space-y-3 shadow-md">
+          <div className="w-12 h-12 mx-auto rounded-full bg-slate-700/60 flex items-center justify-center text-clay text-2xl">
             🪞
           </div>
-          <h3 className="text-base font-bold text-cream">
+          <h3 className="text-base font-bold text-navy">
             {t('mirror.empty_title')}
           </h3>
-          <p className="text-sm text-slate-400 max-w-xs mx-auto">
+          <p className="text-sm text-slate-500 max-w-xs mx-auto">
             {t('mirror.empty_desc')}
           </p>
         </div>
@@ -203,21 +203,21 @@ export const Mirror: React.FC = () => {
         <>
           {/* Weekly Summary Card */}
           {weeklySummary && (
-            <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-4 shadow-md space-y-2">
+            <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-md space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs uppercase font-bold text-saffron tracking-wider">
+                <span className="text-xs uppercase font-bold text-clay tracking-wider">
                   {t('mirror.weekly_summary_title')}
                 </span>
                 <AIBadge isAI={isAISummary} />
               </div>
-              <p className="text-sm font-medium text-cream leading-relaxed">
+              <p className="text-sm font-medium text-navy leading-relaxed">
                 {weeklySummary}
               </p>
             </div>
           )}
 
           {/* Recharts Stacked Bar Chart */}
-          <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 shadow-md">
+          <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-md">
             <div className="h-64 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
@@ -228,10 +228,10 @@ export const Mirror: React.FC = () => {
               <YAxis allowDecimals={false} stroke="#94a3b8" fontSize={12} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#14213D',
-                  borderColor: '#334155',
+                  backgroundColor: '#FFFFFF',
+                  borderColor: '#E2E8F0',
                   borderRadius: '0.75rem',
-                  color: '#FAF6EE',
+                  color: '#14213D',
                 }}
               />
               <Legend
@@ -258,23 +258,23 @@ export const Mirror: React.FC = () => {
 
       {/* 3 Plain Stats */}
       <div className="grid grid-cols-3 gap-2 text-center">
-        <div className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3">
-          <div className="text-2xl font-bold text-cream">{totalPauses}</div>
-          <div className="text-[11px] text-slate-400 mt-1 leading-tight font-medium">
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
+          <div className="text-2xl font-bold text-navy">{totalPauses}</div>
+          <div className="text-[11px] text-slate-500 mt-1 leading-tight font-medium">
             {t('mirror.stat_pauses')}
           </div>
         </div>
 
-        <div className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3">
-          <div className="text-2xl font-bold text-rukoGreen">{totalSaved}</div>
-          <div className="text-[11px] text-slate-400 mt-1 leading-tight font-medium">
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
+          <div className="text-2xl font-bold text-teal-700">{totalSaved}</div>
+          <div className="text-[11px] text-slate-500 mt-1 leading-tight font-medium">
             {t('mirror.stat_saved')}
           </div>
         </div>
 
-        <div className="bg-slate-800/60 border border-slate-700/60 rounded-xl p-3">
+        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
           <div className="text-2xl font-bold text-rukoRed">{impulsivePercent}%</div>
-          <div className="text-[11px] text-slate-400 mt-1 leading-tight font-medium">
+          <div className="text-[11px] text-slate-500 mt-1 leading-tight font-medium">
             {t('mirror.stat_impulsive')}
           </div>
         </div>
@@ -282,12 +282,12 @@ export const Mirror: React.FC = () => {
 
       {/* Neutral Support Card (if loan >= 3 in last 7 days) */}
       {showSupportCard && (
-        <div className="bg-amber-950/40 border-2 border-saffron/70 rounded-2xl p-4 text-cream space-y-2">
+        <div className="bg-amber-50 border-2 border-saffron/70 rounded-2xl p-4 text-navy space-y-2">
           <div className="flex items-center space-x-2">
-            <span className="text-saffron text-lg font-bold">ℹ</span>
-            <span className="text-xs uppercase font-bold text-saffron tracking-wider">{t('mirror.notice')}</span>
+            <span className="text-clay text-lg font-bold">ℹ</span>
+            <span className="text-xs uppercase font-bold text-clay tracking-wider">{t('mirror.notice')}</span>
           </div>
-          <p className="text-sm leading-relaxed text-cream font-medium">
+          <p className="text-sm leading-relaxed text-navy font-medium">
             {t('mirror.support_card')}
           </p>
         </div>
@@ -295,23 +295,23 @@ export const Mirror: React.FC = () => {
 
       {/* Practice Comparison Table (Pause ON vs OFF) */}
       {practiceStats && (practiceStats.pauseOnCount > 0 || practiceStats.pauseOffCount > 0) && (
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 space-y-3 shadow-md">
-          <h3 className="text-xs uppercase font-bold text-saffron tracking-wider">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-3 shadow-md">
+          <h3 className="text-xs uppercase font-bold text-clay tracking-wider">
             {t('mirror.practice_comparison_title')}
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left">
               <caption className="sr-only">{t('mirror.practice_comparison_title')}</caption>
               <thead>
-                <tr className="border-b border-slate-700 text-slate-400">
+                <tr className="border-b border-slate-200 text-slate-500">
                   <th scope="col" className="py-2 font-semibold">{t('mirror.mode_col')}</th>
                   <th scope="col" className="py-2 text-right font-semibold">{t('mirror.avg_trades')}</th>
                   <th scope="col" className="py-2 text-right font-semibold">{t('mirror.loss_chasing_share')}</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800 text-cream">
+              <tbody className="divide-y divide-slate-200 text-navy">
                 <tr>
-                  <td className="py-2 font-medium text-rukoGreen">{t('mirror.comparison_pause_on')} ({practiceStats.pauseOnCount})</td>
+                  <td className="py-2 font-medium text-teal-700">{t('mirror.comparison_pause_on')} ({practiceStats.pauseOnCount})</td>
                   <td className="py-2 text-right font-mono">{practiceStats.pauseOnAvgTrades}</td>
                   <td className="py-2 text-right font-mono">{practiceStats.pauseOnLossShare}</td>
                 </tr>

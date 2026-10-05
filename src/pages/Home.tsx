@@ -60,15 +60,15 @@ export const Home: React.FC = () => {
     <div className="flex flex-col items-center justify-between min-h-[calc(100vh-140px)] max-w-md mx-auto p-4 pb-24 space-y-6">
       {/* Header & Time-Aware Greeting */}
       <header className="text-center pt-3 space-y-2 w-full rise">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-abyss/70 border border-saffron/25 text-xs font-semibold text-saffron">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-saffron/25 text-xs font-semibold text-clay">
           <span className="w-1.5 h-1.5 rounded-full bg-saffron animate-glow-pulse" aria-hidden="true" />
           {t(getGreetingKey())}
         </div>
-        <h1 className="font-ritual text-5xl font-black tracking-tight text-cream leading-none">
+        <h1 className="font-ritual text-5xl font-black tracking-tight text-navy leading-none">
           {t('app_name')}
         </h1>
         <div className="jaali-line w-40 mx-auto" aria-hidden="true" />
-        <p className="text-sm text-slate-300 font-medium">
+        <p className="text-sm text-slate-600 font-medium">
           {t('app_tagline')}
         </p>
       </header>
@@ -90,16 +90,16 @@ export const Home: React.FC = () => {
       </div>
 
       {/* Thought for Today */}
-      <div className="paper-card w-full border border-slate-700/70 rounded-3xl p-5 shadow-card space-y-2 rise rise-2">
-        <div className="flex items-center space-x-2 text-saffron text-[11px] uppercase font-bold tracking-[0.16em]">
+      <div className="paper-card w-full border border-slate-200 rounded-3xl p-5 shadow-card space-y-2 rise rise-2">
+        <div className="flex items-center space-x-2 text-clay text-[11px] uppercase font-bold tracking-[0.16em]">
           <span aria-hidden="true">🪔</span>
           <span>{t('home.thought_for_today')}</span>
         </div>
-        <p className="font-ritual text-lg italic font-medium text-cream leading-relaxed">
+        <p className="font-ritual text-lg italic font-medium text-navy leading-relaxed">
           "{t(`snippets.${thought.key}`)}"
         </p>
         {thought.sourceKey && (
-          <p className="text-xs text-slate-400 font-sans">
+          <p className="text-xs text-slate-500 font-sans">
             — {t(`snippets.${thought.sourceKey}`)}
           </p>
         )}
@@ -109,11 +109,11 @@ export const Home: React.FC = () => {
       <div className="w-full space-y-4 rise rise-3">
         {/* Pending Reflection Alert */}
         {hasPendingReflection && (
-          <div className="bg-amber-950/40 border border-saffron/60 rounded-2xl p-4 shadow-sm">
-            <h3 className="text-base font-bold text-saffron">
+          <div className="bg-amber-50 border border-saffron/60 rounded-2xl p-4 shadow-sm">
+            <h3 className="text-base font-bold text-clay">
               {t('home.pending_reflection_title')}
             </h3>
-            <p className="text-sm text-cream/90 mt-1">
+            <p className="text-sm text-navy mt-1">
               {t('home.pending_reflection_desc')}
             </p>
             <div className="mt-3">
@@ -128,29 +128,29 @@ export const Home: React.FC = () => {
         )}
 
         {/* Today's Counts */}
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 shadow-md">
-          <h2 className="text-xs uppercase font-bold text-slate-400 tracking-wider mb-3">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-md">
+          <h2 className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-3">
             {t('home.today_stats_title')}
           </h2>
           <div className="grid grid-cols-2 gap-3 text-center">
-            <div className="bg-slate-900/60 rounded-xl p-3">
-              <div className="text-2xl font-bold text-cream">{todayPauses}</div>
-              <div className="text-xs text-slate-400 mt-1">{t('home.today_pauses')}</div>
+            <div className="bg-slate-100 rounded-xl p-3">
+              <div className="text-2xl font-bold text-navy">{todayPauses}</div>
+              <div className="text-xs text-slate-500 mt-1">{t('home.today_pauses')}</div>
             </div>
-            <div className="bg-slate-900/60 rounded-xl p-3">
-              <div className="text-2xl font-bold text-rukoGreen">{todaySaved}</div>
-              <div className="text-xs text-slate-400 mt-1">{t('home.today_saved')}</div>
+            <div className="bg-slate-100 rounded-xl p-3">
+              <div className="text-2xl font-bold text-teal-700">{todaySaved}</div>
+              <div className="text-xs text-slate-500 mt-1">{t('home.today_saved')}</div>
             </div>
           </div>
         </div>
 
         {/* Practice Mode Promo Card */}
-        <div className="bg-slate-800/80 border border-slate-700 rounded-2xl p-4 shadow-md flex items-center justify-between">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-md flex items-center justify-between">
           <div className="space-y-1">
-            <h3 className="text-sm font-bold text-cream">
+            <h3 className="text-sm font-bold text-navy">
               {t('home.try_practice_title')}
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-500">
               {t('home.try_practice_desc')}
             </p>
           </div>

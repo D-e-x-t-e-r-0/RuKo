@@ -8,21 +8,20 @@ export const Header: React.FC = () => {
   const currentLang = i18n.language.startsWith('hi') ? 'hi' : 'en';
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-40 bg-[#0E162E]/92 backdrop-blur-md border-b border-saffron/15 max-w-md mx-auto h-16 px-4 flex items-center justify-between">
+    <header className="sticky top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 max-w-md mx-auto h-16 px-4 flex items-center justify-between">
       <Link
         to="/"
-        className="flex items-center space-x-2.5 text-saffron font-ritual font-black text-xl tracking-tight hover:opacity-90 transition-opacity min-h-[48px]"
+        className="flex items-center space-x-2.5 text-navy font-ritual font-black text-xl tracking-tight hover:opacity-90 transition-opacity min-h-[48px]"
         aria-label="Ruko home"
       >
-        <span className="relative w-9 h-9 rounded-full bg-gradient-to-b from-saffron to-ember text-night flex items-center justify-center text-base font-black shadow-diya">
+        <span className="relative w-9 h-9 rounded-full bg-gradient-to-b from-saffron to-ember text-night flex items-center justify-center text-base font-black shadow-neu-btn">
           <span className="animate-flicker">रु</span>
-          <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-cream/90 blur-[0.5px] animate-glow-pulse" aria-hidden="true" />
         </span>
-        <span>रुको <span className="text-cream/90 font-sans font-bold text-sm tracking-wide">· RUKO</span></span>
+        <span>रुको <span className="text-slate-500 font-sans font-bold text-sm tracking-wide">· RUKO</span></span>
       </Link>
 
       <div
-        className="flex items-center bg-abyss/80 border border-slate-700/80 rounded-full p-1 text-xs font-bold"
+        className="flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 text-xs font-bold"
         role="group"
         aria-label="Language"
       >
@@ -34,8 +33,8 @@ export const Header: React.FC = () => {
           aria-pressed={currentLang === 'hi'}
           className={`min-h-[40px] min-w-[40px] px-3 py-1 rounded-full transition-all ${
             currentLang === 'hi'
-              ? 'bg-saffron text-night shadow-diya'
-              : 'text-slate-400 hover:text-cream'
+              ? 'bg-navy text-white'
+              : 'text-slate-500 hover:text-navy'
           }`}
           aria-label="Hindi language"
         >
@@ -48,8 +47,8 @@ export const Header: React.FC = () => {
           aria-pressed={currentLang === 'en'}
           className={`min-h-[40px] min-w-[40px] px-3 py-1 rounded-full transition-all ${
             currentLang === 'en'
-              ? 'bg-saffron text-night shadow-diya'
-              : 'text-slate-400 hover:text-cream'
+              ? 'bg-navy text-white'
+              : 'text-slate-500 hover:text-navy'
           }`}
           aria-label="English language"
         >

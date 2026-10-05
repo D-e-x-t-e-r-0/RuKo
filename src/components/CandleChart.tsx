@@ -41,7 +41,7 @@ export const CandleChart: React.FC<Props> = ({ candles, tick = Infinity }) => {
     <div role="img" aria-label={`Candlestick chart, ${candles.length} candles, last close ${lastClose.toFixed(2)}`}>
       <svg viewBox={`0 0 ${W} ${H}`} className="h-44 w-full" preserveAspectRatio="none">
         {/* last-price guide */}
-        <line x1="0" x2={W} y1={y(lastClose)} y2={y(lastClose)} stroke="#F2A33A" strokeWidth="1" strokeDasharray="4 3" opacity="0.7" />
+        <line x1="0" x2={W} y1={y(lastClose)} y2={y(lastClose)} stroke="#92400E" strokeWidth="1" strokeDasharray="4 3" opacity="0.8" />
         {candles.map((c, i) => {
           const up = c.close >= c.open;
           const color = up ? UP : DOWN;
@@ -66,7 +66,7 @@ export const CandleChart: React.FC<Props> = ({ candles, tick = Infinity }) => {
       </svg>
       <div className="flex items-center justify-between text-[10px] font-mono text-slate-500 pt-1" aria-hidden="true">
         <span>₹{lo.toFixed(2)}</span>
-        <span className="text-saffron">last ₹{lastClose.toFixed(2)}</span>
+        <span className="text-clay font-bold">last ₹{lastClose.toFixed(2)}</span>
         <span>₹{hi.toFixed(2)}</span>
       </div>
     </div>

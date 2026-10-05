@@ -18,30 +18,30 @@ const MoreMenu: React.FC = () => {
   const { t } = useTranslation();
   return (
     <div className="max-w-md mx-auto p-4 space-y-4">
-      <h1 className="text-2xl font-bold text-cream mb-6">
+      <h1 className="text-2xl font-bold text-navy mb-6">
         {t('nav.more')}
       </h1>
       <div className="space-y-3">
         <Link
           to="/trades"
-          className="flex items-center justify-between min-h-[52px] p-4 bg-slate-800/90 border border-slate-700 hover:border-saffron rounded-2xl text-cream font-bold text-base transition-colors shadow-sm"
+          className="flex items-center justify-between min-h-[52px] p-4 bg-white border border-slate-200 hover:border-saffron rounded-2xl text-navy font-bold text-base transition-colors shadow-sm"
         >
           <span>{t('trades.title')}</span>
-          <span className="text-slate-400">→</span>
+          <span className="text-slate-500">→</span>
         </Link>
         <Link
           to="/rules"
-          className="flex items-center justify-between min-h-[52px] p-4 bg-slate-800/90 border border-slate-700 hover:border-saffron rounded-2xl text-cream font-bold text-base transition-colors shadow-sm"
+          className="flex items-center justify-between min-h-[52px] p-4 bg-white border border-slate-200 hover:border-saffron rounded-2xl text-navy font-bold text-base transition-colors shadow-sm"
         >
           <span>{t('rules.title')}</span>
-          <span className="text-slate-400">→</span>
+          <span className="text-slate-500">→</span>
         </Link>
         <Link
           to="/settings"
-          className="flex items-center justify-between min-h-[52px] p-4 bg-slate-800/90 border border-slate-700 hover:border-saffron rounded-2xl text-cream font-bold text-base transition-colors shadow-sm"
+          className="flex items-center justify-between min-h-[52px] p-4 bg-white border border-slate-200 hover:border-saffron rounded-2xl text-navy font-bold text-base transition-colors shadow-sm"
         >
           <span>{t('settings.title')}</span>
-          <span className="text-slate-400">→</span>
+          <span className="text-slate-500">→</span>
         </Link>
       </div>
     </div>
@@ -64,13 +64,13 @@ const NavigationBar: React.FC = () => {
     location.pathname === '/settings';
 
   return (
-    <nav aria-label="Primary" className="fixed bottom-0 left-0 right-0 z-40 bg-[#0E162E]/92 backdrop-blur-md border-t border-saffron/15 max-w-md mx-auto">
+    <nav aria-label="Primary" className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 max-w-md mx-auto">
       <div className="grid grid-cols-5 h-16 items-center px-1">
         <NavLink
           to="/"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center h-full min-h-[48px] text-xs font-bold transition-colors select-none ${
-              isActive ? 'text-saffron' : 'text-slate-400 hover:text-slate-200'
+              isActive ? 'text-clay' : 'text-slate-500 hover:text-slate-900'
             }`
           }
         >
@@ -81,7 +81,7 @@ const NavigationBar: React.FC = () => {
           to="/practice"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center h-full min-h-[48px] text-xs font-bold transition-colors select-none ${
-              isActive ? 'text-saffron' : 'text-slate-400 hover:text-slate-200'
+              isActive ? 'text-clay' : 'text-slate-500 hover:text-slate-900'
             }`
           }
         >
@@ -92,7 +92,7 @@ const NavigationBar: React.FC = () => {
           to="/journal"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center h-full min-h-[48px] text-xs font-bold transition-colors select-none ${
-              isActive ? 'text-saffron' : 'text-slate-400 hover:text-slate-200'
+              isActive ? 'text-clay' : 'text-slate-500 hover:text-slate-900'
             }`
           }
         >
@@ -103,7 +103,7 @@ const NavigationBar: React.FC = () => {
           to="/mirror"
           className={({ isActive }) =>
             `flex flex-col items-center justify-center h-full min-h-[48px] text-xs font-bold transition-colors select-none ${
-              isActive ? 'text-saffron' : 'text-slate-400 hover:text-slate-200'
+              isActive ? 'text-clay' : 'text-slate-500 hover:text-slate-900'
             }`
           }
         >
@@ -113,7 +113,7 @@ const NavigationBar: React.FC = () => {
         <NavLink
           to="/more"
           className={`flex flex-col items-center justify-center h-full min-h-[48px] text-xs font-bold transition-colors select-none ${
-            isMoreActive ? 'text-saffron' : 'text-slate-400 hover:text-slate-200'
+            isMoreActive ? 'text-clay' : 'text-slate-500 hover:text-slate-900'
           }`}
         >
           {t('nav.more')}
@@ -139,7 +139,7 @@ export const App: React.FC = () => {
         <AIConsentModal onComplete={() => setAiModalDismissed(true)} />
       )}
       <HashRouter>
-        <div className="min-h-screen bg-night text-slate-100 flex flex-col justify-between">
+        <div className="min-h-screen bg-[#F4F6FA] text-slate-900 flex flex-col justify-between">
           <a href="#main" className="skip-link">{hasLang ? 'Skip to content' : 'मुख्य सामग्री पर जाएं'}</a>
           <Header />
           <main id="main" className="flex-1 w-full max-w-md mx-auto">

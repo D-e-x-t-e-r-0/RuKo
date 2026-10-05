@@ -18,11 +18,11 @@ export const BreathingCircle: React.FC = () => {
         @keyframes breathScale {
           0%, 100% {
             transform: scale(0.85);
-            box-shadow: 0 0 20px rgba(43, 179, 163, 0.3), 0 0 60px rgba(242, 163, 58, 0.12);
+            box-shadow: 0 2px 10px rgba(20, 33, 61, 0.1), 0 0 24px rgba(43, 179, 163, 0.25);
           }
           50% {
             transform: scale(1.15);
-            box-shadow: 0 0 45px rgba(43, 179, 163, 0.7), 0 0 90px rgba(242, 163, 58, 0.25);
+            box-shadow: 0 4px 18px rgba(20, 33, 61, 0.12), 0 0 40px rgba(43, 179, 163, 0.4);
           }
         }
         @keyframes ringDrift {
@@ -46,17 +46,17 @@ export const BreathingCircle: React.FC = () => {
         <div className="breath-ring absolute w-52 h-52 rounded-full border border-saffron/30" aria-hidden="true" />
         <div className="breath-ring absolute w-64 h-64 rounded-full border border-rukoGreen/20" aria-hidden="true" style={{ animationDelay: '-4s' }} />
         <div
-          className="breathing-pulse relative w-44 h-44 rounded-full border-4 border-rukoGreen/60 bg-gradient-to-b from-rukoGreen/25 to-navy flex flex-col items-center justify-center text-center p-4 transition-all"
+          className="breathing-pulse relative w-44 h-44 rounded-full border-4 border-rukoGreen bg-white flex flex-col items-center justify-center text-center p-4 transition-all"
         >
-          <span className="font-ritual text-2xl font-bold tracking-wide text-cream">
+          <span className="font-ritual text-2xl font-bold tracking-wide text-navy">
             {breatheIn ? t('pause.breathe_in') : t('pause.breathe_out')}
           </span>
-          <span className="text-xs text-slate-300 mt-1 font-sans" aria-hidden="true">
+          <span className="text-xs text-slate-500 mt-1 font-sans" aria-hidden="true">
             {breatheIn ? '··· in ···' : '··· out ···'}
           </span>
         </div>
       </div>
-      <p className="mt-4 text-xs text-slate-400 max-w-[240px] text-center leading-relaxed">
+      <p className="mt-4 text-xs text-slate-500 max-w-[240px] text-center leading-relaxed">
         {t('pause.body_card_text')}
       </p>
     </div>

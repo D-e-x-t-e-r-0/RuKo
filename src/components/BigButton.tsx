@@ -28,28 +28,28 @@ export const BigButton: React.FC<BigButtonProps> = ({
   switch (variant) {
     case 'primary':
       variantClasses = disabled
-        ? 'bg-saffron/40 text-navy/60 cursor-not-allowed'
-        : 'bg-saffron text-navy hover:bg-[#e09430] active:bg-[#d08527] shadow-diya';
+        ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+        : 'bg-saffron text-navy hover:bg-[#e09430] active:bg-[#d08527] shadow-neu-btn';
       break;
     case 'secondary':
       variantClasses = disabled
-        ? 'bg-rukoGreen/40 text-cream/50 cursor-not-allowed'
-        : 'bg-rukoGreen text-cream hover:bg-[#259b8d] active:bg-[#1f8478] shadow-md';
+        ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+        : 'bg-navy text-white hover:bg-[#1e2f56] active:bg-[#101b33] shadow-sm';
       break;
     case 'danger':
       variantClasses = disabled
-        ? 'bg-rukoRed/40 text-cream/50 cursor-not-allowed'
-        : 'bg-rukoRed text-cream hover:bg-[#cc4c26] active:bg-[#b54220] shadow-md';
+        ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
+        : 'bg-rukoRed text-white hover:bg-[#cc4c26] active:bg-[#b54220] shadow-sm';
       break;
     case 'outline':
       variantClasses = disabled
-        ? 'border-2 border-slate-600 text-slate-500 cursor-not-allowed'
-        : 'border-2 border-slate-400 text-cream hover:bg-slate-800/60 active:bg-slate-800';
+        ? 'border-2 border-slate-200 text-slate-400 cursor-not-allowed'
+        : 'border-2 border-slate-300 text-navy hover:bg-slate-100 active:bg-slate-200';
       break;
     case 'ghost':
       variantClasses = disabled
-        ? 'text-slate-600 cursor-not-allowed'
-        : 'text-slate-300 hover:text-cream hover:bg-slate-800/40';
+        ? 'text-slate-300 cursor-not-allowed'
+        : 'text-slate-600 hover:text-navy hover:bg-slate-100';
       break;
   }
 

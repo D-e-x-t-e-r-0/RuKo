@@ -40,10 +40,10 @@ export const Rules: React.FC = () => {
   return (
     <div className="max-w-md mx-auto p-4 pb-20 space-y-6">
       <header>
-        <h1 className="text-2xl font-bold text-cream">
+        <h1 className="text-2xl font-bold text-navy">
           {t('rules.title')}
         </h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-500 mt-1">
           {t('rules.subtitle')}
         </p>
       </header>
@@ -55,7 +55,7 @@ export const Rules: React.FC = () => {
           value={newRuleText}
           onChange={e => setNewRuleText(e.target.value)}
           placeholder={t('rules.add_placeholder')}
-          className="w-full text-base p-3 rounded-xl bg-slate-800 border-2 border-slate-700 text-cream focus:border-saffron focus:outline-none"
+          className="w-full text-base p-3 rounded-xl bg-white border-2 border-slate-200 text-navy focus:border-saffron focus:outline-none"
         />
         <BigButton
           onClick={() => handleAddRule()}
@@ -66,22 +66,22 @@ export const Rules: React.FC = () => {
       </div>
 
       {/* Suggested Rules */}
-      <div className="bg-slate-800/60 border border-slate-700 rounded-2xl p-4 space-y-3">
-        <h2 className="text-xs uppercase font-bold text-saffron tracking-wider">
+      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+        <h2 className="text-xs uppercase font-bold text-clay tracking-wider">
           {t('rules.suggestions_title')}
         </h2>
         <div className="space-y-2">
           <button
             type="button"
             onClick={() => handleAddRule(t('rules.rule_1'))}
-            className="w-full min-h-[48px] text-left p-3 rounded-xl bg-slate-900/80 border border-slate-700 hover:border-saffron text-sm text-slate-200 transition-colors"
+            className="w-full min-h-[48px] text-left p-3 rounded-xl bg-slate-100 border border-slate-200 hover:border-saffron text-sm text-slate-700 transition-colors"
           >
             + {t('rules.rule_1')}
           </button>
           <button
             type="button"
             onClick={() => handleAddRule(t('rules.rule_2'))}
-            className="w-full min-h-[48px] text-left p-3 rounded-xl bg-slate-900/80 border border-slate-700 hover:border-saffron text-sm text-slate-200 transition-colors"
+            className="w-full min-h-[48px] text-left p-3 rounded-xl bg-slate-100 border border-slate-200 hover:border-saffron text-sm text-slate-700 transition-colors"
           >
             + {t('rules.rule_2')}
           </button>
@@ -90,7 +90,7 @@ export const Rules: React.FC = () => {
 
       {/* Existing Rules List */}
       <div className="space-y-3">
-        <h2 className="text-xs uppercase font-bold text-slate-400 tracking-wider">
+        <h2 className="text-xs uppercase font-bold text-slate-500 tracking-wider">
           {t('rules.count_active', { count: rules.length })}
         </h2>
         {rules.length === 0 ? (
@@ -102,16 +102,16 @@ export const Rules: React.FC = () => {
             {rules.map(rule => (
               <div
                 key={rule.id}
-                className="bg-slate-800/80 border-l-4 border-rukoGreen rounded-r-xl p-3.5 flex items-center justify-between space-x-3"
+                className="bg-white border-l-4 border-rukoGreen rounded-r-xl p-3.5 flex items-center justify-between space-x-3"
               >
-                <p className="text-sm font-medium text-cream flex-1">
+                <p className="text-sm font-medium text-navy flex-1">
                   {rule.text}
                 </p>
                 <button
                   type="button"
                   onClick={() => handleDeleteRule(rule.id)}
                   aria-label={t('rules.delete_rule_label')}
-                  className="min-h-[48px] min-w-[48px] flex items-center justify-center text-slate-400 hover:text-rukoRed transition-colors text-base"
+                  className="min-h-[48px] min-w-[48px] flex items-center justify-center text-slate-500 hover:text-rukoRed transition-colors text-base"
                 >
                   ✕
                 </button>
