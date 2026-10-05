@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ruko
+  labels: { app: ruko }
+spec:
+  selector: { app: ruko }
+  ports:
+    - name: http
+      port: 80
+      targetPort: 4173
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ruko
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "4"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "5"
+    nginx.ingress.kubernetes.io/limit-rps: "20"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: ruko.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: { name: ruko, port: { number: 80 } }
