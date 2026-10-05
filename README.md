@@ -16,7 +16,68 @@ Rather than acting on impulse or emotional distress, the user opens Ruko to comp
 4. **Screen 4 (Decision):** Locked until the trader types at least 3 characters explaining *why* they want to make this trade, accompanied by time horizon and acceptable loss limits, leading to three conscious choices: *Abandon*, *Wait 30 minutes*, or *Proceed*.
 5. **Screen 5 (Confirmation):** Immediate reinforcement acknowledging the pause with an uplifting courage quote ("That took a moment of courage. Nothing to prove.").
 
-The same ritual also runs **inside Telegram** as a chat-native bot plugged into a webhook endpoint exposed by the app — no install needed, see [§5c](#5c-telegram-bot--chat-native-ruko-plug-in-webhook).
+The same ritual also runs **inside Telegram** as a chat-native bot plugged into a webhook endpoint exposed by the app — no install needed, see [§5c](#5c-telegram-bot--chat-native-ruko-plug-in-webhook). A WhatsApp adapter ships in-repo with the same engine but stays **disabled by default** because it needs a paid WhatsApp Business API number — see [§5d](#5d-whatsapp-adapter--paid-api-gated).
+
+---
+
+## 1b. System at a glance (diagrams)
+
+```mermaid
+flowchart LR
+    subgraph Client["PWA / Expo / Telegram"]
+        UI["Pause ritual UI"]
+        ENG["src/engine/signals + pressure"]
+        FALL["src/ai/fallback (offline)"]
+    end
+    subgraph Edge["Pi cluster (k3s + nginx)"]
+        NG["nginx reverse proxy"]
+        PI["pi-server (dist + /api/health)"]
+    end
+    subgraph Cloud["Vercel / Netlify (serverless)"]
+        AI["/api/ai (Groq)"]
+        SV["/api/sarvam (bulbul/saarika)"]
+        TG["/api/telegram webhook"]
+        WA["/api/whatsapp (disabled, paid API)"]
+    end
+    UI --> ENG --> FALL
+    UI --> NG --> PI
+    UI -.->|"opt-in, why + signals only, 4s timeout"| AI
+    UI -.->|"voice, Sarvam key or Web Speech"| SV
+    TG --> ENG
+    WA -.->|"same engine, gated by WHATSAPP_TOKEN"| ENG
+```
+
+```mermaid
+sequenceDiagram
+    participant U as User (Hindi-first, 2G, low-end Android)
+    participant R as Ruko ritual
+    participant E as 6-signal engine
+    participant AI as Reflection layer (opt-in)
+    U->>R: Quick check (amount, funding, last trade, 20s)
+    R->>E: evaluateSignals() + levelFor()
+    E-->>R: late-night / re-entry / size / streak / funding
+    R->>U: Pressure check (mirror, not verdict) + 10/30/60s lock
+    R->>U: Breathing + 2 cards + own rules
+    U->>R: why (>=3 chars) + horizon + max loss
+    R->>AI: why + signal IDs + lang only (4s, else fallback)
+    AI-->>R: triggers + 1 open question (validator drops advice)
+    R->>U: Abandon / Wait 30 / Proceed + courage line
+```
+
+```mermaid
+flowchart TB
+    WHY["typed why"] --> SEND["sent to AI"]
+    AMT["amount / funding / horizon / loss"] -.->|"never leaves device"| DEV["IndexedDB / chat session"]
+    SEND --> VAL["zero-advisory validator (EN+HI)"]
+    VAL -->|"clean"| Q["reflective question"]
+    VAL -->|"buy/sell/tip/target"| DROP["discarded → keyword fallback"]
+```
+
+### End-to-end user experience (2 paths, same ritual)
+
+**Web (PWA, airplane-mode capable):** Home → Pause now → pressure → breathe → why → abandon/wait/proceed → Journal → 7-day Mirror → Practice Late-night → Debrief with Pause ON vs OFF table. Full script in `JUDGE_DEMO.md`, plain-words guide in `HOW_TO_USE.md`.
+
+**Chat (Telegram live, WhatsApp gated):** `/start` → `/pause` → amount number → funding/size/last-trade buttons → same 6 signals → breathing + cards → server-side 10/30/60s lock → why + horizon + loss → same reflection core → 3 choices → `/mirror` counts. Privacy identical: only why + signal IDs reach AI.
 
 ---
 
@@ -71,6 +132,9 @@ Ruko features an optional, privacy-preserving AI assistant:
 - **i18n & Speech:** `i18next`, `react-i18next` (12 languages: `hi` default, `en`, `bn`, `mr`, `ta`, `te`, `kn`, `ml`, `gu`, `pa`, `or`, `as`), Sarvam AI voices (bulbul TTS / saarika STT via `/api/sarvam`, key in `SARVAM_API_KEY`) with on-device Web Speech fallback
 - **Testing:** `vitest`
 - **Telegram Bot:** chat-native ritual via the `/api/telegram` webhook (serverless, no bot framework dependency — plain Bot API calls)
+- **WhatsApp adapter:** same ritual via `/api/whatsapp`, disabled by default (needs paid Business API number)
+- **Deploy:** Docker image + `docker-compose.pi.yml` for single Pi, `k8s/` manifests for a multi-Pi (k3s) cluster behind nginx
+- **Grading shortcut:** `GRADING.md` (verify in 5 min) · **Ops:** `OPERATIONS.md` · **Security:** `SECURITY.md` · **Design:** `docs/ARCHITECTURE.md`
 
 ---
 
@@ -140,6 +204,20 @@ That's it — the endpoint is stateless to Telegram (it only receives updates an
 ngrok http 5173          # or: cloudflared tunnel --url http://localhost:5173
 npm run bot:set-webhook -- https://<your-tunnel>.ngrok-free.app
 npm run dev
+```
+
+---
+
+## 5d. WhatsApp adapter (paid-API gated)
+
+`api/whatsapp.ts` reuses the exact Telegram conversation reducer and the shared `api/ai-core.ts` reflection layer (same 6 signals, same 10/30/60s server lock, same zero-advisory validator, same minimal-data contract). It is **disabled by default**: without `WHATSAPP_TOKEN` + `WHATSAPP_PHONE_NUMBER_ID` the endpoint returns `503` with a plain-words reason and the app/Telegram paths are unaffected — verified by `api/whatsapp.test.ts`.
+
+Why gated: WhatsApp Cloud API needs a paid business number and Meta verification. The code is complete and covered by tests, but there is no public demo number on the free tier, so judges should grade Telegram (live) as the chat-native proof and treat WhatsApp as code-verified, not demo-verified.
+
+```bash
+# Enable only when you hold a Meta business number:
+WHATSAPP_TOKEN=... WHATSAPP_PHONE_NUMBER_ID=... WHATSAPP_WEBHOOK_VERIFY_TOKEN=...
+curl "https://your-app/api/whatsapp?hub.mode=subscribe&hub.verify_token=$WHATSAPP_WEBHOOK_VERIFY_TOKEN&hub.challenge=test"
 ```
 
 ---
