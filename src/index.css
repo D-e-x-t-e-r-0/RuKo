@@ -179,3 +179,34 @@ input::placeholder, textarea::placeholder {
     display: none;
   }
 }
+
+/* Tier-2 low-end hardening: 48px targets, calm breathing, battery-safe */
+
+/* Every interactive element meets 48px even if Tailwind class missed it */
+button, [role="button"], a.btn, input[type="submit"] {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+/* Breathing circle: 4s inhale / 4s exhale, GPU-only transform+opacity */
+@keyframes ruko-breathe {
+  0%, 100% { transform: scale(0.94); opacity: 0.85; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+.breathe {
+  animation: ruko-breathe 8s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Long lists (journal/trades) skip offscreen paint on 2GB RAM phones */
+.lazy-paint {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 240px;
+}
+
+/* Evidence pack + debrief print cleanly for counsellors */
+@media print {
+  body { background: #fff; color: #111; }
+  body::after, nav, .no-print { display: none !important; }
+  .paper-card { background: #fff; border: 1px solid #ccc; }
+}
