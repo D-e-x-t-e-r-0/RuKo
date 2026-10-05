@@ -10,6 +10,9 @@
     },
     "api/sarvam.ts": {
       "maxDuration": 60
+    },
+    "api/telegram.ts": {
+      "maxDuration": 30
     }
   },
   "headers": [

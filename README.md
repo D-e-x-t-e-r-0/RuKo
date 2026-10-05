@@ -16,6 +16,8 @@ Rather than acting on impulse or emotional distress, the user opens Ruko to comp
 4. **Screen 4 (Decision):** Locked until the trader types at least 3 characters explaining *why* they want to make this trade, accompanied by time horizon and acceptable loss limits, leading to three conscious choices: *Abandon*, *Wait 30 minutes*, or *Proceed*.
 5. **Screen 5 (Confirmation):** Immediate reinforcement acknowledging the pause with an uplifting courage quote ("That took a moment of courage. Nothing to prove.").
 
+The same ritual also runs **inside Telegram** as a chat-native bot plugged into a webhook endpoint exposed by the app — no install needed, see [§5c](#5c-telegram-bot--chat-native-ruko-plug-in-webhook).
+
 ---
 
 ## 2. Practice Mode Dummy Trading Simulator
@@ -68,6 +70,7 @@ Ruko features an optional, privacy-preserving AI assistant:
 - **Charts:** `recharts` (weekly mirror stacked bar chart and practice price line chart)
 - **i18n & Speech:** `i18next`, `react-i18next` (12 languages: `hi` default, `en`, `bn`, `mr`, `ta`, `te`, `kn`, `ml`, `gu`, `pa`, `or`, `as`), Sarvam AI voices (bulbul TTS / saarika STT via `/api/sarvam`, key in `SARVAM_API_KEY`) with on-device Web Speech fallback
 - **Testing:** `vitest`
+- **Telegram Bot:** chat-native ritual via the `/api/telegram` webhook (serverless, no bot framework dependency — plain Bot API calls)
 
 ---
 
@@ -84,6 +87,59 @@ Ruko features an optional, privacy-preserving AI assistant:
 
 ```bash
 git tag v1.1.0 && git push origin v1.1.0
+```
+
+---
+
+## 5c. Telegram Bot — Chat-native Ruko (Plug-in Webhook)
+
+Ruko exposes a **Telegram webhook endpoint** at `/api/telegram` on every host that already serves the app's serverless routes (Vercel, Netlify, and the local `vite dev` shim). Point any bot token at it once, and the full **5-screen pause ritual runs as a native Telegram conversation** — no app install, works on slow networks, same guardrails.
+
+### How a bot plugs into the endpoint
+
+```bash
+# 1. Create a bot with @BotFather, then set the env vars (see §7):
+#    TELEGRAM_BOT_TOKEN, TELEGRAM_WEBHOOK_SECRET (recommended)
+
+# 2. Deploy the app as usual (Vercel / Netlify), then run ONE command:
+npm run bot:set-webhook -- https://your-app.vercel.app
+#    ...or do it manually:
+curl "https://api.telegram.org/bot<TOKEN>/setWebhook" \
+  -d "url=https://your-app.vercel.app/api/telegram" \
+  -d "secret_token=<TELEGRAM_WEBHOOK_SECRET>" \
+  -d 'allowed_updates=["message","callback_query"]'
+```
+
+That's it — the endpoint is stateless to Telegram (it only receives updates and replies through the Bot API), so it plugs into any bot token. A `GET /api/telegram` health check returns the service status.
+
+### What the user gets (ritual → chat mapping)
+
+| App screen | Telegram experience |
+| --- | --- |
+| Screen 1 · Quick check | `/pause` → amount (typed), funding / usual-size / last-trade / trades-today as inline-button taps |
+| Screen 2 · Pressure check | The same **6 behavioral signals** (late-night, many trades today, quick re-entry after loss, size escalation, loss streak, risky funding) evaluated with the app's engine (`src/engine`), levels and wording mirrored from `src/i18n` — *"Nothing here is a verdict. It is a mirror."* |
+| Screen 3 · Reflection wait | Breathing instructions + reflection cards (the same loss-math and SEBI snippets), with the decision button **locked server-side** for the level's friction window (calm 10s / caution 30s / high 60s) — early taps get *"Still breathing… Xs left."* |
+| Screen 4 · Decision | Requires typing a why (≥3 chars), time horizon, acceptable-loss limit — then triggers + one open reflective question from the **same reflection layer as `/api/ai`** — then the three conscious choices as buttons: *Abandon*, *Wait 30 minutes*, *Proceed anyway* |
+| Screen 5 · Confirmation | *"That took a moment of courage. Nothing to prove."* — plus a come-back time for the wait choice |
+
+**Commands:** `/start` (bilingual onboarding) · `/pause` · `/mirror` (pause counts) · `/checkin` · `/lang` · `/cancel` · `/help`. Both **Hindi (default)** and **English** are fully supported, mirroring the app's tone and copy.
+
+### Privacy & guardrails (identical contract to the app)
+
+- **Shared reflection core:** the bot calls the same prompts, JSON cleanup and **server-side zero-advisory validator** as `/api/ai` via the shared `api/ai-core.ts` — one code path, one guardrail. If the model tries to advise, the output is discarded and a deterministic keyword fallback (`src/ai/fallback.ts`) is used.
+- **Minimal data:** only the typed why sentence, fired signal IDs and language ever reach the AI layer. Amounts, funding, horizon and loss limits never leave the chat session — enforced by tests (`api/telegram-bot.test.ts`).
+- **No advice:** same hard rules — no tickers, no price direction, no strategy, autonomy preserved (Proceed always available).
+- **Webhook security:** set `TELEGRAM_WEBHOOK_SECRET` and Telegram must echo it in `X-Telegram-Bot-Api-Secret-Token` on every update, or the request is rejected with 401.
+- **Session state:** per-chat, in-memory, 24h TTL (best-effort on serverless cold starts; wire Redis/Vercel KV if you need durability). Mirror counters live in the same session — never synced with the app's on-device journal.
+
+### Local development
+
+`vite dev` serves `/api/telegram` in-process via the dev shim, so you can test against a real bot:
+
+```bash
+ngrok http 5173          # or: cloudflared tunnel --url http://localhost:5173
+npm run bot:set-webhook -- https://<your-tunnel>.ngrok-free.app
+npm run dev
 ```
 
 ---
@@ -121,6 +177,11 @@ npm run build
 ### Environment Variables (Optional for Sarvam Voices):
 - `SARVAM_API_KEY`: Your Sarvam AI API key (dashboard at https://dashboard.sarvam.ai). Powers `/api/sarvam` — natural TTS (bulbul), speech-to-text (saarika), and translation (Mayura) across all 12 app languages. Without it the app silently uses on-device Web Speech. See `.env.example`.
 
+### Environment Variables (Optional for the Telegram Bot):
+- `TELEGRAM_BOT_TOKEN`: Bot token from @BotFather. Enables the `/api/telegram` webhook endpoint (see §5c).
+- `TELEGRAM_WEBHOOK_SECRET`: Recommended shared secret — Telegram must echo it in the `X-Telegram-Bot-Api-Secret-Token` header on every update or the request is rejected with 401.
+- After deploying, point your bot at the endpoint once: `npm run bot:set-webhook -- https://your-app.vercel.app`
+
 ### Deploying to Vercel:
 1. Connect this repository to Vercel (or run `npx vercel`).
 2. Settings:
@@ -130,4 +191,4 @@ npm run build
 3. In Project Settings -> Environment Variables, add:
    - `GROQ_API_KEY`: `gsk_...`
    - `AI_MODEL`: `llama-3.3-70b-versatile` (optional)
-4. The serverless route `/api/ai.ts` is automatically detected and served by Vercel.
+4. The serverless route `/api/ai.ts` is automatically detected and served by Vercel. `/api/telegram.ts` (if you add the Telegram env vars) is detected the same way.
