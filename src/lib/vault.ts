@@ -47,7 +47,13 @@ export async function decryptBackup(payload: string, passphrase: string): Promis
   if (!payload.startsWith('RUKO1.')) throw new Error('bad backup header');
   const pack = JSON.parse(atob(payload.slice(6)));
   const key = await getKey(passphrase, unb64(pack.salt));
-  const pt = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64(pack.iv) as BufferSource }, key, unb64(pack.ct));
+  const iv = unb64(pack.iv);
+  const ct = unb64(pack.ct);
+  const pt = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: iv.buffer as ArrayBuffer },
+    key,
+    ct.buffer as ArrayBuffer
+  );
   return new TextDecoder().decode(pt);
 }
 
