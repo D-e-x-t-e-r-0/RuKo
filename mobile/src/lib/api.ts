@@ -36,7 +36,7 @@ async function post<T>(path: string, payload: Record<string, unknown>, timeoutMs
 
 export type VoiceMode = 'auto' | 'sarvam' | 'device';
 
-/** Optional AI reflection (Gemini via /api/ai). Null when off/unreachable. */
+/** Optional AI reflection (Groq via /api/ai). Null when off/unreachable. */
 export async function askAI<T>(task: string, lang: string, payload: Record<string, unknown>): Promise<T | null> {
   return post<T>('/api/ai', { task, lang, ...payload }, 4000);
 }

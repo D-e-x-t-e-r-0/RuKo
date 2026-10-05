@@ -151,7 +151,7 @@ describe('Phase 3: Client askAI Guardrails', () => {
   });
 });
 
-describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
+describe('Phase 3: Groq API Serverless Handler (api/ai.ts)', () => {
   const originalEnv = { ...process.env };
   let testIpCounter = 1;
 
@@ -208,7 +208,8 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
     expect(getJson()).toEqual({ ok: false });
   });
 
-  it('returns 503 when neither GEMINI_API_KEY nor ANTHROPIC_API_KEY is configured', async () => {
+  it('returns 503 when no AI key is configured', async () => {
+    delete process.env.GROQ_API_KEY;
     delete process.env.GEMINI_API_KEY;
     delete process.env.ANTHROPIC_API_KEY;
 
@@ -220,8 +221,9 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
     expect(getJson()).toEqual({ ok: false, error: 'AI key not configured' });
   });
 
-  it('uses GEMINI_API_KEY and defaults model to gemini-1.5-flash', async () => {
-    process.env.GEMINI_API_KEY = 'test-gemini-key-123';
+  it('uses GROQ_API_KEY and defaults model to llama-3.3-70b-versatile', async () => {
+    process.env.GROQ_API_KEY = 'test-groq-key-123';
+    delete process.env.GEMINI_API_KEY;
     delete process.env.ANTHROPIC_API_KEY;
     delete process.env.AI_MODEL;
 
@@ -234,16 +236,12 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
       return Promise.resolve({
         ok: true,
         json: async () => ({
-          candidates: [
+          choices: [
             {
-              content: {
-                parts: [
-                  {
-                    text: JSON.stringify({
-                      triggers: [{ type: 'fomo', evidence: 'feel like everyone' }],
-                    }),
-                  },
-                ],
+              message: {
+                content: JSON.stringify({
+                  triggers: [{ type: 'fomo', evidence: 'feel like everyone' }],
+                }),
               },
             },
           ],
@@ -265,20 +263,23 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
 
     // Verify endpoint, header, and body formatting
     expect(calledUrl).toBe(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
+      'https://api.groq.com/openai/v1/chat/completions'
     );
-    expect(calledOptions.headers['x-goog-api-key']).toBe('test-gemini-key-123');
+    expect(calledOptions.headers['Authorization']).toBe('Bearer test-groq-key-123');
     expect(calledOptions.headers['content-type']).toBe('application/json');
 
     const parsedBody = JSON.parse(calledOptions.body);
-    expect(parsedBody.systemInstruction.parts[0].text).toContain('reflection assistant inside Ruko');
-    expect(parsedBody.contents[0].parts[0].text).toContain(whyText);
-    expect(parsedBody.generationConfig.responseMimeType).toBe('application/json');
+    expect(parsedBody.model).toBe('llama-3.3-70b-versatile');
+    expect(parsedBody.messages[0].role).toBe('system');
+    expect(parsedBody.messages[0].content).toContain('reflection assistant inside Ruko');
+    expect(parsedBody.messages[1].role).toBe('user');
+    expect(parsedBody.messages[1].content).toContain(whyText);
+    expect(parsedBody.response_format).toEqual({ type: 'json_object' });
   });
 
-  it('falls back to ANTHROPIC_API_KEY when GEMINI_API_KEY is not set', async () => {
-    delete process.env.GEMINI_API_KEY;
-    process.env.ANTHROPIC_API_KEY = 'fallback-key-abc';
+  it('falls back to the GEMINI_API_KEY slot when GROQ_API_KEY is not set', async () => {
+    delete process.env.GROQ_API_KEY;
+    process.env.GEMINI_API_KEY = 'fallback-key-abc';
 
     let calledOptions: any = null;
     vi.stubGlobal('fetch', vi.fn().mockImplementation((_url: string, opts: any) => {
@@ -286,10 +287,10 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
       return Promise.resolve({
         ok: true,
         json: async () => ({
-          candidates: [
+          choices: [
             {
-              content: {
-                parts: [{ text: JSON.stringify({ triggers: [] }) }],
+              message: {
+                content: JSON.stringify({ triggers: [] }),
               },
             },
           ],
@@ -303,24 +304,24 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
 
     await handler(req, res);
     expect(getStatus()).toBe(200);
-    expect(calledOptions.headers['x-goog-api-key']).toBe('fallback-key-abc');
+    expect(calledOptions.headers['Authorization']).toBe('Bearer fallback-key-abc');
   });
 
-  it('respects custom AI_MODEL and ignores legacy claude models', async () => {
-    process.env.GEMINI_API_KEY = 'test-key';
+  it('respects custom AI_MODEL and defaults when unset', async () => {
+    process.env.GROQ_API_KEY = 'test-key';
 
-    // 1. Custom Gemini model
-    process.env.AI_MODEL = 'gemini-2.0-flash';
-    let calledUrl = '';
-    vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string) => {
-      calledUrl = url;
+    // 1. Custom model passed through verbatim
+    process.env.AI_MODEL = 'llama-3.1-8b-instant';
+    let calledBody: any = null;
+    vi.stubGlobal('fetch', vi.fn().mockImplementation((_url: string, opts: any) => {
+      calledBody = JSON.parse(opts.body);
       return Promise.resolve({
         ok: true,
         json: async () => ({
-          candidates: [
+          choices: [
             {
-              content: {
-                parts: [{ text: JSON.stringify({ triggers: [] }) }],
+              message: {
+                content: JSON.stringify({ triggers: [] }),
               },
             },
           ],
@@ -332,31 +333,27 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
       body: { task: 'triggers', lang: 'en', payload: { why: 'test' } },
     });
     await handler(mock1.req, mock1.res);
-    expect(calledUrl).toContain('models/gemini-2.0-flash:generateContent');
+    expect(calledBody.model).toBe('llama-3.1-8b-instant');
 
-    // 2. Legacy claude model -> falls back to gemini-1.5-flash
-    process.env.AI_MODEL = 'claude-haiku-4-5-20251001';
+    // 2. Unset model -> falls back to llama-3.3-70b-versatile
+    delete process.env.AI_MODEL;
     const mock2 = createMockReqRes({
       body: { task: 'triggers', lang: 'en', payload: { why: 'test' } },
     });
     await handler(mock2.req, mock2.res);
-    expect(calledUrl).toContain('models/gemini-1.5-flash:generateContent');
+    expect(calledBody.model).toBe('llama-3.3-70b-versatile');
   });
 
-  it('handles question task and markdown code fences in Gemini output', async () => {
-    process.env.GEMINI_API_KEY = 'test-key';
+  it('handles question task and markdown code fences in Groq output', async () => {
+    process.env.GROQ_API_KEY = 'test-key';
 
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        candidates: [
+        choices: [
           {
-            content: {
-              parts: [
-                {
-                  text: '```json\n{"question": "What would happen if you paused for 10 minutes?"}\n```',
-                },
-              ],
+            message: {
+              content: JSON.stringify({ question: 'What would happen if you paused for 10 minutes?' }),
             },
           },
         ],
@@ -372,21 +369,17 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
     expect(getJson().data.question).toBe('What would happen if you paused for 10 minutes?');
   });
 
-  it('rejects Gemini responses that violate guardrails with 422', async () => {
-    process.env.GEMINI_API_KEY = 'test-key';
+  it('rejects Groq responses that violate guardrails with 422', async () => {
+    process.env.GROQ_API_KEY = 'test-key';
 
     // Model attempts to give financial advice
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        candidates: [
+        choices: [
           {
-            content: {
-              parts: [
-                {
-                  text: JSON.stringify({ question: 'You should buy this stock now.' }),
-                },
-              ],
+            message: {
+              content: JSON.stringify({ question: 'You should buy this stock now.' }),
             },
           },
         ],
@@ -402,10 +395,10 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
     expect(getJson()).toEqual({ ok: false });
   });
 
-  it('returns 502 when Gemini API returns non-ok status or empty content', async () => {
-    process.env.GEMINI_API_KEY = 'test-key';
+  it('returns 502 when Groq API returns non-ok status or empty content', async () => {
+    process.env.GROQ_API_KEY = 'test-key';
 
-    // Non-ok response from Gemini
+    // Non-ok response from Groq
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: false,
       status: 403,
@@ -422,7 +415,7 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        candidates: [{ finishReason: 'SAFETY' }],
+        choices: [],
       }),
     }));
 
@@ -435,15 +428,15 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
   });
 
   it('returns 500 without leaking secrets when JSON parsing fails', async () => {
-    process.env.GEMINI_API_KEY = 'super-secret-key-12345';
+    process.env.GROQ_API_KEY = 'super-secret-key-12345';
 
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        candidates: [
+        choices: [
           {
-            content: {
-              parts: [{ text: 'This is not valid JSON at all' }],
+            message: {
+              content: 'This is not valid JSON at all',
             },
           },
         ],
@@ -462,15 +455,15 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
   });
 
   it('supports Web standard Response objects when res is omitted (Netlify Functions v2)', async () => {
-    process.env.GEMINI_API_KEY = 'test-key';
+    process.env.GROQ_API_KEY = 'test-key';
 
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        candidates: [
+        choices: [
           {
-            content: {
-              parts: [{ text: JSON.stringify({ summary: 'Calm reflection week.' }) }],
+            message: {
+              content: JSON.stringify({ summary: 'Calm reflection week.' }),
             },
           },
         ],
@@ -495,20 +488,20 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
     expect(body.data.summary).toBe('Calm reflection week.');
   });
 
-  it('normalizes models/ prefix in AI_MODEL environment variable', async () => {
-    process.env.GEMINI_API_KEY = 'test-key';
-    process.env.AI_MODEL = 'models/gemini-2.0-flash';
+  it('passes custom AI_MODEL through to Groq verbatim', async () => {
+    process.env.GROQ_API_KEY = 'test-key';
+    process.env.AI_MODEL = 'llama-3.1-8b-instant';
 
-    let calledUrl = '';
-    vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string) => {
-      calledUrl = url;
+    let calledBody: any = null;
+    vi.stubGlobal('fetch', vi.fn().mockImplementation((_url: string, opts: any) => {
+      calledBody = JSON.parse(opts.body);
       return Promise.resolve({
         ok: true,
         json: async () => ({
-          candidates: [
+          choices: [
             {
-              content: {
-                parts: [{ text: JSON.stringify({ triggers: [] }) }],
+              message: {
+                content: JSON.stringify({ triggers: [] }),
               },
             },
           ],
@@ -524,26 +517,20 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
 
     const res = await handler(req);
     expect(res.status).toBe(200);
-    expect(calledUrl).toBe(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
-    );
+    expect(calledBody.model).toBe('llama-3.1-8b-instant');
   });
 
   it('handles uppercase markdown code fences and conversational preambles', async () => {
-    process.env.GEMINI_API_KEY = 'test-key';
+    process.env.GROQ_API_KEY = 'test-key';
 
     // Model returns preamble + uppercase ```JSON fence
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
       ok: true,
       json: async () => ({
-        candidates: [
+        choices: [
           {
-            content: {
-              parts: [
-                {
-                  text: 'Here is your reflection:\n```JSON\n{"question": "How are you feeling right now?"}\n```',
-                },
-              ],
+            message: {
+              content: 'Here is your reflection:\n```JSON\n{"question": "How are you feeling right now?"}\n```',
             },
           },
         ],
@@ -564,6 +551,7 @@ describe('Phase 3: Gemini API Serverless Handler (api/ai.ts)', () => {
   });
 
   it('returns appropriate Response objects on errors without res parameter', async () => {
+    delete process.env.GROQ_API_KEY;
     delete process.env.GEMINI_API_KEY;
     delete process.env.ANTHROPIC_API_KEY;
 

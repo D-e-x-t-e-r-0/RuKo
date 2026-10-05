@@ -68,7 +68,7 @@ This document records the architectural, behavioral, and technical decisions mad
 - **Implementation**:
   - The client transmits *only* the user's single typed "Why" sentence and language code (`hi` or `en`).
   - Account balances, trade history, profit/loss, and rules are **never** transmitted to the AI endpoint.
-  - Serverless functions `/api/ai.ts` and `netlify/functions/ai.ts` connect to Gemini API using lightweight `fetch` with IP rate limiting (20 req/hour) and output validation against financial advice.
+  - Serverless functions `/api/ai.ts` and `netlify/functions/ai.ts` connect to the Groq Cloud chat-completions API (OpenAI-compatible, `llama-3.3-70b-versatile` by default, JSON mode) using lightweight `fetch` with IP rate limiting (20 req/hour) and output validation against financial advice. Key is read from `GROQ_API_KEY`, falling back to the legacy `GEMINI_API_KEY` slot.
   - Client implements a strict 4-second timeout with silent fallback to rule-based questions and summaries.
 
 ---

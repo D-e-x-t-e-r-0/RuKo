@@ -115,8 +115,8 @@ npm run build
 ## 7. How to Deploy to Vercel or Netlify
 
 ### Environment Variables (Optional for AI Layer):
-- `GEMINI_API_KEY`: Your Google Gemini API key (configured as a secret in Vercel/Netlify dashboard; backwards compatible with `ANTHROPIC_API_KEY`).
-- `AI_MODEL`: Gemini model to use (defaults to `gemini-1.5-flash`).
+- `GROQ_API_KEY`: Your Groq Cloud API key (console.groq.com → API Keys; configured as a secret in Vercel/Netlify dashboard). The `GEMINI_API_KEY` slot is still accepted as a fallback, so existing deployments keep working.
+- `AI_MODEL`: Groq model to use (defaults to `llama-3.3-70b-versatile`).
 
 ### Environment Variables (Optional for Sarvam Voices):
 - `SARVAM_API_KEY`: Your Sarvam AI API key (dashboard at https://dashboard.sarvam.ai). Powers `/api/sarvam` — natural TTS (bulbul), speech-to-text (saarika), and translation (Mayura) across all 12 app languages. Without it the app silently uses on-device Web Speech. See `.env.example`.
@@ -128,6 +128,6 @@ npm run build
    - **Build Command:** `npm run build`
    - **Output Directory:** `dist`
 3. In Project Settings -> Environment Variables, add:
-   - `GEMINI_API_KEY`: `AIzaSy...`
-   - `AI_MODEL`: `gemini-1.5-flash` (optional)
+   - `GROQ_API_KEY`: `gsk_...`
+   - `AI_MODEL`: `llama-3.3-70b-versatile` (optional)
 4. The serverless route `/api/ai.ts` is automatically detected and served by Vercel.
