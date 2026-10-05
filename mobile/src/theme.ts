@@ -2,7 +2,7 @@
  *  Same brand hues as web (saffron/ember/green/red stay); surfaces go white
  *  with hairline borders and one soft gray shadow — features first. */
 export const colors = {
-  night: '#F4F6FA',
+  night: '#FAFAF9',
   abyss: '#FFFFFF',
   navy: '#14213D',
   card: '#FFFFFF',

@@ -29,7 +29,7 @@ export const LanguagePicker: React.FC<LanguagePickerProps> = ({ onSelect }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#F4F6FA] text-navy flex flex-col justify-between p-6 max-w-md mx-auto overflow-y-auto">
+    <div className="fixed inset-0 z-[100] bg-[#FAFAF9] text-navy flex flex-col justify-between p-6 max-w-md mx-auto overflow-y-auto">
       <div className="my-auto text-center space-y-6 rise">
         {/* App Logo & Title */}
         <div className="space-y-3">

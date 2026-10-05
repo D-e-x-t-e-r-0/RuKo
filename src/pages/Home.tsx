@@ -60,7 +60,7 @@ export const Home: React.FC = () => {
     <div className="flex flex-col items-center justify-between min-h-[calc(100vh-140px)] max-w-md mx-auto p-4 pb-24 space-y-6">
       {/* Header & Time-Aware Greeting */}
       <header className="text-center pt-3 space-y-2 w-full rise">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-saffron/25 text-xs font-semibold text-clay">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-100 border border-saffron/25 text-xs font-semibold text-clay">
           <span className="w-1.5 h-1.5 rounded-full bg-saffron animate-glow-pulse" aria-hidden="true" />
           {t(getGreetingKey())}
         </div>
@@ -133,11 +133,11 @@ export const Home: React.FC = () => {
             {t('home.today_stats_title')}
           </h2>
           <div className="grid grid-cols-2 gap-3 text-center">
-            <div className="bg-slate-100 rounded-xl p-3">
+            <div className="bg-stone-100 rounded-xl p-3">
               <div className="text-2xl font-bold text-navy">{todayPauses}</div>
               <div className="text-xs text-slate-500 mt-1">{t('home.today_pauses')}</div>
             </div>
-            <div className="bg-slate-100 rounded-xl p-3">
+            <div className="bg-stone-100 rounded-xl p-3">
               <div className="text-2xl font-bold text-teal-700">{todaySaved}</div>
               <div className="text-xs text-slate-500 mt-1">{t('home.today_saved')}</div>
             </div>

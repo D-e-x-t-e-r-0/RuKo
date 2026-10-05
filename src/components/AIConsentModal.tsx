@@ -27,7 +27,7 @@ export const AIConsentModal: React.FC<AIConsentModalProps> = ({ onComplete }) =>
           </h2>
         </div>
 
-        <div className="text-xs text-slate-600 space-y-2.5 leading-relaxed bg-slate-50 p-4 rounded-2xl border border-slate-200">
+        <div className="text-xs text-slate-600 space-y-2.5 leading-relaxed bg-stone-100 p-4 rounded-2xl border border-slate-200">
           <p className="font-semibold text-slate-700">
             {t('ai_consent.subtitle')}
           </p>
@@ -52,7 +52,7 @@ export const AIConsentModal: React.FC<AIConsentModalProps> = ({ onComplete }) =>
           <button
             type="button"
             onClick={() => handleChoice(false)}
-            className="w-full min-h-[48px] py-3 px-4 rounded-xl bg-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-300 hover:text-navy active:scale-95 transition-all"
+            className="w-full min-h-[48px] py-3 px-4 rounded-xl bg-stone-200 text-slate-600 font-bold text-sm hover:bg-slate-300 hover:text-navy active:scale-95 transition-all"
           >
             {t('ai_consent.btn_not_now')}
           </button>

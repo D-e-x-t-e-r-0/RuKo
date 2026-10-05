@@ -143,7 +143,7 @@ export const Journal: React.FC = () => {
                     </div>
                   </div>
                   {s.selfReflection && (
-                    <p className="text-xs italic text-slate-600 bg-slate-100 p-2.5 rounded-xl border border-slate-200">
+                    <p className="text-xs italic text-slate-600 bg-stone-100 p-2.5 rounded-xl border border-slate-200">
                       "{s.selfReflection}"
                     </p>
                   )}
@@ -256,7 +256,7 @@ export const Journal: React.FC = () => {
 
                 {/* Expanded Details Body */}
                 {expandedDetails[d.id!] && (
-                  <div className="p-3 rounded-xl bg-slate-100/70 border border-slate-200 text-xs space-y-2 mt-2">
+                  <div className="p-3 rounded-xl bg-stone-100/70 border border-slate-200 text-xs space-y-2 mt-2">
                     <div className="grid grid-cols-2 gap-2 text-slate-600">
                       <div>
                         <span className="text-slate-500 block text-[11px]">{t('journal.max_loss_label')}</span>
@@ -295,7 +295,7 @@ export const Journal: React.FC = () => {
                         <span className="text-slate-500 text-[11px] block">{t('journal.reflections_title')}:</span>
                         <div className="space-y-1">
                           {d.reflections.map((ref, idx) => (
-                            <div key={idx} className="text-slate-600 bg-slate-50 p-1.5 rounded-lg">
+                            <div key={idx} className="text-slate-600 bg-stone-100 p-1.5 rounded-lg">
                               <span className="font-semibold text-slate-500 mr-1">{ref.qid.replace('q_', '')}:</span>
                               <span>{ref.answer}</span>
                             </div>
@@ -308,7 +308,7 @@ export const Journal: React.FC = () => {
 
                 {/* Existing Reflection */}
                 {(d.reflection || d.feeling) && (
-                  <div className="mt-3 p-3 rounded-xl bg-slate-100 border border-slate-200 text-xs space-y-1">
+                  <div className="mt-3 p-3 rounded-xl bg-stone-100 border border-slate-200 text-xs space-y-1">
                     <div className="flex items-center space-x-2">
                       <span className="text-slate-500">{t('journal.reflection_label')}</span>
                       {d.feeling && (
@@ -380,7 +380,7 @@ export const Journal: React.FC = () => {
                       onChange={e =>
                         setReflectionTexts(prev => ({ ...prev, [d.id!]: e.target.value }))
                       }
-                      className="w-full text-sm min-h-[48px] p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
+                      className="w-full text-sm min-h-[48px] p-3 rounded-xl bg-stone-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
                     />
 
                     <button

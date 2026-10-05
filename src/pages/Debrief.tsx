@@ -184,7 +184,7 @@ export const Debrief: React.FC = () => {
       </div>
 
       {/* Observed Pressure Signals */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2">
+      <div className="bg-stone-100 border border-slate-200 rounded-2xl p-4 space-y-2">
         <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">
           {t('debrief.signals_observed')}
         </div>
@@ -235,7 +235,7 @@ export const Debrief: React.FC = () => {
             }}
             placeholder={t('debrief.self_reflection_placeholder')}
             rows={3}
-            className="w-full bg-slate-100 border border-slate-200 rounded-xl p-3 pr-12 text-xs text-navy placeholder-slate-500 focus:outline-none focus:border-saffron"
+            className="w-full bg-stone-100 border border-slate-200 rounded-xl p-3 pr-12 text-xs text-navy placeholder-slate-500 focus:outline-none focus:border-saffron"
           />
           <div className="absolute right-2 bottom-3">
             <MicButton

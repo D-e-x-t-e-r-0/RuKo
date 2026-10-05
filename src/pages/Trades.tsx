@@ -140,7 +140,7 @@ export const Trades: React.FC = () => {
               placeholder={t('trades.amount_placeholder')}
               value={amount}
               onChange={e => setAmount(e.target.value)}
-              className="w-full text-lg min-h-[48px] p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
+              className="w-full text-lg min-h-[48px] p-3 rounded-xl bg-stone-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
               required
             />
           </div>
@@ -156,7 +156,7 @@ export const Trades: React.FC = () => {
                 className={`min-h-[48px] py-2 px-2 rounded-xl text-xs font-bold transition-all ${
                   funding === 'savings'
                     ? 'bg-saffron text-navy'
-                    : 'bg-slate-100 text-slate-600 border border-slate-200'
+                    : 'bg-stone-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.funding_savings')}
@@ -167,7 +167,7 @@ export const Trades: React.FC = () => {
                 className={`min-h-[48px] py-2 px-2 rounded-xl text-xs font-bold transition-all ${
                   funding === 'emergency'
                     ? 'bg-saffron text-navy'
-                    : 'bg-slate-100 text-slate-600 border border-slate-200'
+                    : 'bg-stone-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.funding_emergency')}
@@ -178,7 +178,7 @@ export const Trades: React.FC = () => {
                 className={`min-h-[48px] py-2 px-2 rounded-xl text-xs font-bold transition-all ${
                   funding === 'loan'
                     ? 'bg-saffron text-navy'
-                    : 'bg-slate-100 text-slate-600 border border-slate-200'
+                    : 'bg-stone-100 text-slate-600 border border-slate-200'
                 }`}
               >
                 {t('pause.funding_loan')}
@@ -195,7 +195,7 @@ export const Trades: React.FC = () => {
               placeholder={t('trades.pnl_placeholder')}
               value={pnl}
               onChange={e => setPnl(e.target.value)}
-              className="w-full text-base min-h-[48px] p-3 rounded-xl bg-slate-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
+              className="w-full text-base min-h-[48px] p-3 rounded-xl bg-stone-100 border border-slate-200 text-navy focus:border-saffron focus:outline-none"
             />
           </div>
 
@@ -216,7 +216,7 @@ export const Trades: React.FC = () => {
 
         <label className="block cursor-pointer">
           <span className="sr-only">{t('trades.choose_csv_sr')}</span>
-          <div className="min-h-[48px] w-full border-2 border-dashed border-slate-300 hover:border-saffron rounded-xl p-3 text-center text-sm font-semibold text-navy flex items-center justify-center bg-slate-100 transition-colors">
+          <div className="min-h-[48px] w-full border-2 border-dashed border-slate-300 hover:border-saffron rounded-xl p-3 text-center text-sm font-semibold text-navy flex items-center justify-center bg-stone-100 transition-colors">
             {isProcessing ? t('trades.processing_csv') : t('trades.select_csv')}
           </div>
           <input
@@ -268,7 +268,7 @@ export const Trades: React.FC = () => {
             {recentTrades.map((trade, idx) => (
               <div
                 key={trade.id || idx}
-                className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between text-xs"
+                className="bg-stone-100 border border-slate-200 rounded-xl p-3 flex items-center justify-between text-xs"
               >
                 <div>
                   <div className="font-semibold text-navy text-sm font-mono">

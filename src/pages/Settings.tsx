@@ -70,7 +70,7 @@ export const Settings: React.FC = () => {
               className={`min-h-[48px] py-2 px-3 rounded-xl font-bold text-sm transition-all ${
                 currentLang === l.code
                   ? 'bg-saffron text-night shadow-diya'
-                  : 'bg-slate-100 text-slate-600 border border-slate-200'
+                  : 'bg-stone-100 text-slate-600 border border-slate-200'
               }`}
             >
               <span className="block leading-tight">{l.nativeName}</span>
@@ -106,7 +106,7 @@ export const Settings: React.FC = () => {
               className={`min-h-[48px] py-2 px-4 rounded-xl font-bold text-sm text-left transition-all ${
                 voiceMode === mode
                   ? 'bg-saffron text-night shadow-diya'
-                  : 'bg-slate-100 text-slate-600 border border-slate-200'
+                  : 'bg-stone-100 text-slate-600 border border-slate-200'
               }`}
             >
               {label}
@@ -163,7 +163,7 @@ export const Settings: React.FC = () => {
       </section>
 
       {/* Privacy Guarantee Note */}
-      <div className="bg-slate-100 border border-slate-200 rounded-2xl p-4 text-center">
+      <div className="bg-stone-100 border border-slate-200 rounded-2xl p-4 text-center">
         <p className="text-xs text-slate-500 font-medium">
           🔒 {t('settings.privacy_note')}
         </p>

@@ -457,7 +457,7 @@ export const Practice: React.FC = () => {
   // If paused for ritual modal
   if (isPausedForRitual) {
     return (
-      <div className="fixed inset-0 z-[70] bg-slate-100 overflow-y-auto">
+      <div className="fixed inset-0 z-[70] bg-stone-100 overflow-y-auto">
         <Pause
           mode="practice"
           sessionId={sessionId ?? undefined}
@@ -503,7 +503,7 @@ export const Practice: React.FC = () => {
                   className={`w-full text-left p-4 rounded-2xl border transition-all ${
                     isSelected
                       ? 'bg-white border-saffron ring-1 ring-saffron'
-                      : 'bg-slate-50 border-slate-200 hover:border-slate-500'
+                      : 'bg-stone-100 border-slate-200 hover:border-slate-500'
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -626,7 +626,7 @@ export const Practice: React.FC = () => {
                     className={`py-2 px-3 rounded-xl text-xs font-semibold text-left border transition-all ${
                       isSelected
                         ? 'bg-slate-700 border-saffron text-navy'
-                        : 'bg-slate-50 border-slate-200 text-slate-500 hover:text-slate-900'
+                        : 'bg-stone-100 border-slate-200 text-slate-500 hover:text-slate-900'
                     } ${activePosition !== null ? 'opacity-50 cursor-not-allowed' : ''}`}
                   >
                     {info.name}
@@ -699,7 +699,7 @@ export const Practice: React.FC = () => {
                     onChange={e => setCustomMargin(e.target.value)}
                     placeholder={t('practice.enter_margin_placeholder')}
                     aria-label={t('practice.margin')}
-                    className="w-full bg-slate-100 border border-slate-200 rounded-xl px-3 py-2 text-sm text-navy font-mono mt-2 min-h-[48px]"
+                    className="w-full bg-stone-100 border border-slate-200 rounded-xl px-3 py-2 text-sm text-navy font-mono mt-2 min-h-[48px]"
                   />
                 )}
               </div>

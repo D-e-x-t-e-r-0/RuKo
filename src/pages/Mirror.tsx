@@ -258,21 +258,21 @@ export const Mirror: React.FC = () => {
 
       {/* 3 Plain Stats */}
       <div className="grid grid-cols-3 gap-2 text-center">
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
+        <div className="bg-stone-100 border border-slate-200 rounded-xl p-3">
           <div className="text-2xl font-bold text-navy">{totalPauses}</div>
           <div className="text-[11px] text-slate-500 mt-1 leading-tight font-medium">
             {t('mirror.stat_pauses')}
           </div>
         </div>
 
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
+        <div className="bg-stone-100 border border-slate-200 rounded-xl p-3">
           <div className="text-2xl font-bold text-teal-700">{totalSaved}</div>
           <div className="text-[11px] text-slate-500 mt-1 leading-tight font-medium">
             {t('mirror.stat_saved')}
           </div>
         </div>
 
-        <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
+        <div className="bg-stone-100 border border-slate-200 rounded-xl p-3">
           <div className="text-2xl font-bold text-rukoRed">{impulsivePercent}%</div>
           <div className="text-[11px] text-slate-500 mt-1 leading-tight font-medium">
             {t('mirror.stat_impulsive')}

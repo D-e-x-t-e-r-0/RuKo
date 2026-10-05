@@ -13,7 +13,7 @@ export const AIBadge: React.FC<AIBadgeProps> = ({ isAI, className = '' }) => {
   if (!isAI) {
     return (
       <span
-        className={`inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-wider select-none ${className}`}
+        className={`inline-flex items-center px-2 py-0.5 rounded-md bg-stone-100 border border-slate-200 text-slate-600 text-[10px] font-bold uppercase tracking-wider select-none ${className}`}
       >
         {t('ai_badge.rule_based')}
       </span>
@@ -37,7 +37,7 @@ export const AIBadge: React.FC<AIBadgeProps> = ({ isAI, className = '' }) => {
       </div>
 
       {showExplanation && (
-        <div className="mt-1.5 p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-600 leading-relaxed shadow-sm">
+        <div className="mt-1.5 p-2.5 rounded-xl bg-stone-100 border border-slate-200 text-[11px] text-slate-600 leading-relaxed shadow-sm">
           {t('ai_badge.explanation')}
         </div>
       )}

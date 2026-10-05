@@ -21,7 +21,7 @@ export const Header: React.FC = () => {
       </Link>
 
       <div
-        className="flex items-center bg-slate-100 border border-slate-200 rounded-full p-1 text-xs font-bold"
+        className="flex items-center bg-stone-100 border border-slate-200 rounded-full p-1 text-xs font-bold"
         role="group"
         aria-label="Language"
       >

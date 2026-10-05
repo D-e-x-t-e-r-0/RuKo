@@ -66,7 +66,7 @@ export const Rules: React.FC = () => {
       </div>
 
       {/* Suggested Rules */}
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3">
+      <div className="bg-stone-100 border border-slate-200 rounded-2xl p-4 space-y-3">
         <h2 className="text-xs uppercase font-bold text-clay tracking-wider">
           {t('rules.suggestions_title')}
         </h2>
@@ -74,14 +74,14 @@ export const Rules: React.FC = () => {
           <button
             type="button"
             onClick={() => handleAddRule(t('rules.rule_1'))}
-            className="w-full min-h-[48px] text-left p-3 rounded-xl bg-slate-100 border border-slate-200 hover:border-saffron text-sm text-slate-700 transition-colors"
+            className="w-full min-h-[48px] text-left p-3 rounded-xl bg-stone-100 border border-slate-200 hover:border-saffron text-sm text-slate-700 transition-colors"
           >
             + {t('rules.rule_1')}
           </button>
           <button
             type="button"
             onClick={() => handleAddRule(t('rules.rule_2'))}
-            className="w-full min-h-[48px] text-left p-3 rounded-xl bg-slate-100 border border-slate-200 hover:border-saffron text-sm text-slate-700 transition-colors"
+            className="w-full min-h-[48px] text-left p-3 rounded-xl bg-stone-100 border border-slate-200 hover:border-saffron text-sm text-slate-700 transition-colors"
           >
             + {t('rules.rule_2')}
           </button>

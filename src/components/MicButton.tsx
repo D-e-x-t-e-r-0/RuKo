@@ -41,7 +41,7 @@ export const MicButton: React.FC<MicButtonProps> = ({ onTranscript, className = 
       className={`min-h-[48px] min-w-[48px] p-2.5 rounded-full flex items-center justify-center transition-all ${
         listening
           ? 'bg-rukoRed text-white animate-pulse'
-          : 'bg-slate-200 text-clay hover:bg-slate-300 active:bg-slate-300'
+          : 'bg-stone-200 text-clay hover:bg-slate-300 active:bg-slate-300'
       } ${className}`}
     >
       <svg

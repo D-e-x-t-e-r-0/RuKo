@@ -139,7 +139,7 @@ export const App: React.FC = () => {
         <AIConsentModal onComplete={() => setAiModalDismissed(true)} />
       )}
       <HashRouter>
-        <div className="min-h-screen bg-[#F4F6FA] text-slate-900 flex flex-col justify-between">
+        <div className="min-h-screen bg-[#FAFAF9] text-slate-900 flex flex-col justify-between">
           <a href="#main" className="skip-link">{hasLang ? 'Skip to content' : 'मुख्य सामग्री पर जाएं'}</a>
           <Header />
           <main id="main" className="flex-1 w-full max-w-md mx-auto">
