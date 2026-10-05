@@ -71,6 +71,23 @@ Ruko features an optional, privacy-preserving AI assistant:
 
 ---
 
+## 5b. Mobile App (Expo) & Releases
+
+- **`mobile/`** is the native Expo companion (SDK 57): same ritual, journal,
+  simulator, and 12 languages with a polished midnight-diya theme.
+  Storage is on-device AsyncStorage; voice is Sarvam-first with expo-speech
+  fallback. See `mobile/README.md`.
+- **Releases** are automated in `.github/workflows/release.yml`:
+  push a `v*` tag (or dispatch manually) to run web tests + build, Expo
+  typecheck + web export, an optional EAS preview APK (needs the `EXPO_TOKEN`
+  secret), and publish a GitHub Release with both web bundles attached.
+
+```bash
+git tag v1.1.0 && git push origin v1.1.0
+```
+
+---
+
 ## 6. How to Run Locally
 
 ### Install dependencies:
@@ -98,8 +115,8 @@ npm run build
 ## 7. How to Deploy to Vercel or Netlify
 
 ### Environment Variables (Optional for AI Layer):
-- `GEMINI_API_KEY`: Your Google Gemini API key (configured as a secret in Vercel/Netlify dashboard; backwards compatible with `ANTHROPIC_API_KEY`).
-- `AI_MODEL`: Gemini model to use (defaults to `gemini-1.5-flash`).
+- `GROQ_API_KEY`: Your Groq Cloud API key (console.groq.com → API Keys; configured as a secret in Vercel/Netlify dashboard). The `GEMINI_API_KEY` slot is still accepted as a fallback, so existing deployments keep working.
+- `AI_MODEL`: Groq model to use (defaults to `llama-3.3-70b-versatile`).
 
 ### Environment Variables (Optional for Sarvam Voices):
 - `SARVAM_API_KEY`: Your Sarvam AI API key (dashboard at https://dashboard.sarvam.ai). Powers `/api/sarvam` — natural TTS (bulbul), speech-to-text (saarika), and translation (Mayura) across all 12 app languages. Without it the app silently uses on-device Web Speech. See `.env.example`.
@@ -111,6 +128,6 @@ npm run build
    - **Build Command:** `npm run build`
    - **Output Directory:** `dist`
 3. In Project Settings -> Environment Variables, add:
-   - `GEMINI_API_KEY`: `AIzaSy...`
-   - `AI_MODEL`: `gemini-1.5-flash` (optional)
+   - `GROQ_API_KEY`: `gsk_...`
+   - `AI_MODEL`: `llama-3.3-70b-versatile` (optional)
 4. The serverless route `/api/ai.ts` is automatically detected and served by Vercel.

@@ -129,8 +129,12 @@ async function handleStt(body: any, key: string) {
     return { status: 400, payload: { ok: false, error: 'bad audio' } };
   }
   const ext = mime.includes('mp4') || mime.includes('m4a') ? 'm4a' : mime.includes('ogg') ? 'ogg' : mime.includes('wav') ? 'wav' : 'webm';
+  // Copy into a fresh ArrayBuffer: Buffer's ArrayBufferLike view is not a
+  // valid BlobPart under newer lib defs (TS 5.9+, as used by Vercel).
+  const copy = new Uint8Array(bytes.length);
+  copy.set(bytes);
   const form = new FormData();
-  form.append('file', new Blob([bytes], { type: mime }), `clip.${ext}`);
+  form.append('file', new Blob([copy.buffer], { type: mime }), `clip.${ext}`);
   form.append('model', 'saarika:v2.5');
   form.append('language_code', languageCode);
   const { status, json } = await sarvamFetch('/speech-to-text', key, { method: 'POST', body: form }, 25000);

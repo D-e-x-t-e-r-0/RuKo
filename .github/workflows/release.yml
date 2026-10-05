@@ -1,0 +1,157 @@
+name: App Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      android:
+        description: 'Build Android APK with EAS (needs EXPO_TOKEN secret)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  verify-web:
+    name: Test + build PWA
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npm test
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ruko-web-dist
+          path: dist
+
+  verify-mobile:
+    name: Typecheck Expo app
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - run: npx tsc --noEmit
+
+  expo-web:
+    name: Export Expo web bundle
+    runs-on: ubuntu-latest
+    needs: [verify-web, verify-mobile]
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+      - run: npm ci
+      - run: npx expo export --platform web --output-dir expo-web
+        env:
+          EXPO_PUBLIC_API_URL: ${{ vars.EXPO_PUBLIC_API_URL }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ruko-expo-web
+          path: mobile/expo-web
+
+  android-apk:
+    name: EAS Android APK (preview)
+    runs-on: ubuntu-latest
+    needs: [verify-mobile]
+    if: startsWith(github.ref, 'refs/tags/v') || inputs.android == true
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm ci
+      - id: eas-build
+        run: |
+          BUILD_JSON=$(eas build --platform android --profile preview --non-interactive --wait --json)
+          echo "$BUILD_JSON" | head -c 300
+          BUILD_ID=$(echo "$BUILD_JSON" | jq -r '.[0].id')
+          echo "build_id=$BUILD_ID" >> "$GITHUB_OUTPUT"
+      - run: |
+          LOG=$(eas build:download --build-id "${{ steps.eas-build.outputs.build_id }}" --non-interactive 2>&1)
+          echo "$LOG"
+          APK_PATH=$(echo "$LOG" | grep -oE '/[^ ]+\.apk' | tail -1)
+          test -n "$APK_PATH"
+          cp "$APK_PATH" ./ruko-preview.apk
+          ls -la ./ruko-preview.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ruko-android-apk
+          path: mobile/ruko-preview.apk
+
+  github-release:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    needs: [verify-web, expo-web, android-apk]
+    # APK is best-effort: publish even if it was skipped or failed.
+    if: startsWith(github.ref, 'refs/tags/v') && !cancelled()
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: ruko-web-dist
+          path: ruko-web-dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: ruko-expo-web
+          path: ruko-expo-web
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: ruko-android-apk
+          path: ruko-android-apk
+      - run: |
+          cd ruko-web-dist && zip -qr ../ruko-web-pwa.zip . && cd ..
+          cd ruko-expo-web && zip -qr ../ruko-expo-web.zip . && cd ..
+          if [ -f ruko-android-apk/ruko-preview.apk ]; then
+            cp ruko-android-apk/ruko-preview.apk "ruko-${GITHUB_REF_NAME}-preview.apk"
+          fi
+          ls -la ruko-*.zip ruko-*.apk 2>/dev/null || ls -la ruko-*.zip
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ruko-web-pwa.zip
+            ruko-expo-web.zip
+          generate_release_notes: true
+      - if: hashFiles('ruko-*-preview.apk') != ''
+        run: gh release upload "${GITHUB_REF_NAME}" ruko-*-preview.apk --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}

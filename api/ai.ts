@@ -48,7 +48,10 @@ export default async function handler(req: any, res?: any) {
     });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY || process.env.ANTHROPIC_API_KEY;
+  // Groq key preferred; the GEMINI_API_KEY slot is also accepted so existing
+  // deployments keep working without dashboard changes.
+  const apiKey =
+    process.env.GROQ_API_KEY || process.env.GEMINI_API_KEY || process.env.ANTHROPIC_API_KEY;
   if (!apiKey) {
     if (res?.status) {
       return res.status(503).json({ ok: false, error: 'AI key not configured' });
@@ -60,11 +63,7 @@ export default async function handler(req: any, res?: any) {
   }
 
   const configuredModel = process.env.AI_MODEL?.trim();
-  const rawModel =
-    configuredModel && !configuredModel.startsWith('claude')
-      ? configuredModel
-      : 'gemini-1.5-flash';
-  const model = rawModel.replace(/^models\//, '');
+  const model = configuredModel || 'llama-3.3-70b-versatile';
 
   let body = req.body;
   if (typeof body === 'string') {
@@ -133,28 +132,22 @@ Schema: { "summary": "<plain, non-judgmental summary, at most 400 characters>" }
 
   try {
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+      'https://api.groq.com/openai/v1/chat/completions',
       {
         method: 'POST',
         headers: {
-          'x-goog-api-key': apiKey,
+          'Authorization': `Bearer ${apiKey}`,
           'content-type': 'application/json',
         },
         body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: systemPrompt }],
-          },
-          contents: [
-            {
-              role: 'user',
-              parts: [{ text: userPrompt }],
-            },
+          model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
           ],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 300,
-            responseMimeType: 'application/json',
-          },
+          temperature: 0.3,
+          max_completion_tokens: 300,
+          response_format: { type: 'json_object' },
         }),
       }
     );
@@ -168,10 +161,10 @@ Schema: { "summary": "<plain, non-judgmental summary, at most 400 characters>" }
     }
 
     const aiRes = await response.json();
-    const parts = aiRes.candidates?.[0]?.content?.parts;
-    const rawContent = Array.isArray(parts)
-      ? parts.map((p: any) => (typeof p?.text === 'string' ? p.text : '')).join('')
-      : '';
+    const rawContent =
+      typeof aiRes.choices?.[0]?.message?.content === 'string'
+        ? aiRes.choices[0].message.content
+        : '';
     if (!rawContent) {
       if (res?.status) return res.status(502).json({ ok: false });
       return new Response(JSON.stringify({ ok: false }), {
