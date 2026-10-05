@@ -61,6 +61,15 @@ export function sweep(now = nowMs()): number {
   return dropped;
 }
 
+/** Test hooks — the webhook re-exports these under its historic names. */
+export function resetSessions(): void {
+  sessions.clear();
+}
+
+export function peekSession(chatId: number): BotSession | undefined {
+  return sessions.get(chatId)?.s;
+}
+
 function readAll(): Record<string, any> {
   if (!filePath) return {};
   const fs = require('node:fs');

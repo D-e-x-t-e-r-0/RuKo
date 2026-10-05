@@ -26,11 +26,13 @@ export const Header: React.FC = () => {
         role="group"
         aria-label="Language"
       >
+        {/* Header exception to the 48px rule: 40px keeps the 64px bar from
+            overflowing on 360px phones; still exceeds the 24px WCAG minimum. */}
         <button
           type="button"
           onClick={() => changeAppLanguage('hi')}
           aria-pressed={currentLang === 'hi'}
-          className={`min-h-[48px] min-w-[48px] px-3 py-1 rounded-full transition-all ${
+          className={`min-h-[40px] min-w-[40px] px-3 py-1 rounded-full transition-all ${
             currentLang === 'hi'
               ? 'bg-saffron text-night shadow-diya'
               : 'text-slate-400 hover:text-cream'
@@ -44,7 +46,7 @@ export const Header: React.FC = () => {
           type="button"
           onClick={() => changeAppLanguage('en')}
           aria-pressed={currentLang === 'en'}
-          className={`min-h-[48px] min-w-[48px] px-3 py-1 rounded-full transition-all ${
+          className={`min-h-[40px] min-w-[40px] px-3 py-1 rounded-full transition-all ${
             currentLang === 'en'
               ? 'bg-saffron text-night shadow-diya'
               : 'text-slate-400 hover:text-cream'

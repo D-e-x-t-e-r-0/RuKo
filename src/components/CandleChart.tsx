@@ -32,7 +32,7 @@ export const CandleChart: React.FC<Props> = ({ candles, tick = Infinity }) => {
   }, [candles]);
 
   if (!geom || candles.length === 0) {
-    return <div className="h-44 w-full flex items-center justify-center text-xs text-slate-500">Waiting for ticks…</div>;
+    return <div className="h-44 w-full flex items-center justify-center text-xs text-slate-500">Waiting for price ticks…</div>;
   }
   const { hi, lo, y, slot, bodyW } = geom;
   const lastClose = candles[candles.length - 1].close;
@@ -54,7 +54,12 @@ export const CandleChart: React.FC<Props> = ({ candles, tick = Infinity }) => {
           return (
             <g key={c.tick} opacity={future ? 0.25 : 1}>
               <line x1={cx} x2={cx} y1={y(c.high)} y2={y(c.low)} stroke={color} strokeWidth="1.5" />
-              <rect x={cx - bodyW / 2} y={top} width={bodyW} height={hgt} rx="1" fill={up ? color : color} fillOpacity={up ? 0.9 : 1} stroke={color} strokeWidth="1" />
+              {up ? (
+                <rect x={cx - bodyW / 2} y={top} width={bodyW} height={hgt} rx="1" fill={color} fillOpacity={0.9} />
+              ) : (
+                /* Down candles are hollow — readable without color vision (WCAG 1.4.1) */
+                <rect x={cx - bodyW / 2} y={top} width={bodyW} height={hgt} rx="1" fill="none" stroke={color} strokeWidth="2" />
+              )}
             </g>
           );
         })}

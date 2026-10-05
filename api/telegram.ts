@@ -1,7 +1,6 @@
 import {
   handleCallback,
   handleText,
-  newSession,
   applyTriggersResult,
   applyQuestionResult,
   type BotAction,
@@ -28,28 +27,18 @@ import { runReflectionTask } from './ai-core';
  * KV store if you need durable state.
  */
 
-const sessions = new Map<number, { s: BotSession; at: number }>();
-const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
+import { getSession, saveSession, resetSessions, peekSession } from './telegram-store';
 
 function loadSession(chatId: number): BotSession {
-  const cutoff = Date.now() - SESSION_TTL_MS;
-  for (const [k, v] of sessions) if (v.at < cutoff) sessions.delete(k);
-  const hit = sessions.get(chatId);
-  if (hit) {
-    hit.at = Date.now();
-    return hit.s;
-  }
-  const s = newSession();
-  sessions.set(chatId, { s, at: Date.now() });
-  return s;
+  return getSession(chatId);
 }
 
-// Test hooks — not part of the webhook contract.
+// Test hooks — not part of the webhook contract (kept names for existing tests).
 export function _testResetSessions(): void {
-  sessions.clear();
+  resetSessions();
 }
 export function _testSessionFor(chatId: number): BotSession | undefined {
-  return sessions.get(chatId)?.s;
+  return peekSession(chatId);
 }
 
 function header(req: any, name: string): string | null {
@@ -118,6 +107,8 @@ async function processUpdate(token: string, update: any): Promise<void> {
       queue.push(...follow);
     }
   }
+  // Persist touch + /mirror counts (file-backed on Pi, memory elsewhere).
+  saveSession(chatId);
 }
 
 function respond(body: unknown, status: number, res?: any) {

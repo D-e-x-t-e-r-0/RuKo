@@ -39,7 +39,11 @@ function CandleStrip({ candles }: { candles: Candle[] }) {
         return (
           <React.Fragment key={c.tick}>
             <SvgLine x1={cx} x2={cx} y1={y(c.high)} y2={y(c.low)} stroke={color} strokeWidth={1.5} />
-            <Rect x={cx - bodyW / 2} y={top} width={bodyW} height={hgt} rx={1} fill={color} />
+            {up ? (
+              <Rect x={cx - bodyW / 2} y={top} width={bodyW} height={hgt} rx={1} fill={color} fillOpacity={0.9} />
+            ) : (
+              <Rect x={cx - bodyW / 2} y={top} width={bodyW} height={hgt} rx={1} fill="none" stroke={color} strokeWidth={2} />
+            )}
           </React.Fragment>
         );
       })}
