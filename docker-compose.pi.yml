@@ -1,26 +1,43 @@
-# Ruko Pi compose — one command boot behind nginx
+# Ruko Pi compose — one command boot behind nginx (same images as docker-compose.yml).
 # Usage:
-#   cp scripts/pi/env.pi.example .env
+#   npm run build                        # once — the image ships dist/, no npm inside
+#   cp scripts/pi/env.pi.example .env    # optional — keyless boot works without it
 #   docker compose -f docker-compose.pi.yml up -d --build
+#   curl http://<pi-ip>/api/health
 #   curl http://<pi-ip>/api/telegram
 services:
-  ruko:
-    build: .
-    container_name: ruko
+  ruko-app:
+    build:
+      context: .
+      target: runtime
+    image: ruko:1.2.0-pi
+    container_name: ruko-app
     restart: unless-stopped
-    env_file: .env
+    env_file:
+      - path: .env
+        required: false
     environment:
       PORT: 4173
       HOST: 0.0.0.0
-    ports:
-      - "80:80"
-      - "4173:4173"
-    volumes:
-      # persist nothing server-side by design (journal stays on device);
-      # keep nginx logs on host for judges to tail
-      - ./logs:/var/log/nginx
+    expose:
+      - "4173"
     healthcheck:
-      test: ["CMD", "curl", "-sf", "http://127.0.0.1:4173/api/telegram"]
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4173/api/telegram').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
       interval: 30s
       timeout: 4s
       retries: 3
+
+  ruko-web:
+    image: nginx:stable-alpine
+    container_name: ruko-web
+    restart: unless-stopped
+    depends_on:
+      ruko-app:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/ruko.docker.conf:/etc/nginx/conf.d/default.conf:ro
+      # persist nothing server-side by design (journal stays on device);
+      # keep nginx logs on host for judges to tail
+      - ./logs:/var/log/nginx

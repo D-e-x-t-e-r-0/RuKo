@@ -1,27 +1,30 @@
-# Ruko on Raspberry Pi (arm64) — multi-stage, ~120MB runtime
-FROM node:22-bookworm-slim AS build
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --no-audit --no-fund
-COPY . .
-RUN npm test --silent && npm run build
+# Ruko — whole app in containers.
+#
+# The runtime image ships PREBUILT artifacts (no npm inside the build — fast
+# even on a Pi, and immune to registry flakiness at deploy time):
+#   npm test && npm run build          # on your laptop or in CI
+#   docker build -t ruko:1.2.0-pi .
+#   docker compose up -d && curl http://localhost/api/health
+#
+# Two services: ruko-app (node pi-server: dist/ + /api/health) fronted by
+# ruko-web (nginx: same rate limits, timeouts and headers as nginx/ruko.conf).
+#
+# Targets:
+#   runtime (default) — the app above
+#   dev               — plain node image for the vite shim + bot bridge (compose profiles)
 
+# ---- production runtime: prebuilt dist + keyless pi-server (node builtins only) ----
 FROM node:22-bookworm-slim AS runtime
-RUN apt-get update && apt-get install -y --no-install-recommends curl nginx && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/package*.json ./
-COPY --from=build /app/vite.config.ts ./vite.config.ts
-COPY --from=build /app/vite-plugin-dev-api.ts ./vite-plugin-dev-api.ts
-COPY --from=build /app/api ./api
-COPY --from=build /app/netlify ./netlify
-RUN npm ci --omit=dev --no-audit --no-fund
-COPY nginx/ruko.conf /etc/nginx/sites-available/ruko.conf
-COPY deploy/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
-  && ln -sf /etc/nginx/sites-available/ruko.conf /etc/nginx/sites-enabled/ruko.conf \
-  && rm -f /etc/nginx/sites-enabled/default
+COPY dist ./dist
+COPY server ./server
 ENV PORT=4173 HOST=0.0.0.0 NODE_ENV=production
-EXPOSE 80 4173
-HEALTHCHECK --interval=30s --timeout=4s --retries=3 CMD curl -sf http://127.0.0.1:4173/api/telegram >/dev/null || exit 1
-ENTRYPOINT ["docker-entrypoint.sh"]
+EXPOSE 4173
+HEALTHCHECK --interval=30s --timeout=4s --retries=3 CMD node -e "fetch('http://127.0.0.1:4173/api/telegram').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))" || exit 1
+CMD ["node", "server/pi-server.mjs"]
+
+# ---- dev: stock node for vite (full /api via shim) and the bot bridge ----
+FROM node:22-bookworm-slim AS dev
+WORKDIR /app
+EXPOSE 5173
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
