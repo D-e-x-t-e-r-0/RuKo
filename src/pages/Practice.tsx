@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-} from 'recharts';
 import { format } from 'date-fns';
 import { db } from '../db';
 import type { Outcome, PracticeTrade } from '../types';
@@ -18,8 +10,10 @@ import {
   type ScenarioId,
   type InstrumentId,
   generatePrices,
+  pricesToCandles,
   getSimTime,
 } from '../sim/market';
+import { CandleChart } from '../components/CandleChart';
 import {
   calculatePnl,
   isAutoCloseTriggered,
@@ -442,15 +436,10 @@ export const Practice: React.FC = () => {
     navigate(`/debrief?id=${sessionId}`);
   };
 
-  // Chart data: prices up to current tick
-  const chartData = useMemo(() => {
+  // Chart data: OHLC candles (5 ticks each) up to current tick
+  const chartCandles = useMemo(() => {
     if (!priceSeries || !priceSeries[selectedInstrument]) return [];
-    return priceSeries[selectedInstrument]
-      .slice(0, tick + 1)
-      .map((p, idx) => ({
-        tick: idx,
-        price: p,
-      }));
+    return pricesToCandles(priceSeries[selectedInstrument].slice(0, tick + 1), 5);
   }, [priceSeries, selectedInstrument, tick]);
 
   // Unrealized P&L of active position
@@ -616,35 +605,9 @@ export const Practice: React.FC = () => {
             </div>
           </div>
 
-          {/* Chart */}
+          {/* Chart — candlesticks (5 ticks each), like a real trading screen */}
           <div className="bg-slate-800/90 border border-slate-700 rounded-2xl p-3">
-            <div className="h-44 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData}>
-                  <XAxis dataKey="tick" hide />
-                  <YAxis domain={['auto', 'auto']} hide />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#1E293B',
-                      borderColor: '#475569',
-                      borderRadius: '0.75rem',
-                      color: '#F8FAFC',
-                      fontSize: '12px',
-                    }}
-                    formatter={(val: number) => [`₹${val.toFixed(2)}`, 'Price']}
-                    labelFormatter={(label: number) => `Tick ${label}`}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="price"
-                    stroke="#E5A93C"
-                    strokeWidth={2}
-                    dot={false}
-                    isAnimationActive={false}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+            <CandleChart candles={chartCandles} tick={tick + 1} />
           </div>
 
           {/* Instrument Selector */}

@@ -167,6 +167,44 @@ export function generatePrices(
   return prices;
 }
 
+export interface Candle {
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  /** index of the first tick in this candle */
+  tick: number;
+}
+
+/** Group tick closes into OHLC candles (default 5 ticks = 5 sim-minutes each).
+ *  high/low are the true max/min of the group's closes — no invented wicks. */
+export function pricesToCandles(prices: number[], per = 5): Candle[] {
+  const out: Candle[] = [];
+  for (let i = 0; i < prices.length; i += per) {
+    const group = prices.slice(i, i + per);
+    if (group.length === 0) break;
+    out.push({
+      open: group[0],
+      high: Math.max(...group),
+      low: Math.min(...group),
+      close: group[group.length - 1],
+      tick: i,
+    });
+  }
+  return out;
+}
+
+/** Deterministic candles from the same seeded feed as the line series. */
+export function generateCandles(
+  seed: number,
+  scenario: ScenarioId,
+  instrument: InstrumentId,
+  ticks = 120,
+  per = 5
+): Candle[] {
+  return pricesToCandles(generatePrices(seed, scenario, instrument, ticks), per);
+}
+
 export function getSimTime(startHour: number, startMinute: number, tickIndex: number): number {
   const d = new Date();
   d.setHours(startHour, startMinute, 0, 0);

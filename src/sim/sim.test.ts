@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generatePrices, SCENARIOS } from './market';
+import { generatePrices, generateCandles, pricesToCandles, SCENARIOS } from './market';
 import { calculatePnl, isAutoCloseTriggered } from './account';
 
 describe('Phase 4: Market Engine Simulation Tests', () => {
@@ -38,6 +38,36 @@ describe('Phase 4: Market Engine Simulation Tests', () => {
     }
 
     expect(found10PercentDrop).toBe(true);
+  });
+});
+
+describe('Candlesticks from the same deterministic feed', () => {
+  it('groups 120 ticks into 24 candles of 5 with valid OHLC', () => {
+    const candles = generateCandles(42101, 'calm', 'demo_index', 120, 5);
+    expect(candles).toHaveLength(24);
+    for (const c of candles) {
+      expect(c.high).toBeGreaterThanOrEqual(Math.max(c.open, c.close));
+      expect(c.low).toBeLessThanOrEqual(Math.min(c.open, c.close));
+    }
+  });
+
+  it('first candle opens at 100 and chains closes to next opens', () => {
+    const candles = generateCandles(42101, 'calm', 'demo_index', 120, 5);
+    expect(candles[0].open).toBe(100);
+    const prices = generatePrices(42101, 'calm', 'demo_index', 120);
+    expect(candles[0].close).toBe(prices[4]);
+    expect(candles[1].open).toBe(prices[5]);
+  });
+
+  it('crash scenario shows a red candle across the drop', () => {
+    const candles = generateCandles(SCENARIOS.crash.fixedSeed, 'crash', 'demo_index', 120, 5);
+    expect(candles.some((c) => c.close < c.open)).toBe(true);
+  });
+
+  it('handles a partial final candle', () => {
+    const candles = pricesToCandles([100, 101, 102], 5);
+    expect(candles).toHaveLength(1);
+    expect(candles[0]).toMatchObject({ open: 100, high: 102, low: 100, close: 102 });
   });
 });
 

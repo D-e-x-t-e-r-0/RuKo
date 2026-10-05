@@ -2,9 +2,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import Svg, { Polyline } from 'react-native-svg';
+import Svg, { Line as SvgLine, Rect } from 'react-native-svg';
 import { BigButton, Card, Chip, Screen, Title } from '../components/ui';
-import { INSTRUMENTS, SCENARIOS, generatePrices, getSimTime, type InstrumentId, type ScenarioId } from '../sim/market';
+import { INSTRUMENTS, SCENARIOS, generatePrices, pricesToCandles, getSimTime, type Candle, type InstrumentId, type ScenarioId } from '../sim/market';
 import { INITIAL_WALLET_BALANCE, calculatePnl, isAutoCloseTriggered } from '../sim/account';
 import type { Outcome, PracticeTrade } from '../types';
 import { store } from '../storage';
@@ -14,18 +14,35 @@ import { PauseScreen } from './Pause';
 const TICKS = 120;
 const MARGINS = [10000, 25000, 50000] as const;
 
-function Spark({ data, up }: { data: number[]; up: boolean }) {
+function CandleStrip({ candles }: { candles: Candle[] }) {
   const W = 320;
   const H = 120;
-  const min = Math.min(...data);
-  const max = Math.max(...data);
-  const span = max - min || 1;
-  const pts = data
-    .map((p, i) => `${((i / (data.length - 1)) * W).toFixed(1)},${(H - 8 - ((p - min) / span) * (H - 16)).toFixed(1)}`)
-    .join(' ');
+  if (candles.length === 0) return null;
+  const all = candles.flatMap((c) => [c.high, c.low]);
+  let hi = Math.max(...all);
+  let lo = Math.min(...all);
+  if (hi - lo < 0.01) {
+    hi += 0.5;
+    lo -= 0.5;
+  }
+  const y = (p: number) => 8 + (1 - (p - lo) / (hi - lo)) * (H - 16);
+  const slot = W / candles.length;
+  const bodyW = Math.max(3, Math.min(14, slot * 0.55));
   return (
     <Svg width="100%" height={H} viewBox={`0 0 ${W} ${H}`}>
-      <Polyline points={pts} fill="none" stroke={up ? colors.green : colors.red} strokeWidth={2.5} />
+      {candles.map((c, i) => {
+        const up = c.close >= c.open;
+        const color = up ? colors.green : colors.red;
+        const cx = slot * i + slot / 2;
+        const top = Math.min(y(c.open), y(c.close));
+        const hgt = Math.max(2, Math.abs(y(c.close) - y(c.open)));
+        return (
+          <React.Fragment key={c.tick}>
+            <SvgLine x1={cx} x2={cx} y1={y(c.high)} y2={y(c.low)} stroke={color} strokeWidth={1.5} />
+            <Rect x={cx - bodyW / 2} y={top} width={bodyW} height={hgt} rx={1} fill={color} />
+          </React.Fragment>
+        );
+      })}
     </Svg>
   );
 }
@@ -288,7 +305,7 @@ export function PracticeScreen() {
           </Pressable>
         </View>
         <View style={st.chart}>
-          <Spark data={prices.slice(0, tick + 1)} up={pnl >= 0} />
+          <CandleStrip candles={pricesToCandles(prices.slice(0, tick + 1), 5)} />
         </View>
         <View style={st.kvRow}>
           <View style={st.kv}>
