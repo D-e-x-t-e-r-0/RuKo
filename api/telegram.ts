@@ -7,6 +7,7 @@ import {
   type BotSession,
 } from './telegram-bot';
 import { runReflectionTask } from './ai-core';
+import { tgFetch } from '../src/lib/tg-net';
 
 /**
  * `/api/telegram` — the Telegram webhook endpoint.
@@ -51,7 +52,7 @@ async function tgCall(token: string, method: string, body: Record<string, unknow
     // TELEGRAM_API_BASE exists for local end-to-end testing (mock Bot API);
     // defaults to the real Telegram API.
     const base = (process.env.TELEGRAM_API_BASE || 'https://api.telegram.org').replace(/\/+$/, '');
-    await fetch(`${base}/bot${token}/${method}`, {
+    await tgFetch(`${base}/bot${token}/${method}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(body),
