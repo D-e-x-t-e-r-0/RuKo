@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { db } from '../db';
+import { comparePauseOnOff } from '../lib/pauseImpact';
 import type { PracticeSession } from '../types';
 import { askAI } from '../ai/ai';
 import { getFallbackSummary } from '../ai/fallback';
@@ -25,6 +26,7 @@ export const Debrief: React.FC = () => {
   // Self reflection state
   const [selfReflection, setSelfReflection] = useState<string>('');
   const [isSaved, setIsSaved] = useState<boolean>(false);
+  const [impact, setImpact] = useState<string>('');
 
   useEffect(() => {
     async function loadSession() {
@@ -84,6 +86,14 @@ export const Debrief: React.FC = () => {
     }
 
     loadSession();
+    db.sessions.toArray().then((all) => {
+      if (all.length >= 2) {
+        const r = comparePauseOnOff(all);
+        if (r.on.n > 0 && r.off.n > 0) {
+          setImpact(`Pause ON (${r.on.n}): ${r.on.avgTrades}/sess, ${r.on.reentryShare}% after-loss, ${r.on.avgDrawdown}% dd · OFF (${r.off.n}): ${r.off.avgTrades}/sess, ${r.off.reentryShare}% after-loss, ${r.off.avgDrawdown}% dd`);
+        }
+      }
+    }).catch(() => {});
   }, [sessionIdParam, i18n.language]);
 
   const handleSaveNote = async () => {
@@ -252,6 +262,14 @@ export const Debrief: React.FC = () => {
       <div className="bg-amber-950/40 border border-saffron/40 text-saffron p-3.5 rounded-2xl text-xs font-medium text-center leading-relaxed">
         {t('debrief.closing_disclaimer')}
       </div>
+
+      {impact && (
+        <div className="bg-emerald-950/40 border border-emerald-700/50 rounded-2xl p-4 space-y-1">
+          <div className="text-xs font-bold text-emerald-300 uppercase tracking-wider">Pause impact · practice only</div>
+          <p className="text-xs text-slate-300 leading-relaxed">{impact}</p>
+          <p className="text-[11px] text-slate-500">Real Mirror stays clean — this table never mixes practice with real decisions.</p>
+        </div>
+      )}
 
       {/* Action Buttons */}
       <div className="space-y-2 pt-2">
