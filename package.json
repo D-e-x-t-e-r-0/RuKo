@@ -11,7 +11,9 @@
     "pi:audit": "node scripts/audit-pwa.mjs",
     "eval": "node eval/run.mjs",
     "test": "vitest run",
-    "bot:set-webhook": "node scripts/set-webhook.mjs"
+    "bot:set-webhook": "node scripts/set-webhook.mjs",
+    "bot:dev": "node scripts/bot-poll.mjs",
+    "bot:mock": "node scripts/mock-telegram-api.mjs"
   },
   "dependencies": {
     "date-fns": "^3.6.0",

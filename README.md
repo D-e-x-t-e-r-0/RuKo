@@ -198,7 +198,22 @@ That's it — the endpoint is stateless to Telegram (it only receives updates an
 
 ### Local development
 
-`vite dev` serves `/api/telegram` in-process via the dev shim, so you can test against a real bot:
+No tunnel and no public URL needed — `bot:dev` long-polls `getUpdates` and feeds every update to the same `/api/telegram` endpoint that `vite dev` serves in-process (identical code path to the production webhook; the bridge calls `deleteWebhook` on start so the two modes never fight):
+
+```bash
+npm run dev        # terminal 1 — app + /api/telegram (dev shim)
+npm run bot:dev    # terminal 2 — long-polling bridge → real Telegram
+```
+
+Fully offline (no bot token required): a mock Bot API serves a scripted `/start` and logs every bot reply to `.bot-log.jsonl` —
+
+```bash
+npm run bot:mock                                        # terminal 1 — mock on :8081
+TELEGRAM_API_BASE=http://127.0.0.1:8081 npm run dev     # terminal 2
+TELEGRAM_API_BASE=http://127.0.0.1:8081 npm run bot:dev # terminal 3 (any token passes the mock)
+```
+
+Webhook mode (needs a public HTTPS URL, e.g. when deployed or via a tunnel):
 
 ```bash
 ngrok http 5173          # or: cloudflared tunnel --url http://localhost:5173

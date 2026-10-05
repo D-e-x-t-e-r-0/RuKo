@@ -48,7 +48,10 @@ function header(req: any, name: string): string | null {
 
 async function tgCall(token: string, method: string, body: Record<string, unknown>): Promise<void> {
   try {
-    await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+    // TELEGRAM_API_BASE exists for local end-to-end testing (mock Bot API);
+    // defaults to the real Telegram API.
+    const base = (process.env.TELEGRAM_API_BASE || 'https://api.telegram.org').replace(/\/+$/, '');
+    await fetch(`${base}/bot${token}/${method}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(body),
