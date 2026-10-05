@@ -36,7 +36,7 @@ Expo typecheck + web export, optional EAS preview APK (needs the
 `EXPO_TOKEN` repo secret), then a GitHub Release with both web bundles.
 
 ```bash
-git tag v1.1.0 && git push origin v1.1.0
+git tag v1.2.0-pi && git push origin v1.2.0-pi
 ```
 
 Local preview build without CI:

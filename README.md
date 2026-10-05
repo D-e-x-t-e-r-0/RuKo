@@ -150,7 +150,7 @@ Ruko features an optional, privacy-preserving AI assistant:
   secret), and publish a GitHub Release with both web bundles attached.
 
 ```bash
-git tag v1.1.0 && git push origin v1.1.0
+git tag v1.2.0-pi && git push origin v1.2.0-pi
 ```
 
 ---

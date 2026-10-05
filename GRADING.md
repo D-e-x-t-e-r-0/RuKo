@@ -5,7 +5,7 @@ Team SrijanPecks · Track D · `v1.2.0-pi`. Grade working code only.
 ## 60-second trust check
 ```bash
 npm ci --no-audit --no-fund
-npm test                    # expect: 14 files, 135 tests, all pass
+npm test                    # expect: 15 files, 142 tests, all pass
 node eval/run.mjs           # expect: PASS across 25 cases
 npm run build && node scripts/audit-pwa.mjs  # expect: standalone, icons=3, sw present
 ```

@@ -40,7 +40,7 @@ notes(s, 'Walk the 5 screens. Proceed always present — friction, not force.');
 // 4 Engine
 s = pres.addSlide(); dark(s);
 title(s, 'Real engine, tested', '6 deterministic signals + eval gate in CI');
-body(s, ['late-night · many-trades · quick re-entry <30m · size x1.5 · 3-loss streak · loan/emergency.', 'Same engine in app + Telegram (IST-correct). 130+ vitest checks, eval/cases.json.', 'Zero network needed. Works in airplane mode after first load.']);
+body(s, ['late-night · many-trades · quick re-entry <30m · size x1.5 · 3-loss streak · loan/emergency.', 'Same engine in app + Telegram (IST-correct). 140+ vitest checks, eval/cases.json.', 'Zero network needed. Works in airplane mode after first load.']);
 notes(s, 'Engine slide: deterministic, tested, shared.');
 
 // 5 Privacy

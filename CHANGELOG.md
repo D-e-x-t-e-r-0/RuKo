@@ -1,11 +1,11 @@
 # Changelog — Ruko Pi release
 
-## v1.2.0-pi (this batch, 20 commits)
+## v1.2.0-pi (this batch — see git log; grading + theme + candle + GOAT passes)
 Target: Track D 1st + Top-5 overall, 9.4+ under frozen v3 rubric
 (Overall = 0.25 Tech + 0.40 Use + 0.15 Innov + 0.10 Integ + 0.05 Compl + 0.05 Build).
 
 Tech (0.25): eval harness 25 cases in CI, ai-core privacy contract, vault AES-GCM,
-evidence pack, telegram TTL store, pi-server, pause-impact utility. 134 tests green.
+evidence pack, telegram TTL store, pi-server, pause-impact utility. 142 tests green.
 Use (0.40): 48px targets, breathe loop, lazy-paint, offline.html, APK judge path,
 HOW_TO_USE + 5-min demo, 12 langs intact.
 Integrity (0.10): redaction-first everywhere, EN+HI validator + injection wrap,
