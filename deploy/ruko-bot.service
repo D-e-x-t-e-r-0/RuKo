@@ -1,0 +1,16 @@
+[Unit]
+Description=Ruko Telegram webhook check (oneshot, verifies bot wiring)
+After=ruko-web.service nginx.service
+Wants=ruko-web.service
+
+[Service]
+Type=oneshot
+User=pi
+WorkingDirectory=/opt/ruko
+EnvironmentFile=-/opt/ruko/.env
+# Fails safe when no token is set (bot is optional; app is fully keyless)
+ExecStart=/bin/bash -c 'if [ -z "${TELEGRAM_BOT_TOKEN:-}" ]; then echo "no TELEGRAM_BOT_TOKEN — bot disabled, app still runs"; exit 0; fi; curl -sf http://127.0.0.1:4173/api/telegram | head -c 300; echo'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
