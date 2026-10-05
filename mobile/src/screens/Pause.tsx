@@ -366,7 +366,7 @@ export function PauseScreen(embedded?: Props) {
 const st = StyleSheet.create({
   step: { color: colors.faint, fontSize: 12, fontWeight: '700', letterSpacing: 1 },
   banner: { backgroundColor: 'rgba(242,163,58,0.12)', borderWidth: 1, borderColor: colors.saffron, borderRadius: radius.md, padding: 10 },
-  bannerText: { color: colors.saffron, fontSize: 12, fontWeight: '700', textAlign: 'center' },
+  bannerText: { color: colors.clay, fontSize: 12, fontWeight: '700', textAlign: 'center' },
   h: { color: colors.cream, fontWeight: '800', fontSize: 15, marginBottom: 10 },
   row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   input: {
@@ -407,11 +407,11 @@ const st = StyleSheet.create({
   navOff: { opacity: 0.35 },
   navTxt: { color: colors.cream, fontWeight: '700' },
   navGo: { backgroundColor: colors.saffron, borderColor: colors.saffron },
-  navGoTxt: { color: colors.night },
+  navGoTxt: { color: colors.navy },
   counter: { color: colors.faint, fontWeight: '700' },
   recap: { fontFamily: fonts.display, fontStyle: 'italic', fontSize: 18, color: colors.cream, lineHeight: 26 },
   recapSub: { color: colors.muted, fontSize: 13, marginTop: 8 },
-  warn: { color: colors.saffron, fontSize: 13, fontWeight: '600' },
+  warn: { color: colors.clay, fontSize: 13, fontWeight: '600' },
   err: { color: colors.red, fontSize: 13, fontWeight: '700', backgroundColor: 'rgba(228,87,46,0.12)', padding: 10, borderRadius: radius.md, overflow: 'hidden' },
   proceed: { minHeight: 48, alignItems: 'center', justifyContent: 'center' },
   proceedTxt: { color: colors.muted, textDecorationLine: 'underline', fontSize: 14 },

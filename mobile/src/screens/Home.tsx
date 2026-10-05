@@ -85,7 +85,7 @@ export function HomeScreen() {
             <Text style={st.statL}>{t('home.today_pauses')}</Text>
           </View>
           <View style={st.stat}>
-            <Text style={[st.statN, { color: colors.green }]}>{saved}</Text>
+            <Text style={[st.statN, { color: colors.greenInk }]}>{saved}</Text>
             <Text style={st.statL}>{t('home.today_saved')}</Text>
           </View>
         </View>
@@ -116,7 +116,7 @@ const st = StyleSheet.create({
     paddingVertical: 6,
   },
   dot: { width: 6, height: 6, borderRadius: 3, backgroundColor: colors.saffron },
-  greet: { color: colors.saffron, fontSize: 12, fontWeight: '700' },
+  greet: { color: colors.clay, fontSize: 12, fontWeight: '700' },
   app: { fontSize: 46, marginTop: 6 },
   tag: { color: colors.muted, fontSize: 14, marginTop: 2 },
   diyaWrap: { alignItems: 'center', paddingVertical: spacing.sm },
@@ -136,13 +136,13 @@ const st = StyleSheet.create({
     elevation: 10,
   },
   diyaPressed: { transform: [{ scale: 0.96 }] },
-  diyaText: { fontFamily: fonts.display, fontSize: 38, fontWeight: '900', color: colors.night },
-  diyaSub: { fontSize: 10, fontWeight: '800', letterSpacing: 2, color: colors.night, opacity: 0.75, marginTop: 2 },
-  cardLabel: { fontSize: 11, fontWeight: '800', letterSpacing: 1.6, color: colors.saffron, textTransform: 'uppercase' },
+  diyaText: { fontFamily: fonts.display, fontSize: 38, fontWeight: '900', color: colors.navy },
+  diyaSub: { fontSize: 10, fontWeight: '800', letterSpacing: 2, color: colors.navy, opacity: 0.75, marginTop: 2 },
+  cardLabel: { fontSize: 11, fontWeight: '800', letterSpacing: 1.6, color: colors.clay, textTransform: 'uppercase' },
   thought: { fontFamily: fonts.display, fontStyle: 'italic', fontSize: 18, color: colors.cream, marginTop: 8, lineHeight: 26 },
   source: { color: colors.faint, fontSize: 12, marginTop: 6 },
   alert: { borderColor: colors.saffron, borderWidth: 1.5, backgroundColor: 'rgba(242,163,58,0.08)' },
-  alertTitle: { color: colors.saffron, fontWeight: '800', fontSize: 16 },
+  alertTitle: { color: colors.clay, fontWeight: '800', fontSize: 16 },
   alertBody: { color: colors.cream, fontSize: 14, marginTop: 4, lineHeight: 20 },
   alertBtn: {
     marginTop: 12,
@@ -152,7 +152,7 @@ const st = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  alertBtnText: { color: colors.night, fontWeight: '800' },
+  alertBtnText: { color: colors.navy, fontWeight: '800' },
   stats: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.sm },
   stat: { flex: 1, backgroundColor: colors.abyss, borderRadius: radius.md, padding: 14, alignItems: 'center' },
   statN: { fontSize: 26, fontWeight: '800', color: colors.cream },
@@ -167,5 +167,5 @@ const st = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  practiceBtnText: { color: colors.night, fontWeight: '800', fontSize: 13 },
+  practiceBtnText: { color: colors.navy, fontWeight: '800', fontSize: 13 },
 });

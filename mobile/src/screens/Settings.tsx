@@ -99,7 +99,7 @@ export function SettingsScreen() {
 const st = StyleSheet.create({
   flash: { backgroundColor: 'rgba(43,179,163,0.16)', borderWidth: 1, borderColor: colors.green, borderRadius: radius.md, padding: 12 },
   flashTxt: { color: colors.cream, fontWeight: '700', textAlign: 'center', fontSize: 13 },
-  h: { color: colors.saffron, fontSize: 11, fontWeight: '800', letterSpacing: 1.4, textTransform: 'uppercase', marginBottom: 10 },
+  h: { color: colors.clay, fontSize: 11, fontWeight: '800', letterSpacing: 1.4, textTransform: 'uppercase', marginBottom: 10 },
   d: { color: colors.muted, fontSize: 12, marginBottom: 10 },
   grid: { gap: 8 },
   privacy: { color: colors.muted, fontSize: 12, textAlign: 'center' },

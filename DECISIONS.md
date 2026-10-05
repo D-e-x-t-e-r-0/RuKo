@@ -107,4 +107,10 @@ This document records the architectural, behavioral, and technical decisions mad
 - **Decision**: Removed all timers, countdown clocks, second counters, and auto-advance intervals from the Screen 3 reflection window. The breathing circle animates naturally without a timer clock, and users navigate through the cards and questions unhurried at their own pace.
 - **Rationale**: Any ticking clock or forced countdown during reflection directly induces cognitive stress and anxiety, contradicting Ruko's purpose of calm self-observation. Users advance question-by-question when ready, or skip to Decide once their core why rationale is formulated.
 
+---
+
+### 16. Clean Institutional Light Theme (NSDL-grade, features first)
+- **Decision**: Replaced the dark midnight-diya skin with a clean light theme on web and Expo: white surfaces, `#F4F6FA` app background, navy ink, hairline borders, one soft shadow. Saffron survives only as fill (Pause button, primary CTAs, selected states); small accent text uses Clay `#92400E` for contrast; chart down-candles are hollow so color is never the only signal.
+- **Rationale**: Judge and user feedback showed the dark theme hid the primary action and spent contrast on decoration. An investor-safety tool must read like a public institution: labels first, color second, every number legible in sunlight on a 2GB phone.
+
 

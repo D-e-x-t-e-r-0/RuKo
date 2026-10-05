@@ -110,7 +110,7 @@ export function MirrorScreen() {
       <Card>
         <Bars days={days} />
         <View style={st.legend}>
-          <Text style={[st.leg, { color: colors.green }]}>● {t('mirror.planned')}</Text>
+          <Text style={[st.leg, { color: colors.greenInk }]}>● {t('mirror.planned')}</Text>
           <Text style={[st.leg, { color: colors.red }]}>● {t('mirror.impulsive')}</Text>
         </View>
       </Card>
@@ -120,7 +120,7 @@ export function MirrorScreen() {
           <Text style={st.l}>{t('mirror.stat_pauses')}</Text>
         </Card>
         <Card style={st.stat}>
-          <Text style={[st.n, { color: colors.green }]}>{saved}</Text>
+          <Text style={[st.n, { color: colors.greenInk }]}>{saved}</Text>
           <Text style={st.l}>{t('mirror.stat_saved')}</Text>
         </Card>
         <Card style={st.stat}>
@@ -138,7 +138,7 @@ export function MirrorScreen() {
         <Card>
           <Text style={st.cmpH}>{t('mirror.practice_comparison_title')}</Text>
           <View style={st.cmpRow}>
-            <Text style={[st.cmpCell, { color: colors.green }]}>{t('mirror.comparison_pause_on')}</Text>
+            <Text style={[st.cmpCell, { color: colors.greenInk }]}>{t('mirror.comparison_pause_on')}</Text>
             <Text style={st.cmpCell}>{t('mirror.avg_trades')}: {cmp.on}</Text>
             <Text style={st.cmpCell}>{t('mirror.loss_chasing_share')}: {cmp.onLoss}</Text>
           </View>
@@ -166,9 +166,9 @@ const st = StyleSheet.create({
   emptyH: { color: colors.cream, fontWeight: '800', fontSize: 16, marginTop: 8 },
   emptyD: { color: colors.muted, fontSize: 13, textAlign: 'center', marginTop: 4 },
   support: { borderColor: colors.saffron, borderWidth: 1.5 },
-  supH: { color: colors.saffron, fontWeight: '800', fontSize: 12 },
+  supH: { color: colors.clay, fontWeight: '800', fontSize: 12 },
   supB: { color: colors.cream, fontSize: 13, lineHeight: 19, marginTop: 6 },
-  cmpH: { color: colors.saffron, fontSize: 11, fontWeight: '800', letterSpacing: 1, textTransform: 'uppercase' },
+  cmpH: { color: colors.clay, fontSize: 11, fontWeight: '800', letterSpacing: 1, textTransform: 'uppercase' },
   cmpRow: { marginTop: 8, gap: 2, borderTopWidth: 1, borderTopColor: colors.line, paddingTop: 8 },
   cmpCell: { color: colors.cream, fontSize: 12 },
 });

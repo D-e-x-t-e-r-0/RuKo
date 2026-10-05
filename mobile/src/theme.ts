@@ -1,42 +1,45 @@
-/** Midnight-diya design tokens shared by every mobile screen.
- *  Same palette as web — soft neumorphism applied via paired shadows:
- *  cream lip top-left, abyss pocket bottom-right. */
+/** Institutional light tokens shared by every mobile screen.
+ *  Same brand hues as web (saffron/ember/green/red stay); surfaces go white
+ *  with hairline borders and one soft gray shadow — features first. */
 export const colors = {
-  night: '#0E162E',
-  abyss: '#0A1122',
+  night: '#F4F6FA',
+  abyss: '#FFFFFF',
   navy: '#14213D',
-  card: '#182747',
-  cardHi: '#1B2C4E',
-  cardLo: '#101B33',
-  cream: '#FAF6EE',
-  muted: '#94A3B8',
-  faint: '#64748B',
-  line: 'rgba(250, 246, 238, 0.08)',
+  card: '#FFFFFF',
+  cardHi: '#FFFFFF',
+  cardLo: '#EEF2F7',
+  cream: '#14213D',
+  muted: '#475569',
+  faint: '#94A3B8',
+  line: '#E2E8F0',
   saffron: '#F2A33A',
   saffronHi: '#F6B252',
   saffronLo: '#D98A26',
   ember: '#E07B2A',
+  clay: '#92400E',
   green: '#2BB3A3',
+  greenInk: '#0F766E',
   red: '#E4572E',
+  redInk: '#B91C1C',
 } as const;
 
-/** Soft-neumorphism shadow pairs (iOS shadow + Android elevation). */
+/** Clean institutional shadow pairs (iOS shadow + Android elevation). */
 export const neu = {
-  light: 'rgba(250, 246, 238, 0.08)',
-  dark: 'rgba(4, 8, 20, 0.65)',
+  light: 'rgba(255, 255, 255, 1)',
+  dark: 'rgba(20, 33, 61, 0.08)',
   card: {
-    shadowColor: '#040814',
-    shadowOpacity: 0.55,
-    shadowRadius: 9,
-    shadowOffset: { width: 7, height: 7 },
-    elevation: 8,
+    shadowColor: '#14213D',
+    shadowOpacity: 0.08,
+    shadowRadius: 7,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 2,
   },
   btn: {
-    shadowColor: '#F2A33A',
-    shadowOpacity: 0.28,
-    shadowRadius: 11,
-    shadowOffset: { width: 0, height: 5 },
-    elevation: 7,
+    shadowColor: '#92400E',
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 3,
   },
 } as const;
 

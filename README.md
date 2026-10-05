@@ -124,7 +124,7 @@ Ruko features an optional, privacy-preserving AI assistant:
 ## 5. Tech Stack
 
 - **Framework:** React 18 + TypeScript (Strict Mode) + Vite
-- **Styling:** Tailwind CSS, same midnight-diya palette throughout (Navy `#14213D`, Cream `#FAF6EE`, Saffron `#F2A33A`, Green `#2BB3A3`, Red `#E4572E`) applied as **soft neumorphism**: `shadow-neu` raised cards (abyss pocket + cream lip), `shadow-neu-in` pressed states, `neu-btn` saffron ritual actions. See `src/index.css` (§ neu primitives) and `docs/ARCHITECTURE.md` § visual language.
+- **Styling:** Tailwind CSS, clean institutional light theme (white surfaces `#FFFFFF`, app bg `#F4F6FA`, ink Navy `#14213D`, hairline borders `#E2E8F0`). Brand accents kept functional: Saffron `#F2A33A` fills only (buttons, last-price), Clay `#92400E` for small accent text, Green `#2BB3A3` / Red `#E4572E` for chart bodies with hollow-down non-color cue. Flat cards, one soft gray shadow, 48px targets. See `src/index.css` and `docs/ARCHITECTURE.md` § visual language.
 - **Routing:** `react-router-dom` (HashRouter for universal static hosting)
 - **Local Storage:** `dexie` (IndexedDB v3)
 - **PWA:** `vite-plugin-pwa` (precache + web app manifest)
@@ -141,7 +141,8 @@ Ruko features an optional, privacy-preserving AI assistant:
 ## 5b. Mobile App (Expo) & Releases
 
 - **`mobile/`** is the native Expo companion (SDK 57): same ritual, journal,
-  simulator, and 12 languages with a polished midnight-diya theme.
+  simulator, and 12 languages with the same clean light theme as web
+  (`mobile/src/theme.ts`: white cards, navy ink, clay accents).
   Storage is on-device AsyncStorage; voice is Sarvam-first with expo-speech
   fallback. See `mobile/README.md`.
 - **Releases** are automated in `.github/workflows/release.yml`:

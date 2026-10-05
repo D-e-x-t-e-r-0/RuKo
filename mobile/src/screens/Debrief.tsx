@@ -110,15 +110,15 @@ export function DebriefScreen() {
 }
 
 const st = StyleSheet.create({
-  sc: { color: colors.saffron, fontSize: 12, fontWeight: '800', letterSpacing: 1.5, textTransform: 'uppercase' },
+  sc: { color: colors.clay, fontSize: 12, fontWeight: '800', letterSpacing: 1.5, textTransform: 'uppercase' },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   cell: { width: '48%', flexGrow: 1 },
   k: { color: colors.muted, fontSize: 11 },
   v: { color: colors.cream, fontWeight: '800', fontSize: 17, marginTop: 2 },
-  h: { color: colors.saffron, fontSize: 11, fontWeight: '800', letterSpacing: 1, textTransform: 'uppercase' },
+  h: { color: colors.clay, fontSize: 11, fontWeight: '800', letterSpacing: 1, textTransform: 'uppercase' },
   body: { color: colors.cream, fontSize: 14, lineHeight: 20, marginTop: 8 },
   input: { backgroundColor: colors.abyss, borderWidth: 1, borderColor: colors.line, borderRadius: radius.md, color: colors.cream, padding: 12, minHeight: 88, textAlignVertical: 'top', marginTop: 8 },
   save: { minHeight: 48, borderRadius: radius.md, backgroundColor: colors.saffron, alignItems: 'center', justifyContent: 'center', marginTop: 10 },
-  saveTxt: { color: colors.night, fontWeight: '800' },
+  saveTxt: { color: colors.navy, fontWeight: '800' },
   disclaimer: { color: colors.faint, fontStyle: 'italic', fontSize: 12, lineHeight: 17, textAlign: 'center' },
 });

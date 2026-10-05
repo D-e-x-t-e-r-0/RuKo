@@ -322,7 +322,7 @@ export function PracticeScreen() {
           </View>
           <View style={st.kv}>
             <Text style={st.k}>{t('practice.unrealized_pnl')}</Text>
-            <Text style={[st.v, { color: pnl >= 0 ? colors.green : colors.red }]}>
+            <Text style={[st.v, { color: pnl >= 0 ? colors.greenInk : colors.redInk }]}>
               {pnl >= 0 ? '+' : ''}₹{pnl.toLocaleString('en-IN')}
             </Text>
           </View>
@@ -404,14 +404,14 @@ const st = StyleSheet.create({
   toggleDesc: { color: colors.muted, fontSize: 12, marginTop: 2 },
   toggle: { minHeight: 48, minWidth: 56, borderRadius: 24, backgroundColor: '#475569', justifyContent: 'center', padding: 4 },
   toggleOn: { backgroundColor: colors.saffron },
-  knob: { width: 24, height: 24, borderRadius: 12, backgroundColor: colors.night },
+  knob: { width: 24, height: 24, borderRadius: 12, backgroundColor: '#FFFFFF' },
   knobOn: { alignSelf: 'flex-end' },
   banner: { backgroundColor: 'rgba(242,163,58,0.12)', borderWidth: 1, borderColor: colors.saffron, borderRadius: radius.md, padding: 10 },
-  bannerText: { color: colors.saffron, fontSize: 12, fontWeight: '700', textAlign: 'center', lineHeight: 17 },
+  bannerText: { color: colors.clay, fontSize: 12, fontWeight: '700', textAlign: 'center', lineHeight: 17 },
   topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
   scTitle: { color: colors.cream, fontWeight: '800', fontSize: 13, flex: 1 },
   endBtn: { minHeight: 48, justifyContent: 'center', paddingHorizontal: 12, borderWidth: 1, borderColor: colors.red, borderRadius: 10 },
-  endTxt: { color: '#FDA4AF', fontWeight: '800', fontSize: 12 },
+  endTxt: { color: colors.redInk, fontWeight: '800', fontSize: 12 },
   chart: { backgroundColor: colors.abyss, borderRadius: radius.md, padding: 6, marginTop: 10, alignItems: 'center' },
   kvRow: { flexDirection: 'row', gap: 8, marginTop: 10 },
   kv: { flex: 1, backgroundColor: colors.abyss, borderRadius: radius.md, padding: 10 },
@@ -422,5 +422,5 @@ const st = StyleSheet.create({
   input: { backgroundColor: colors.abyss, borderWidth: 1, borderColor: colors.line, borderRadius: radius.md, color: colors.cream, fontSize: 16, padding: 12, minHeight: 52, marginTop: 10 },
   posTxt: { color: colors.cream, fontWeight: '700', fontSize: 14, lineHeight: 20 },
   notice: { backgroundColor: 'rgba(228,87,46,0.14)', borderWidth: 1, borderColor: colors.red, borderRadius: radius.md, padding: 10 },
-  noticeTxt: { color: '#FCA5A5', fontSize: 12, fontWeight: '700', textAlign: 'center' },
+  noticeTxt: { color: colors.redInk, fontSize: 12, fontWeight: '700', textAlign: 'center' },
 });
