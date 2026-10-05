@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /api/health
+Disallow: /api/ai
+Disallow: /api/sarvam
+Disallow: /api/telegram
+Disallow: /api/whatsapp
+
+Sitemap: https://ruko.local/sitemap.xml

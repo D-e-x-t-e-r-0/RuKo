@@ -1,0 +1,31 @@
+# Ruko — llms.txt (AI-friendly index)
+
+> Ruko (रुको) is a Hindi-first pre-trade pause ritual for retail investors.
+> 5 screens: quick check, pressure check (6 signals), reflection wait (10/30/60s lock),
+> decision (why + horizon + loss → abandon/wait/proceed), courage confirmation.
+> Offline PWA + Telegram live + WhatsApp gated (paid API) + Expo APK.
+> No tips, no tickers, no broker links. AI default OFF.
+
+## Grade fast (5 min)
+- [GRADING.md](GRADING.md): exact commands, expected outputs, rubric mapping
+- [JUDGE_DEMO.md](JUDGE_DEMO.md): timed 5-min click path
+- [HOW_TO_USE.md](HOW_TO_USE.md): plain-words user guide
+
+## Verify
+- Engine: `src/engine/signals.ts` + `src/engine/pressure.ts` (6 signals, calm/caution/high)
+- Guardrails: `api/validate.ts` + `api/ai-core.ts` (EN+HI banned words, 422 drop)
+- Privacy: `src/lib/vault.ts` (redact + RUKO1 AES-GCM), `src/lib/evidence.ts` (no amounts)
+- Tests: `npm test` (135 checks) · `node eval/run.mjs` (25 eval cases) · `node scripts/audit-pwa.mjs`
+- Channels: `api/telegram.ts` (live) · `api/whatsapp.ts` (disabled without WHATSAPP_TOKEN, see README §5d)
+- Deploy: `Dockerfile` + `docker-compose.pi.yml` (single Pi) · `k8s/` (multi-Pi k3s) · `nginx/ruko.conf` · `OPERATIONS.md`
+- Design: `docs/ARCHITECTURE.md` (system + improvements) · `SECURITY.md` (scope + headers)
+
+## Docs
+- [README.md](README.md): diagrams (§1b), stack (§5), Telegram (§5c), WhatsApp (§5d), deploy (§7)
+- [OPERATIONS.md](OPERATIONS.md): Pi boot, update, backup, HTTPS
+- [CHANGELOG.md](CHANGELOG.md): v1.2.0-pi mapped to rubric weights
+- [pitch/ruko-trackD.pptx](pitch/ruko-trackD.pptx): 8-slide deck with notes
+
+## Opt-out
+AI features need explicit consent in-app and keys server-side. Crawlers: do not
+POST to `/api/*` in loops; edge rate limits apply. Contact in SECURITY.md.
