@@ -1,0 +1,92 @@
+# Ruko — whole app in containers.
+#
+# Web only (Pi / demo / any VM with Docker):
+#   npm run build                        # once — the image ships dist/, no npm inside
+#   cp scripts/pi/env.pi.example .env    # optional — app boots keyless without it
+#   docker compose up -d --build
+#   curl http://localhost/api/health
+#   curl http://localhost/api/telegram
+#
+# Web + Telegram bot, no public URL (needs TELEGRAM_BOT_TOKEN in .env):
+#   docker compose --profile bot up -d --build
+#   # ruko-dev serves the full /api via the vite shim, bot bridges getUpdates into it
+#   # talk to your bot: /start, /pause, /mirror
+
+services:
+  ruko-app:
+    build:
+      context: .
+      target: runtime
+    image: ruko:1.2.0-pi
+    container_name: ruko-app
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PORT: 4173
+      HOST: 0.0.0.0
+    expose:
+      - "4173"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4173/api/telegram').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+
+  ruko-web:
+    image: nginx:stable-alpine
+    container_name: ruko-web
+    restart: unless-stopped
+    depends_on:
+      ruko-app:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/ruko.docker.conf:/etc/nginx/conf.d/default.conf:ro
+      # Journal stays on user devices by design; only nginx logs persist here.
+      - ./logs:/var/log/nginx
+
+  # NOTE: the dev/bot profiles mount the repo, so run `npm install` on the
+  # host first — node_modules rides along in the mount (no install in image).
+  ruko-dev:
+    profiles: ["bot"]
+    build:
+      context: .
+      target: dev
+    image: ruko:dev
+    container_name: ruko-dev
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5173/api/telegram').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 4s
+      retries: 3
+
+  bot:
+    profiles: ["bot"]
+    build:
+      context: .
+      target: dev
+    image: ruko:dev
+    container_name: ruko-bot
+    depends_on:
+      ruko-dev:
+        condition: service_healthy
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      RUKO_API_URL: http://ruko-dev:5173/api/telegram
+    volumes:
+      - .:/app
+    command: ["node", "scripts/bot-poll.mjs"]
+    restart: unless-stopped

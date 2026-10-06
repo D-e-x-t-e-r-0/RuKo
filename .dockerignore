@@ -1,0 +1,10 @@
+node_modules
+node_modules.rootbak
+.git
+logs
+.env
+*.log
+coverage
+mobile/node_modules
+mobile/.expo
+.DS_Store

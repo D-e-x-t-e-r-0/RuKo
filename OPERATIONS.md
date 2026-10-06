@@ -28,11 +28,18 @@ npm --prefix /opt/ruko run build
 sudo systemctl restart ruko-web && curl http://127.0.0.1:4173/api/health
 ```
 
-## Docker path
+## Docker path (whole app: node pi-server + nginx, ~230MB)
 ```
-cp scripts/pi/env.pi.example .env
-docker compose -f docker-compose.pi.yml up -d --build
-docker logs -f ruko
+npm run build                              # once — the image ships dist/, no npm inside
+cp scripts/pi/env.pi.example .env          # optional — keyless boot works without it
+docker compose up -d --build               # Pi: -f docker-compose.pi.yml
+curl http://localhost/api/health           # {"ok":true,"service":"ruko-pi",...}
+curl http://localhost/api/telegram         # {"ok":true,...}
+docker compose logs -f
+```
+With a bot token in `.env`, add the chat stack (no public URL needed):
+```
+docker compose --profile bot up -d --build # ruko-dev (full /api) + poll bridge
 ```
 
 ## Telegram wiring (once per deploy)
