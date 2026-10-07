@@ -52,5 +52,9 @@ export default defineConfig({
   ],
   test: {
     globals: true,
+  },
+  server: {
+    host: '0.0.0.0',
+    allowedHosts: ['.trycloudflare.com'],
   }
 });
